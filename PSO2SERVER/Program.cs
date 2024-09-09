@@ -117,15 +117,13 @@ namespace PSO2SERVER
 
         public void Start()
         {
-            Logger.WriteInternal("服务器启动完成 " + DateTime.Now);
-
             Server = new Server();
 
             Config.Load();
 
             PacketHandlers.LoadPacketHandlers();
 
-            Logger.WriteInternal("[DB ] 载入数据库...");
+            Logger.WriteInternal("[DBC] 载入数据库...");
             using (var db = new ServerEf())
             {
                 db.TestDatabaseConnection();
@@ -136,6 +134,7 @@ namespace PSO2SERVER
             for (var i = 0; i < 10; i++)
                 QueryServers.Add(new QueryServer(QueryMode.ShipList, 12099 + (100 * i)));
 
+            Logger.WriteInternal("服务器启动完成 " + DateTime.Now);
             Server.Run();
         }
 

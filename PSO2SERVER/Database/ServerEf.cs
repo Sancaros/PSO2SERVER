@@ -115,7 +115,7 @@ namespace PSO2SERVER.Database
                     var f in
                         Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/Resources/sql/scripts/", "*.sql"))
                 {
-                    Logger.WriteInternal("[DB ] 执行数据库脚本 {0}", f);
+                    Logger.WriteInternal("[DBC] 执行数据库脚本 {0}", f);
                     Database.ExecuteSqlCommand(File.ReadAllText(f));
                 }
                 var revision = ServerInfos.Find("Revision");
@@ -129,7 +129,7 @@ namespace PSO2SERVER.Database
                 }
                 SaveChanges();
 
-                Logger.WriteInternal("[DB ] 加载数据集修订的数据库 {0}", revision.Setting);
+                Logger.WriteInternal("[DBC] 加载数据集修订的数据库 {0}", revision.Setting);
             }
             catch (Exception ex)
             {

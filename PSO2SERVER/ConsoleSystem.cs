@@ -13,6 +13,7 @@ using PSO2SERVER.Object;
 using PSO2SERVER.Packets;
 using PSO2SERVER.Packets.PSOPackets;
 using PSO2SERVER.Zone;
+using Org.BouncyCastle.Tls;
 
 namespace PSO2SERVER
 {
@@ -110,7 +111,7 @@ namespace PSO2SERVER
 
         public ConsoleSystem()
         {
-            Console.Title = "梦幻之星OL2";
+            Console.Title = ServerApp.ServerName;
             Console.CursorVisible = true;
             SetSize(80, 24);
 
@@ -207,7 +208,7 @@ namespace PSO2SERVER
         {
             lock (_consoleLock)
             {
-                Console.Title = "梦幻之星OL2 - " + AssembleInfoBar();
+                Console.Title = ServerApp.ServerName + " - " + AssembleInfoBar();
             }
         }
 

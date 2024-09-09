@@ -34,7 +34,7 @@ namespace PSO2SERVER
             var queryThread = new Thread(Run);
             queryThread.Start();
             RunningServers.Add(queryThread);
-            Logger.WriteInternal("[---] 开始监听端口 " + port);
+            Logger.WriteInternal("[QSP] 开始监听端口 " + port);
         }
 
         private void Run()

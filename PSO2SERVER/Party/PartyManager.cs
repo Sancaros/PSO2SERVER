@@ -21,7 +21,7 @@ namespace PSO2SERVER.Party
 
         private PartyManager()
         {
-            Logger.WriteInternal("[PTY] PartyManager initialized.");
+            Logger.WriteInternal("[PTY] PartyManager 初始化完成.");
         }
 
         public Party GetCurrentPartyForClient(Client c)
