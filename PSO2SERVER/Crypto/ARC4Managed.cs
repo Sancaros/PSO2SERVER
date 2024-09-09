@@ -27,7 +27,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace PolarisServer.Crypto
+namespace PSO2SERVER.Crypto
 {
     // References:
     // a.   Usenet 1994 - RC4 Algorithm revealed

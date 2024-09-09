@@ -2,13 +2,13 @@
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
-using PolarisServer.Models;
-using PolarisServer.Packets.PSOPackets;
-using PolarisServer.Object;
-using PolarisServer.Database;
-using PolarisServer.Zone;
+using PSO2SERVER.Models;
+using PSO2SERVER.Packets.PSOPackets;
+using PSO2SERVER.Object;
+using PSO2SERVER.Database;
+using PSO2SERVER.Zone;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0x3E)]
     public class CharacterSpawn : PacketHandler
@@ -29,7 +29,7 @@ namespace PolarisServer.Packets.Handlers
                 context.Character.Looks = reader.ReadStruct<Character.LooksParam>();
                 context.Character.Jobs = reader.ReadStruct<Character.JobParam>();
 
-                using(var db = new PolarisEf())
+                using(var db = new ServerEf())
                     db.ChangeTracker.DetectChanges();
             }
 

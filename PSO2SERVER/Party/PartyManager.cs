@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PolarisServer.Party
+namespace PSO2SERVER.Party
 {
     class PartyManager
     {

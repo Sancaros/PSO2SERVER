@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 
-namespace PolarisServer
+namespace PSO2SERVER
 {
     public class ConfigComment : Attribute
     {
@@ -20,7 +20,7 @@ namespace PolarisServer
     public class Config
     {
         private readonly string _configFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
-                                              Path.DirectorySeparatorChar + "PolarisServer.cfg";
+                                              Path.DirectorySeparatorChar + "Server.cfg";
 
         // Settings
         [ConfigComment("The address to bind to")]
@@ -35,7 +35,7 @@ namespace PolarisServer
         [ConfigComment("Port of the database server")]
         public string DatabasePort = "3306";
 
-        [ConfigComment("Name of the database which contains the Polaris data")]
+        [ConfigComment("Name of the database which contains the Server data")]
         public string DatabaseName = "pso2server";
 
         [ConfigComment("Username for logging into the database server")]
@@ -145,9 +145,9 @@ namespace PolarisServer
 
         public void SettingsChanged()
         {
-            PolarisApp.BindAddress = BindAddress;
+            ServerApp.BindAddress = BindAddress;
             Logger.VerbosePackets = VerbosePackets;
-            PolarisApp.Instance.Server.PingTimer.Interval = 1000 * PingTime;
+            ServerApp.Instance.Server.PingTimer.Interval = 1000 * PingTime;
         }
 
         public bool SetField(string name, string value)

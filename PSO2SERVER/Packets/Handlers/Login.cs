@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using PolarisServer.Database;
-using PolarisServer.Packets.PSOPackets;
-using PolarisServer.Models;
+using PSO2SERVER.Database;
+using PSO2SERVER.Packets.PSOPackets;
+using PSO2SERVER.Models;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0x0)]
     public class Login : PacketHandler
@@ -28,7 +28,7 @@ namespace PolarisServer.Packets.Handlers
 
 
             // What am I doing here even
-            using (var db = new PolarisEf())
+            using (var db = new ServerEf())
             {
                 var users = from u in db.Players
                             where u.Username.ToLower().Equals(username.ToLower())
@@ -86,7 +86,7 @@ namespace PolarisServer.Packets.Handlers
 
                 // Login response packet
                
-                context.SendPacket(new LoginDataPacket("Polaris Block 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
+                context.SendPacket(new LoginDataPacket("Server Block 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
 
                 if (user == null)
                     return;
@@ -100,9 +100,9 @@ namespace PolarisServer.Packets.Handlers
 
             }
 
-            if (PolarisApp.Config.motd != "")
+            if (ServerApp.Config.motd != "")
             {
-                context.SendPacket(new SystemMessagePacket(PolarisApp.Config.motd, SystemMessagePacket.MessageType.AdminMessageInstant));
+                context.SendPacket(new SystemMessagePacket(ServerApp.Config.motd, SystemMessagePacket.MessageType.AdminMessageInstant));
             }
 
         }

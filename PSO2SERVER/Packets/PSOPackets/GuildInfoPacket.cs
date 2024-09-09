@@ -1,6 +1,6 @@
-﻿using PolarisServer.Models;
+﻿using PSO2SERVER.Models;
 
-namespace PolarisServer.Packets.PSOPackets
+namespace PSO2SERVER.Packets.PSOPackets
 {
     internal class GuildInfoPacket : Packet
     {
@@ -47,7 +47,7 @@ namespace PolarisServer.Packets.PSOPackets
 
             // Team Name
             // We don't actually have team names anywhere, just dump a test here
-            writer.WriteFixedLengthUtf16("Polaris Team", 16);
+            writer.WriteFixedLengthUtf16("Sancaros", 16);
 
             // Unknown
             // Somewhere in here is likely a Team ID

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PolarisServer.Models
+namespace PSO2SERVER.Models
 {
     public enum EntityType : UInt16
     {

@@ -5,10 +5,10 @@ using System.Linq;
 
 using Newtonsoft.Json;
 
-using PolarisServer.Database;
-using PolarisServer.Models;
+using PSO2SERVER.Database;
+using PSO2SERVER.Models;
 
-namespace PolarisServer.Object
+namespace PSO2SERVER.Object
 {
     class ObjectManager
     {
@@ -39,7 +39,7 @@ namespace PolarisServer.Object
                 Dictionary<ulong, PSOObject> objects = new Dictionary<ulong, PSOObject>();
 
                 // Collect from db
-                using (var db = new PolarisEf())
+                using (var db = new ServerEf())
                 {
                     var dbObjects = from dbo in db.GameObjects
                                     where dbo.ZoneName == zone
@@ -92,7 +92,7 @@ namespace PolarisServer.Object
         internal PSONPC[] getNPCSForZone(string zone)
         {
             List<PSONPC> npcs = new List<PSONPC>();
-            using (var db = new PolarisEf())
+            using (var db = new ServerEf())
             {
                 var dbNpcs = from n in db.NPCs
                              where n.ZoneName == zone

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PolarisServer.Zone
+namespace PSO2SERVER.Zone
 {
     public class ZoneManager
     {

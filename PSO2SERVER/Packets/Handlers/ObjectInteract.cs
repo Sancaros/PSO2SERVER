@@ -1,13 +1,13 @@
-﻿using PolarisServer.Database;
-using PolarisServer.Models;
-using PolarisServer.Object;
-using PolarisServer.Packets.PSOPackets;
+﻿using PSO2SERVER.Database;
+using PSO2SERVER.Models;
+using PSO2SERVER.Object;
+using PSO2SERVER.Packets.PSOPackets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x4, 0x14)]
     class ObjectInteract : PacketHandler
@@ -43,7 +43,7 @@ namespace PolarisServer.Packets.Handlers
             if (command == "Transfer" && context.CurrentZone.Name == "lobby")
             {
                 // Try and get the teleport definition for the object...
-                using (var db = new PolarisEf())
+                using (var db = new ServerEf())
                 {
                     db.Configuration.AutoDetectChangesEnabled = true;
                     var teleporterEndpoint = db.Teleports.Find("lobby", (int)srcObject.ID);

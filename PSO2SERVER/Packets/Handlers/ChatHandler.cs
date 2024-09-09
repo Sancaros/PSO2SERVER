@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x07, 0x00)]
     public class ChatHandler : PacketHandler
@@ -18,12 +18,12 @@ namespace PolarisServer.Packets.Handlers
             var channel = reader.ReadUInt32();
             var message = reader.ReadUtf16(0x9D3F, 0x44);
 
-            if (message.StartsWith(PolarisApp.Config.CommandPrefix))
+            if (message.StartsWith(ServerApp.Config.CommandPrefix))
             {
                 var valid = false;
 
                 // Iterate commands
-                foreach (var command in PolarisApp.ConsoleSystem.Commands)
+                foreach (var command in ServerApp.ConsoleSystem.Commands)
                 {
                     var full = message.Substring(1); // Strip the command chars
                     var args = full.Split(' ');

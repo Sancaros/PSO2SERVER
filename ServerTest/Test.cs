@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-using PolarisServer.Models;
-using PolarisServer.Packets;
-using PolarisServer.Packets.Handlers;
+using PSO2SERVER.Models;
+using PSO2SERVER.Packets;
+using PSO2SERVER.Packets.Handlers;
 
-namespace PolarisTests
+namespace ServerTest
 {
     [TestFixture]
     public class ReflectionTests

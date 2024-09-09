@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using PolarisServer.Database;
-using PolarisServer.Models;
-using PolarisServer.Network;
-using PolarisServer.Packets;
-using PolarisServer.Packets.Handlers;
-using PolarisServer.Zone;
+using PSO2SERVER.Database;
+using PSO2SERVER.Models;
+using PSO2SERVER.Network;
+using PSO2SERVER.Packets;
+using PSO2SERVER.Packets.Handlers;
+using PSO2SERVER.Zone;
 
-namespace PolarisServer
+namespace PSO2SERVER
 {
     public class Client
     {

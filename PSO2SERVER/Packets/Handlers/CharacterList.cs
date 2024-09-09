@@ -1,7 +1,7 @@
-﻿using PolarisServer.Database;
+﻿using PSO2SERVER.Database;
 using System.Linq;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0x02)]
     public class CharacterList : PacketHandler
@@ -15,7 +15,7 @@ namespace PolarisServer.Packets.Handlers
 
             var writer = new PacketWriter();
 
-            using (var db = new PolarisEf())
+            using (var db = new ServerEf())
             {
                 var chars = db.Characters
                     .Where(w => w.Player.PlayerId == context.User.PlayerId)

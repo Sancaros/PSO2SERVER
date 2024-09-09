@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using PolarisServer.Crypto;
+using PSO2SERVER.Crypto;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0xB)]
     public class KeyExchange : PacketHandler

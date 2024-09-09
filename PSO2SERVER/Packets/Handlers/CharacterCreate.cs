@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Data.Entity;
-using PolarisServer.Models;
-using PolarisServer.Packets.PSOPackets;
-using PolarisServer.Database;
+using PSO2SERVER.Models;
+using PSO2SERVER.Packets.PSOPackets;
+using PSO2SERVER.Database;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0x05)]
     public class CharacterCreate : PacketHandler
@@ -38,7 +38,7 @@ namespace PolarisServer.Packets.Handlers
             };
 
             // Add to database
-            using (var db = new PolarisEf())
+            using (var db = new ServerEf())
             { 
                 db.Characters.Add(newCharacter);
                 db.Entry(newCharacter.Player).State = EntityState.Modified;

@@ -1,6 +1,6 @@
-﻿using PolarisServer.Models;
+﻿using PSO2SERVER.Models;
 
-namespace PolarisServer.Packets.PSOPackets
+namespace PSO2SERVER.Packets.PSOPackets
 {
     public class NoPayloadPacket : Packet
     {

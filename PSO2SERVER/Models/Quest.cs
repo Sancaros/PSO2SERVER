@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using PolarisServer.Packets.PSOPackets;
+using PSO2SERVER.Packets.PSOPackets;
 
-namespace PolarisServer.Models
+namespace PSO2SERVER.Models
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     public unsafe struct QuestDefiniton

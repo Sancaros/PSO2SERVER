@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using PolarisServer.Models;
+using PSO2SERVER.Models;
 
-namespace PolarisServer.Packets.PSOPackets
+namespace PSO2SERVER.Packets.PSOPackets
 {
     class QuestStartPacket : Packet
     {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 
-using PolarisServer.Models;
-using PolarisServer.Object;
-using PolarisServer.Packets;
-using PolarisServer.Packets.PSOPackets;
+using PSO2SERVER.Models;
+using PSO2SERVER.Object;
+using PSO2SERVER.Packets;
+using PSO2SERVER.Packets.PSOPackets;
 
-namespace PolarisServer.Zone
+namespace PSO2SERVER.Zone
 {
     public class Map
     {

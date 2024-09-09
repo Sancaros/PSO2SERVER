@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace PolarisServer.Models
+namespace PSO2SERVER.Models
 {
     public struct PacketHeader
     {

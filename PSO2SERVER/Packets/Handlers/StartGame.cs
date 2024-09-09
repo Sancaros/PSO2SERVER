@@ -1,8 +1,8 @@
-﻿using PolarisServer.Database;
-using PolarisServer.Packets.PSOPackets;
-using PolarisServer.Party;
+﻿using PSO2SERVER.Database;
+using PSO2SERVER.Packets.PSOPackets;
+using PSO2SERVER.Party;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0x4)]
     public class StartGame : PacketHandler
@@ -19,7 +19,7 @@ namespace PolarisServer.Packets.Handlers
 
             if (context.Character == null) // On character create, this is already set.
             {
-                using (var db = new PolarisEf())
+                using (var db = new ServerEf())
                 {
                     var character = db.Characters.Find((int)charId);
 

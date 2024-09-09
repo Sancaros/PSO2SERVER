@@ -5,23 +5,23 @@ using System.Net;
 using System.Threading;
 using System.Security.Cryptography;
 
-using PolarisServer.Database;
-using PolarisServer.Packets.Handlers;
+using PSO2SERVER.Database;
+using PSO2SERVER.Packets.Handlers;
 
-namespace PolarisServer
+namespace PSO2SERVER
 {
-    internal class PolarisApp
+    internal class ServerApp
     {
-        public static PolarisApp Instance { get; private set; }
+        public static ServerApp Instance { get; private set; }
         
         // Will be using these around the app later [KeyPhact]
-        public const string PolarisName = "Polaris Server";
-        public const string PolarisShortName = "Polaris";
-        public const string PolarisAuthor = "PolarisTeam (http://github.com/PolarisTeam)";
-        public const string PolarisCopyright = "(C) 2014 PolarisTeam.";
-        public const string PolarisLicense = "All licenced under AGPL.";
-        public const string PolarisVersion = "v0.1.0-pre";
-        public const string PolarisVersionName = "Corsac Fox";
+        public const string ServerName = "Phantasy Star Online 2 Server";
+        public const string ServerShortName = "PSO2";
+        public const string ServerAuthor = "Sancaros (https://github.com/Sancaros/PSO2SERVER)";
+        public const string ServerCopyright = "(C) 2024 Sancaros.";
+        public const string ServerLicense = "All licenced under AGPL.";
+        public const string ServerVersion = "v0.1.1";
+        public const string ServerVersionName = "Sancaros";
 
         public static IPAddress BindAddress = IPAddress.Parse("127.0.0.1");
         public static Config Config;
@@ -105,13 +105,13 @@ namespace PolarisServer
 
             // Fix up startup message [KeyPhact]
             Logger.WriteHeader();
-            Logger.Write(PolarisName + " - " + PolarisVersion + " (" + PolarisVersionName + ")");
-            Logger.Write("By " + PolarisAuthor);
-            Logger.Write(PolarisLicense);
+            Logger.Write(ServerName + " - " + ServerVersion + " (" + ServerVersionName + ")");
+            Logger.Write("作者 " + ServerAuthor);
+            //Logger.Write(ServerLicense);
 
             Thread.Sleep(1000);
-            //System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseIfModelChanges<PolarisEF>());
-            Instance = new PolarisApp();
+            //System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseIfModelChanges<ServerEf>());
+            Instance = new ServerApp();
             Instance.Start();
         }
 
@@ -126,7 +126,7 @@ namespace PolarisServer
             PacketHandlers.LoadPacketHandlers();
 
             Logger.WriteInternal("[DB ] 载入数据库...");
-            using (var db = new PolarisEf())
+            using (var db = new ServerEf())
             {
                 db.TestDatabaseConnection();
 

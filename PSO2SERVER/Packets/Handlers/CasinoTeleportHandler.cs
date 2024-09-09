@@ -1,13 +1,13 @@
-﻿using PolarisServer.Models;
-using PolarisServer.Object;
-using PolarisServer.Packets.PSOPackets;
-using PolarisServer.Zone;
+﻿using PSO2SERVER.Models;
+using PSO2SERVER.Object;
+using PSO2SERVER.Packets.PSOPackets;
+using PSO2SERVER.Zone;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x3, 0x35)]
     class CasinoTeleportHandler : PacketHandler

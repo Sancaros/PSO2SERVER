@@ -1,9 +1,9 @@
-﻿using PolarisServer.Models;
+﻿using PSO2SERVER.Models;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace PolarisServer.Packets
+namespace PSO2SERVER.Packets
 {
     public class PacketReader : BinaryReader
     {

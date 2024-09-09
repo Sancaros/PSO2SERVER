@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using PolarisServer.Packets.PSOPackets;
-using PolarisServer.Database;
+using PSO2SERVER.Packets.PSOPackets;
+using PSO2SERVER.Database;
 
 // This file is to hold all packet handlers that require no logic to respond to, or require less than 5 lines of logic.
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x03, 0x0C)]
     public class PingResponse : PacketHandler
@@ -33,7 +33,7 @@ namespace PolarisServer.Packets.Handlers
             Logger.Write("[CHR] {0} is deleting character with ID {1}", context.User.Username, id);
 
             // Delete Character
-            using (var db = new PolarisEf())
+            using (var db = new ServerEf())
             {
 
                 foreach (var character in db.Characters)
@@ -87,7 +87,7 @@ namespace PolarisServer.Packets.Handlers
             reader.BaseStream.Seek(0xC, SeekOrigin.Begin);
             var id = reader.ReadUInt32();
 
-            foreach (var client in PolarisApp.Instance.Server.Clients)
+            foreach (var client in ServerApp.Instance.Server.Clients)
             {
                 if (client.Character.CharacterId == id)
                 {

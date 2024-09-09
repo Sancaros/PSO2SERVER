@@ -33,7 +33,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace PolarisServer.Crypto
+namespace PSO2SERVER.Crypto
 {
 #if !INSIDE_CORLIB
     public

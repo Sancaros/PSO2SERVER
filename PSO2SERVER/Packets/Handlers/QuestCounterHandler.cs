@@ -1,8 +1,8 @@
 ﻿using System;
-using PolarisServer.Models;
-using PolarisServer.Packets.PSOPackets;
+using PSO2SERVER.Models;
+using PSO2SERVER.Packets.PSOPackets;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0xB, 0x30)]
     class QuestCounterHandler : PacketHandler

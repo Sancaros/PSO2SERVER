@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PolarisServer.Models;
+using PSO2SERVER.Models;
 
-namespace PolarisServer.Packets.PSOPackets
+namespace PSO2SERVER.Packets.PSOPackets
 {
     class SymbolArtList : Packet
     {

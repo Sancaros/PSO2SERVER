@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace PolarisServer.Models
+namespace PSO2SERVER.Models
 {
     /*
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

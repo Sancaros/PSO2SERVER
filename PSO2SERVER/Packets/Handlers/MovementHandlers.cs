@@ -1,9 +1,9 @@
-﻿using PolarisServer.Models;
-using PolarisServer.Packets.PSOPackets;
+﻿using PSO2SERVER.Models;
+using PSO2SERVER.Packets.PSOPackets;
 using System;
 using System.Runtime.InteropServices;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x04, 0x07)]
     public class MovementHandler : PacketHandler

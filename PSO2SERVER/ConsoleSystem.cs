@@ -7,14 +7,14 @@ using System.Threading;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
-using PolarisServer.Database;
-using PolarisServer.Models;
-using PolarisServer.Object;
-using PolarisServer.Packets;
-using PolarisServer.Packets.PSOPackets;
-using PolarisServer.Zone;
+using PSO2SERVER.Database;
+using PSO2SERVER.Models;
+using PSO2SERVER.Object;
+using PSO2SERVER.Packets;
+using PSO2SERVER.Packets.PSOPackets;
+using PSO2SERVER.Zone;
 
-namespace PolarisServer
+namespace PSO2SERVER
 {
     public delegate void ConsoleCommandDelegate(string[] args, int length, string full, Client client);
 
@@ -88,7 +88,7 @@ namespace PolarisServer
             ConsoleKey.Delete
         };
 
-        private const string Prompt = "Polaris> ";
+        private const string Prompt = "[CMD]> ";
 
         private string _commandLine = string.Empty;
         private int _commandIndex;
@@ -110,7 +110,7 @@ namespace PolarisServer
 
         public ConsoleSystem()
         {
-            Console.Title = "Polaris";
+            Console.Title = "梦幻之星OL2";
             Console.CursorVisible = true;
             SetSize(80, 24);
 
@@ -140,7 +140,7 @@ namespace PolarisServer
             {
                 BlankDrawnCommandLine();
 
-                var useColors = PolarisApp.Config.UseConsoleColors;
+                var useColors = ServerApp.Config.UseConsoleColors;
                 var saveColor = Console.ForegroundColor;
 
                 Console.SetCursorPosition(0, _commandRowInConsole);
@@ -190,24 +190,24 @@ namespace PolarisServer
 
         private string AssembleInfoBar()
         {
-            if (PolarisApp.Instance != null && PolarisApp.Instance.Server != null)
+            if (ServerApp.Instance != null && ServerApp.Instance.Server != null)
             {
-                var clients = PolarisApp.Instance.Server.Clients.Count;
+                var clients = ServerApp.Instance.Server.Clients.Count;
                 float usage = Process.GetCurrentProcess().PrivateMemorySize64 / 1024 / 1024;
 
                 var time = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString();
 
-                return string.Format("Clients: {0} | Memory: {1} MB | {2}", clients, usage, time);
+                return string.Format("当前玩家: {0} | 实时内存: {1} MB | {2}", clients, usage, time);
             }
 
-            return "Initializing...";
+            return "正在初始化...";
         }
 
         private void TimerRefresh(object sender, ElapsedEventArgs e)
         {
             lock (_consoleLock)
             {
-                Console.Title = "Polaris - " + AssembleInfoBar();
+                Console.Title = "梦幻之星OL2 - " + AssembleInfoBar();
             }
         }
 
@@ -217,7 +217,7 @@ namespace PolarisServer
             {
                 try
                 {
-                    PolarisApp.ConsoleSystem.CheckInput();
+                    ServerApp.ConsoleSystem.CheckInput();
                 }
                 catch (ThreadInterruptedException ex)
                 {
@@ -390,7 +390,7 @@ namespace PolarisServer
             Commands.Add(tellLoc);
 
             // Exit
-            var exit = new ConsoleCommand(Exit, "exit", "quit") { Help = "Close the Polaris Server" };
+            var exit = new ConsoleCommand(Exit, "exit", "quit") { Help = "Close the PSO2 Server" };
             Commands.Add(exit);
         }
 
@@ -575,23 +575,23 @@ namespace PolarisServer
 
         private void Config(string[] args, int length, string full, Client client)
         {
-            var fields = PolarisApp.Config.GetType().GetFields();
+            var fields = ServerApp.Config.GetType().GetFields();
             var field = fields.FirstOrDefault(o => o.Name == args[1]);
 
             switch (args[1].ToLower())
             {
                 case "save":
-                    PolarisApp.Config.Save();
+                    ServerApp.Config.Save();
                     break;
 
                 case "load":
-                    PolarisApp.Config.Load();
+                    ServerApp.Config.Load();
                     break;
 
                 case "list":
                     Logger.WriteCommand(client, "[CMD] 设置选项");
                     foreach (var f in fields)
-                        Logger.WriteCommand(client, "[CMD] {0} = {1}", f.Name, f.GetValue(PolarisApp.Config));
+                        Logger.WriteCommand(client, "[CMD] {0} = {1}", f.Name, f.GetValue(ServerApp.Config));
                     break;
 
                 default: // Set a config option
@@ -601,13 +601,13 @@ namespace PolarisServer
                     {
                         var value = args[2].Contains('\"') ? full.Split('"')[1].Split('"')[0].Trim('\"') : args[2];
 
-                        if (!PolarisApp.Config.SetField(args[1], value))
+                        if (!ServerApp.Config.SetField(args[1], value))
                             Logger.WriteCommand(client, "[CMD] Config option {0} could not be changed to {1}", args[1],
                                 value);
                         else
                         {
                             Logger.WriteCommand(client, "[CMD] Config option {0} changed to {1}", args[1], value);
-                            PolarisApp.Config.SettingsChanged();
+                            ServerApp.Config.SettingsChanged();
                         }
                     }
                     else
@@ -644,15 +644,15 @@ namespace PolarisServer
                 }
             }
 
-            for (var i = 0; i < PolarisApp.Instance.Server.Clients.Count; i++)
+            for (var i = 0; i < ServerApp.Instance.Server.Clients.Count; i++)
             {
                 if (id > -1 && i == id)
                     continue;
 
                 // This is probably not the right way to do this
-                PolarisApp.Instance.Server.Clients[i].Socket.Close();
+                ServerApp.Instance.Server.Clients[i].Socket.Close();
                 Logger.WriteCommand(client,
-                    "[CMD] Logged out user " + PolarisApp.Instance.Server.Clients[i].User.Username);
+                    "[CMD] Logged out user " + ServerApp.Instance.Server.Clients[i].User.Username);
             }
 
             Logger.WriteCommand(client, "[CMD] Logged out all players successfully");
@@ -683,7 +683,7 @@ namespace PolarisServer
                     return;
                 }
 
-                client = PolarisApp.Instance.Server.Clients[id];
+                client = ServerApp.Instance.Server.Clients[id];
             }
 
             // Default coordinates
@@ -749,7 +749,7 @@ namespace PolarisServer
             }
 
             // Send packet
-            PolarisApp.Instance.Server.Clients[id].SendPacket(type, subType, flags, data);
+            ServerApp.Instance.Server.Clients[id].SendPacket(type, subType, flags, data);
 
             Logger.WriteCommand(client, "[CMD] Sent packet {0:X}-{1:X} with flags {2} to {3}", type, subType, flags,
                 name);
@@ -788,7 +788,7 @@ namespace PolarisServer
                     packet[index] = data[index + 8];
 
                 // Send packet
-                PolarisApp.Instance.Server.Clients[id].SendPacket(data[4], data[5], data[6], packet);
+                ServerApp.Instance.Server.Clients[id].SendPacket(data[4], data[5], data[6], packet);
 
                 Logger.WriteCommand(client, "[CMD] Sent contents of {0} as packet {1:X}-{2:X} with flags {3} to {4}",
                     path, data[4], data[5], data[6], name);
@@ -829,7 +829,7 @@ namespace PolarisServer
                     packet[index] = data[index + 8];
 
                 // Send packet
-                PolarisApp.Instance.Server.Clients[id].SendPacket(data[4], data[5], data[6], packet);
+                ServerApp.Instance.Server.Clients[id].SendPacket(data[4], data[5], data[6], packet);
 
                 Logger.WriteCommand(client, "[CMD] Sent contents of {0} as packet {1:X}-{2:X} with flags {3} to {4}",
                     path, data[4], data[5], data[6], name);
@@ -865,7 +865,7 @@ namespace PolarisServer
                 packet[index] = data[index + 8];
 
             // Send packet
-            PolarisApp.Instance.Server.Clients[id].SendPacket(data[4], data[5], data[6], packet);
+            ServerApp.Instance.Server.Clients[id].SendPacket(data[4], data[5], data[6], packet);
 
             Logger.WriteCommand(client, "[CMD] Sent contents of {0} as packet {1:X}-{2:X} with flags {3} to {4}",
                 filename, data[4], data[5], data[6], name);
@@ -888,7 +888,7 @@ namespace PolarisServer
                 Helper.FindPlayerByUsername(name);
                 if (id != -1)
                     foundPlayer = true;
-                client = PolarisApp.Instance.Server.Clients[id];
+                client = ServerApp.Instance.Server.Clients[id];
             }
             
 
@@ -924,7 +924,7 @@ namespace PolarisServer
                 if (id != -1)
                     foundPlayer = true;
 
-                client = PolarisApp.Instance.Server.Clients[id];
+                client = ServerApp.Instance.Server.Clients[id];
             }
 
 
@@ -960,7 +960,7 @@ namespace PolarisServer
                 return;
             }
 
-            Client context = PolarisApp.Instance.Server.Clients[id];
+            Client context = ServerApp.Instance.Server.Clients[id];
 
             Map dstMap = null;
 
@@ -981,7 +981,7 @@ namespace PolarisServer
             //PSOLocation destination = new PSOLocation(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4]), float.Parse(args[5]),float.Parse(args[6]), float.Parse(args[7]), float.Parse(args[8]));
 
 
-            //PolarisApp.Instance.Server.Clients[id].SendPacket(new TeleportTransferPacket(ObjectManager.Instance.getObjectByID("lobby", 443), destination));
+            //ServerApp.Instance.Server.Clients[id].SendPacket(new TeleportTransferPacket(ObjectManager.Instance.getObjectByID("lobby", 443), destination));
 
             context.SendPacket(0x8, 0xB, 0x0, ObjectManager.Instance.getObjectByID(443).GenerateSpawnBlob());
 
@@ -1005,7 +1005,7 @@ namespace PolarisServer
                 if (id == -1)
                     return;
 
-                client = PolarisApp.Instance.Server.Clients[id];
+                client = ServerApp.Instance.Server.Clients[id];
             }
             else
             {
@@ -1034,7 +1034,7 @@ namespace PolarisServer
                 if (id == -1)
                     return;
 
-                client = PolarisApp.Instance.Server.Clients[id];
+                client = ServerApp.Instance.Server.Clients[id];
             }
             else
             {
@@ -1093,7 +1093,7 @@ namespace PolarisServer
         //        Logger.WriteInternal("[NPC] Adding new NPC {0} to the database for zone {1}", newNPC.NPCName, zone);
         //    }
 
-        //    using (var db = new PolarisEf())
+        //    using (var db = new ServerEf())
         //    {
         //        db.NPCs.AddRange(newNPCs);
         //        db.SaveChanges();
@@ -1140,7 +1140,7 @@ namespace PolarisServer
                 Logger.WriteInternal($"[NPC] Adding new NPC {npc.NPCName} to the database for zone {zone}");
             }
 
-            using (var db = new PolarisEf())
+            using (var db = new ServerEf())
             {
                 db.NPCs.AddRange(newNPCs);
                 db.SaveChanges();
@@ -1196,7 +1196,7 @@ namespace PolarisServer
                 Logger.WriteInternal("[OBJ] Adding new Object {0} to the database for zone {1}", newObj.ObjectName, zone);
             }
 
-            using (var db = new PolarisEf())
+            using (var db = new ServerEf())
             {
                 db.GameObjects.AddRange(newObjects);
                 db.SaveChanges();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace PolarisServer
+namespace PSO2SERVER
 {
     public static class Helper
     {
@@ -48,8 +48,8 @@ namespace PolarisServer
 
         public static int FindPlayerByUsername(string name)
         {
-            for (var i = 0; i < PolarisApp.Instance.Server.Clients.Count; i++)
-                if (name.ToLower() == PolarisApp.Instance.Server.Clients[i].User.Username.ToLower())
+            for (var i = 0; i < ServerApp.Instance.Server.Clients.Count; i++)
+                if (name.ToLower() == ServerApp.Instance.Server.Clients[i].User.Username.ToLower())
                     return i;
 
             return -1;

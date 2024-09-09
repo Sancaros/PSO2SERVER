@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     public class PacketHandlerAttr : Attribute
     {
@@ -29,7 +29,7 @@ namespace PolarisServer.Packets.Handlers
         {
             var classes = from t in Assembly.GetExecutingAssembly().GetTypes()
                 where
-                    t.IsClass && t.Namespace == "PolarisServer.Packets.Handlers" &&
+                    t.IsClass && t.Namespace == "PSO2SERVER.Packets.Handlers" &&
                     t.IsSubclassOf(typeof (PacketHandler))
                 select t;
 

@@ -2,10 +2,10 @@
 using System.Runtime.InteropServices;
 using System.ComponentModel.DataAnnotations;
 
-using PolarisServer.Packets;
-using PolarisServer.Database;
+using PSO2SERVER.Packets;
+using PSO2SERVER.Database;
 
-namespace PolarisServer.Models
+namespace PSO2SERVER.Models
 {
     public class Character
     {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PolarisServer.Models;
-using PolarisServer.Zone;
+using PSO2SERVER.Models;
+using PSO2SERVER.Zone;
 
-namespace PolarisServer.Packets.Handlers
+namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x3, 0x12)]
     class CampshipTeleport : PacketHandler

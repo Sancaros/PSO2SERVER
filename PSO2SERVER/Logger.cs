@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-using PolarisServer.Packets.PSOPackets;
+using PSO2SERVER.Packets.PSOPackets;
 
-namespace PolarisServer
+namespace PSO2SERVER
 {
     /// <summary>
     ///     Wrapper for Console's Write and WriteLine functions to add coloring as well as integrate it into the Console System
@@ -11,16 +11,16 @@ namespace PolarisServer
     /// </summary>
     public static class Logger
     {
-        private static readonly StreamWriter Writer = new StreamWriter("PolarisServer.log", true);
+        private static readonly StreamWriter Writer = new StreamWriter("SERVER.log", true);
 
         public static bool VerbosePackets = false;
 
         private static void AddLine(ConsoleColor color, string text)
         {
             // Return if we don't have a ConsoleSystem created yet
-            if (PolarisApp.ConsoleSystem == null) return;
+            if (ServerApp.ConsoleSystem == null) return;
 
-            PolarisApp.ConsoleSystem.AddLine(color, text);
+            ServerApp.ConsoleSystem.AddLine(color, text);
         }
 
         public static void Write(string text, params object[] args)

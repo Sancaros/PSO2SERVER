@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.IO;
 using MySql.Data.EntityFramework;
-using PolarisServer.Models;
+using PSO2SERVER.Models;
 
-namespace PolarisServer.Database
+namespace PSO2SERVER.Database
 {
     public class ServerInfo
     {
@@ -86,7 +86,7 @@ namespace PolarisServer.Database
     }
 
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
-    public class PolarisEf : DbContext
+    public class ServerEf : DbContext
     {
         public DbSet<ServerInfo> ServerInfos { get; set; }
         public DbSet<Player> Players { get; set; }
@@ -95,14 +95,14 @@ namespace PolarisServer.Database
         public DbSet<NPC> NPCs { get; set; }
         public DbSet<GameObject> GameObjects { get; set; }
 
-        public PolarisEf()
+        public ServerEf()
             : base(
                 string.Format("server={0};port={1};database={2};username={3};password={4}",
-                                         PolarisApp.Config.DatabaseAddress,
-                                         PolarisApp.Config.DatabasePort,
-                                         PolarisApp.Config.DatabaseName,
-                                         PolarisApp.Config.DatabaseUsername,
-                                         PolarisApp.Config.DatabasePassword)
+                                         ServerApp.Config.DatabaseAddress,
+                                         ServerApp.Config.DatabasePort,
+                                         ServerApp.Config.DatabaseName,
+                                         ServerApp.Config.DatabaseUsername,
+                                         ServerApp.Config.DatabasePassword)
                   )
         {
         }
@@ -141,7 +141,7 @@ namespace PolarisServer.Database
         {
             try
             {
-                using (var context = new PolarisEf())
+                using (var context = new ServerEf())
                 {
                     // 执行一个简单的查询来测试数据库连接
                     context.Database.ExecuteSqlCommand("SELECT 1");

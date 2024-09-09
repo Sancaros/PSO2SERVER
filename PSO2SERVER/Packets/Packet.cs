@@ -1,6 +1,6 @@
-﻿using PolarisServer.Models;
+﻿using PSO2SERVER.Models;
 
-namespace PolarisServer.Packets
+namespace PSO2SERVER.Packets
 {
     public abstract class Packet
     {

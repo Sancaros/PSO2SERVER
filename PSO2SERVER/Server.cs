@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Timers;
 
-using PolarisServer.Network;
-using PolarisServer.Packets.PSOPackets;
+using PSO2SERVER.Network;
+using PSO2SERVER.Packets.PSOPackets;
 
-namespace PolarisServer
+namespace PSO2SERVER
 {
     public class Server
     {
@@ -25,7 +25,7 @@ namespace PolarisServer
             Instance = this;
             StartTime = DateTime.Now;
 
-            PingTimer = new Timer(1000 * PolarisApp.Config.PingTime); // 1 Minute default
+            PingTimer = new Timer(1000 * ServerApp.Config.PingTime); // 1 Minute default
             PingTimer.Elapsed += PingClients;
             PingTimer.Start();
 

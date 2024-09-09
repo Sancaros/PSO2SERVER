@@ -6,10 +6,10 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using PolarisServer.Models;
-using PolarisServer.Packets;
+using PSO2SERVER.Models;
+using PSO2SERVER.Packets;
 
-namespace PolarisServer
+namespace PSO2SERVER
 {
     public enum QueryMode
     {
@@ -83,7 +83,7 @@ namespace PolarisServer
                     number = (uint)i,
                     status = i == 2 ? ShipStatus.Online : ShipStatus.Offline, // Maybe move to Config?
                     name = String.Format("Ship{0:0#}", i),
-                    ip = PolarisApp.BindAddress.GetAddressBytes()
+                    ip = ServerApp.BindAddress.GetAddressBytes()
                 };
                 entries.Add(entry);
             }
@@ -106,7 +106,7 @@ namespace PolarisServer
             var writer = new PacketWriter();
             writer.WriteStruct(new PacketHeader(0x90, 0x11, 0x2C, 0x0, 0x0));
             writer.Write(new byte[0x68 - 8]);
-            writer.Write(PolarisApp.BindAddress.GetAddressBytes());
+            writer.Write(ServerApp.BindAddress.GetAddressBytes());
             writer.Write((UInt16)12205);
             writer.Write(new byte[0x90 - 0x6A]);
 

@@ -1,11 +1,11 @@
-﻿using PolarisServer.Models;
-using PolarisServer.Packets.PSOPackets;
+﻿using PSO2SERVER.Models;
+using PSO2SERVER.Packets.PSOPackets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PolarisServer.Party
+namespace PSO2SERVER.Party
 {
     public class Party
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using PolarisServer.Database;
-using PolarisServer.Packets;
+using PSO2SERVER.Database;
+using PSO2SERVER.Packets;
 
-namespace PolarisServer.Models
+namespace PSO2SERVER.Models
 {
     public class PSOObject
     {

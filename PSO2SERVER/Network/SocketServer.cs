@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 
-namespace PolarisServer.Network
+namespace PSO2SERVER.Network
 {
     public class SocketServer
     {

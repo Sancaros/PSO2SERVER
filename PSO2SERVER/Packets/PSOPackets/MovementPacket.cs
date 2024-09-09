@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PolarisServer.Models;
-using PolarisServer.Packets.Handlers;
+using PSO2SERVER.Models;
+using PSO2SERVER.Packets.Handlers;
 
-namespace PolarisServer.Packets.PSOPackets
+namespace PSO2SERVER.Packets.PSOPackets
 {
     class MovementPacket : Packet
     {

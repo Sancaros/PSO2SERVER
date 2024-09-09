@@ -2,9 +2,9 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using PolarisServer.Models;
+using PSO2SERVER.Models;
 
-namespace PolarisServer.Packets
+namespace PSO2SERVER.Packets
 {
     public class PacketWriter : BinaryWriter
     {

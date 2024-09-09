@@ -9,7 +9,7 @@
     <RootNamespace>PSO2SERVER</RootNamespace>
     <AssemblyName>PSO2SERVER</AssemblyName>
     <ReleaseVersion>0.1.0-pre</ReleaseVersion>
-    <StartupObject>PolarisServer.PolarisApp</StartupObject>
+    <StartupObject>PSO2SERVER.ServerApp</StartupObject>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -188,7 +188,7 @@
     <Compile Include="Models\FixedPackets.cs" />
     <Compile Include="QueryServer.cs" />
     <Compile Include="Models\ShipData.cs" />
-    <Compile Include="Database\PolarisEF.cs" />
+    <Compile Include="Database\ServerEf.cs" />
     <Compile Include="Crypto\RC4.cs" />
     <Compile Include="Crypto\ARC4Managed.cs" />
     <Compile Include="Helper.cs" />
