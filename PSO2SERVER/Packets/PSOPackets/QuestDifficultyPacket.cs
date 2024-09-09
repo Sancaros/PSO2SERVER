@@ -75,7 +75,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             public QuestDifficultyEntry difficulty8;
         }
 
-        //Size: 32, confirmed in ctor
+        //Size: 32, confirmed in ctor TODO
         public struct QuestDifficultyEntry
         {
             public uint unknown1;

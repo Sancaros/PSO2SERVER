@@ -72,6 +72,7 @@ namespace PSO2SERVER.Models
         public const int Size = 0x38;
 
         MemoryStream stream;
+        //TODO
         ItemType type = ItemType.Consumable;
         byte[] data = new byte[Size];
 

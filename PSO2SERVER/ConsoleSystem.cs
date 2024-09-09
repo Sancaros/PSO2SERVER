@@ -880,7 +880,6 @@ namespace PSO2SERVER
                 id = client.User.PlayerId;
                 foundPlayer = true;
             }
-                
             else
             {
                 var name = args[8].Trim('\"');
@@ -890,7 +889,6 @@ namespace PSO2SERVER
                     foundPlayer = true;
                 client = ServerApp.Instance.Server.Clients[id];
             }
-            
 
             // Couldn't find the username
             if (!foundPlayer)
@@ -962,8 +960,7 @@ namespace PSO2SERVER
 
             Client context = ServerApp.Instance.Server.Clients[id];
 
-            Map dstMap = null;
-
+            Map dstMap;
             if (!ZoneManager.Instance.InstanceExists(String.Format("tpinstance_{0}_{1}", Int32.Parse(args[3]), Int32.Parse(args[8]))))
             {
                 dstMap = new Map("tpmap", Int32.Parse(args[3]), Int32.Parse(args[8]), (Map.MapType)Int32.Parse(args[2]), (Map.MapFlags)Int32.Parse(args[4]))
