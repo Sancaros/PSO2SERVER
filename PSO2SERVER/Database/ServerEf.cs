@@ -146,13 +146,13 @@ namespace PSO2SERVER.Database
                     // 执行一个简单的查询来测试数据库连接
                     context.Database.ExecuteSqlCommand("SELECT 1");
 
-                    Logger.WriteInternal("[DB Test] 数据库连接成功。");
+                    Logger.WriteInternal("[DBT] 数据库连接成功。");
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                Logger.WriteException("[DB Test] 数据库连接异常", ex);
+                Logger.WriteException("[DBT] 数据库连接异常", ex);
                 return false;
             }
         }

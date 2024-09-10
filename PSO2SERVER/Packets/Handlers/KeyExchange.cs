@@ -20,14 +20,19 @@ namespace PSO2SERVER.Packets.Handlers
 
             // Extract the first 0x80 bytes into a separate array
             var cryptedBlob = new byte[0x80];
+            var rsaBlob = File.ReadAllBytes("privateKey.blob");
+
             Array.Copy(data, position, cryptedBlob, 0, 0x80);
             Array.Reverse(cryptedBlob);
+
+            // Print the contents of cryptedBlob in hexadecimal format
+            var info = string.Format("[<--] 接收到的数据 (hex): ");
+            Logger.WriteHex(info, cryptedBlob);
 
             // FIXME
             if (Client.RsaCsp == null)
             {
                 Client.RsaCsp = new RSACryptoServiceProvider();
-                var rsaBlob = File.ReadAllBytes("privateKey.blob");
                 Client.RsaCsp.ImportCspBlob(rsaBlob);
             }
 
