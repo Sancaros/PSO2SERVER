@@ -49,7 +49,7 @@ namespace PSO2SERVER.Packets.Handlers
                     // Check for special characters
                     else if (!Regex.IsMatch(username, "^[a-zA-Z0-9 ]*$", RegexOptions.IgnoreCase))
                     {
-                        error = "Username must not contain special characters.\nPlease use letters and numbers only.";
+                        error = "用户名不能包含特殊字符\n请只使用字母和数字.";
                         user = null;
                     }
                     else // We're all good!
