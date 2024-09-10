@@ -14,8 +14,7 @@ namespace PSO2SERVER
     public enum QueryMode
     {
         ShipList,/*12100 - 12900*/
-        Ship1,
-        Ship2
+        Block
     }
 
     public class QueryServer
@@ -45,10 +44,7 @@ namespace PSO2SERVER
                 default:
                     c = DoShipList;
                     break;
-                case QueryMode.Ship1:
-                    c = DoBlockBalance;
-                    break;
-                case QueryMode.Ship2:
+                case QueryMode.Block:
                     c = DoBlockBalance;
                     break;
                 case QueryMode.ShipList:

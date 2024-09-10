@@ -29,8 +29,7 @@ namespace PSO2SERVER
             PingTimer.Elapsed += PingClients;
             PingTimer.Start();
 
-            new QueryServer(QueryMode.Ship1, 12100); // Ship 1
-            new QueryServer(QueryMode.Ship2, 12200); // Ship 2
+            new QueryServer(QueryMode.Block, 12200); // Block
         }
 
         public void Run()

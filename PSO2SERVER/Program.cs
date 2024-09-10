@@ -23,6 +23,16 @@ namespace PSO2SERVER
         public const string ServerVersion = "v0.1.1";
         public const string ServerVersionName = "Sancaros";
 
+        public const string ServerSettingsKey = "Resources\\settings.txt";
+
+        // 密钥BLOB格式
+        public const string ServerPrivateKey = "key\\privateKey.blob";
+        public const string ServerPublicKey = "key\\publicKey.blob";
+
+        // 密钥PEM格式
+        public const string ServerPrivatePem = "key\\privateKey.pem";
+        public const string ServerSEGAPem = "key\\SEGAKey.pem";
+
         public static IPAddress BindAddress = IPAddress.Parse("127.0.0.1");
         public static Config Config;
         public static ConsoleSystem ConsoleSystem;
@@ -79,24 +89,24 @@ namespace PSO2SERVER
             }
 
             // Check for settings.txt [AIDA]
-            if (!File.Exists("Resources/settings.txt"))
+            if (!File.Exists(ServerSettingsKey))
             {
                 // If it doesn't exist, throw an error and quit [AIDA]
-                Logger.WriteError("[ERR] 载入 settings.txt 文件错误. 按任意键退出.");
+                Logger.WriteError("[ERR] 载入 {0} 文件错误. 按任意键退出.", ServerSettingsKey);
                 Console.ReadKey();
                 Environment.Exit(0);
             }
 
             // Check for Private Key BLOB [AIDA]
-            if (!File.Exists("privateKey.blob"))
+            if (!File.Exists(ServerPrivateKey))
             {
                 // If it doesn't exist, generate a fresh keypair [CK]
-                Logger.WriteWarning("[WRN] 未找到 privatekey.blob 文件, 正在生成新的密钥...");
+                Logger.WriteWarning("[WRN] 未找到 {0} 文件, 正在生成新的密钥...", ServerPrivateKey);
                 RSACryptoServiceProvider rcsp = new RSACryptoServiceProvider();
                 byte[] cspBlob = rcsp.ExportCspBlob(true);
                 byte[] cspBlobPub = rcsp.ExportCspBlob(false);
-                FileStream outFile = File.Create("privateKey.blob");
-                FileStream outFilePub = File.Create("publicKey.blob");
+                FileStream outFile = File.Create(ServerPrivateKey);
+                FileStream outFilePub = File.Create(ServerPublicKey);
                 outFile.Write(cspBlob, 0, cspBlob.Length);
                 outFile.Close();
                 outFilePub.Write(cspBlobPub, 0, cspBlobPub.Length);

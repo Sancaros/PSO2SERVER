@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.OpenSsl;
 using PSO2SERVER.Crypto;
 
 namespace PSO2SERVER.Packets.Handlers
@@ -20,7 +23,7 @@ namespace PSO2SERVER.Packets.Handlers
 
             // Extract the first 0x80 bytes into a separate array
             var cryptedBlob = new byte[0x80];
-            var rsaBlob = File.ReadAllBytes("privateKey.blob");
+            var rsaBlob = File.ReadAllBytes(ServerApp.ServerPrivateKey);
 
             Array.Copy(data, position, cryptedBlob, 0, 0x80);
             Array.Reverse(cryptedBlob);
@@ -49,7 +52,7 @@ namespace PSO2SERVER.Packets.Handlers
                 context.Socket.Close();
                 return;
             }
-
+            
             // Also a failure.
             if (decryptedBlob.Length < 0x20)
                 return;

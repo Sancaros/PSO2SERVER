@@ -43,7 +43,7 @@ namespace PSO2SERVER.Packets.Handlers
                     // Check if there is an empty field
                     if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                     {
-                        error = "Username and password fields must not be empty.";
+                        error = "用户名或密码为空.";
                         user = null;
                     }
                     // Check for special characters
@@ -61,7 +61,7 @@ namespace PSO2SERVER.Packets.Handlers
                             Password = BCrypt.Net.BCrypt.HashPassword(password),
                             Nickname = username.ToLower(),
                             // Since we can't display the nickname prompt yet, just default it to the username
-                            SettingsIni = File.ReadAllText("Resources/settings.txt")
+                            SettingsIni = File.ReadAllText(ServerApp.ServerSettingsKey)
                         };
                         db.Players.Add(user);
                         db.SaveChanges();
@@ -74,7 +74,7 @@ namespace PSO2SERVER.Packets.Handlers
                     user = users.First();
                     if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                     {
-                        error = "Incorrect password.";
+                        error = "密码错误.";
                         user = null;
                     }
                 }
