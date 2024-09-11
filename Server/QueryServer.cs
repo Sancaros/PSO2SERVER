@@ -25,13 +25,13 @@ namespace PSO2SERVER
         private readonly QueryMode _mode;
         private readonly int _port;
 
-        public QueryServer(QueryMode mode, int port)
+        public QueryServer(QueryMode mode, string desc, int port)
         {
             _mode = mode;
             _port = port;
             var queryTask = Task.Run(() => RunAsync());
             RunningServers.Add(queryTask);
-            Logger.WriteInternal("[QSP] 开始监听端口 " + port);
+            Logger.WriteInternal("[QSP] 开始监听" + desc + "端口 " + port);
         }
 
         private async Task RunAsync()
@@ -70,21 +70,29 @@ namespace PSO2SERVER
             var writer = new PacketWriter();
             var entries = new List<ShipEntry>();
 
-            for (var i = 1; i < 11; i++)
+            for (var i = 1; i <= 10; i++)
             {
                 var entry = new ShipEntry
                 {
                     order = (ushort)i,
                     number = (uint)i,
-                    status = i == 2 ? ShipStatus.Online : ShipStatus.Offline, // Maybe move to Config?
+                    //status = i == 2 ? ShipStatus.Online : ShipStatus.Full, // Maybe move to Config?
+                    status = ShipStatus.Online, // Maybe move to Config?
                     name = String.Format("Ship{0:0#}", i),
                     ip = ServerApp.BindAddress.GetAddressBytes()
                 };
                 entries.Add(entry);
             }
-            PacketHeader header = new PacketHeader(8 + Marshal.SizeOf(typeof(ShipEntry)) * entries.Count + 12, 0x11, 0x3D, 0x4, 0x0);
+
+            // Assuming header size: 8 bytes + (size of ShipEntry * number of entries) + 12 bytes
+            int headerSize = 8;
+            int shipEntrySize = Marshal.SizeOf(typeof(ShipEntry));
+            int totalSize = headerSize + (shipEntrySize * entries.Count) + 12;
+            PacketHeader header = new PacketHeader(totalSize, 0x11, 0x3D, 0x04, 0x00);
+
             writer.WriteStruct(header);
             writer.WriteMagic((uint)entries.Count, 0xE418, 81);
+
             foreach (var entry in entries)
                 writer.WriteStruct(entry);
 
@@ -92,6 +100,7 @@ namespace PSO2SERVER
             writer.Write(1);
 
             var buffer = writer.ToArray();
+
             await Task.Factory.FromAsync(
                 (cb, state) => socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, cb, state),
                 socket.EndSend,

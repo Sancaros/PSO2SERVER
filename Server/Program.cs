@@ -162,6 +162,8 @@ namespace PSO2SERVER
         }
         public async Task StartAsync()
         {
+            var startTime = DateTime.Now;  // 记录启动开始时间
+
             Server = new Server();
 
             await InitializeConfigurationAsync();
@@ -169,6 +171,12 @@ namespace PSO2SERVER
             InitializeQueryServers(); // Assuming this is synchronous
 
             Logger.WriteInternal("服务器启动完成 " + DateTime.Now);
+
+            var endTime = DateTime.Now;  // 记录启动结束时间
+            var duration = endTime - startTime;  // 计算启动耗时
+
+            Logger.WriteInternal($"服务器启动耗时: {duration.TotalSeconds} 秒");  // 记录启动耗时
+
             Server.Run();
         }
 
@@ -198,7 +206,7 @@ namespace PSO2SERVER
         {
             for (var i = 0; i < 10; i++)
             {
-                QueryServers.Add(new QueryServer(QueryMode.ShipList, 12099 + (100 * i)));
+                QueryServers.Add(new QueryServer(QueryMode.ShipList, "舰船", 12099 + (100 * i)));
             }
         }
 

@@ -83,7 +83,7 @@ namespace PSO2SERVER.Network
 
         internal void NotifyConnectionClosed(SocketClient client)
         {
-            Console.WriteLine("连接关闭");
+            Logger.Write("断开客户端连接.");
 
             _socketMap.Remove(client.Socket.Client);
             _clients.Remove(client);

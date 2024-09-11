@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.Security;
-using Org.BouncyCastle.OpenSsl;
 using PSO2SERVER.Crypto;
 
 namespace PSO2SERVER.Packets.Handlers

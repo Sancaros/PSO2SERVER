@@ -29,7 +29,7 @@ namespace PSO2SERVER
             PingTimer.Elapsed += PingClients;
             PingTimer.Start();
 
-            new QueryServer(QueryMode.Block, 12200); // Block
+            new QueryServer(QueryMode.Block, "认证", 12200); // Block
         }
 
         public void Run()
