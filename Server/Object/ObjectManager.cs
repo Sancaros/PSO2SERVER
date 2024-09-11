@@ -50,15 +50,15 @@ namespace PSO2SERVER.Object
                         var newObject = PSOObject.FromDBObject(dbObject);
                         objects.Add(newObject.Header.ID, newObject);
                         allTheObjects.Add(newObject.Header.ID, newObject);
-                        Logger.WriteInternal("[OBJ] Loaded object {0} for zone {1} from the DB.", newObject.Name, zone);
+                        Logger.WriteInternal("[OBJ] 从数据库中载入对象 {0} 所属区域 {1}.", newObject.Name, zone);
                     }
                 }
 
                 // Fallback
-                if (objects.Count < 1 && Directory.Exists("Resources/objects/" + zone))
+                if (objects.Count < 1 && Directory.Exists("Resources\\objects\\" + zone))
                 {
-                    Logger.WriteWarning("[OBJ] No objects defined for zone {0} in the database, falling back to filesystem!", zone);
-                    var objectPaths = Directory.GetFiles("Resources/objects/" + zone);
+                    Logger.WriteWarning("[OBJ] 数据库中没有为该区域定义的对象 {0}, 回退到文件系统!", zone);
+                    var objectPaths = Directory.GetFiles("Resources\\objects\\" + zone);
                     Array.Sort(objectPaths);
                     foreach (var path in objectPaths)
                     {
@@ -67,7 +67,7 @@ namespace PSO2SERVER.Object
                             var newObject = PSOObject.FromPacketBin(File.ReadAllBytes(path));
                             objects.Add(newObject.Header.ID, newObject);
                             allTheObjects.Add(newObject.Header.ID, newObject);
-                            Logger.WriteInternal("[OBJ] Loaded object ID {0} with name {1} pos: ({2}, {3}, {4})", newObject.Header.ID, newObject.Name, newObject.Position.PosX,
+                            Logger.WriteInternal("[OBJ] BIN文件系统载入对象 ID {0} 名称 {1} 坐标: ({2}, {3}, {4})", newObject.Header.ID, newObject.Name, newObject.Position.PosX,
                                 newObject.Position.PosY, newObject.Position.PosZ);
                         }
                         else if (Path.GetExtension(path) == ".json")
@@ -75,7 +75,7 @@ namespace PSO2SERVER.Object
                             var newObject = JsonConvert.DeserializeObject<PSOObject>(File.ReadAllText(path));
                             objects.Add(newObject.Header.ID, newObject);
                             allTheObjects.Add(newObject.Header.ID, newObject);
-                            Logger.WriteInternal("[OBJ] Loaded object ID {0} with name {1} pos: ({2}, {3}, {4})", newObject.Header.ID, newObject.Name, newObject.Position.PosX,
+                            Logger.WriteInternal("[OBJ] JSON文件系统载入对象 ID {0} 名称 {1} 坐标: ({2}, {3}, {4})", newObject.Header.ID, newObject.Name, newObject.Position.PosX,
                                 newObject.Position.PosY, newObject.Position.PosZ);
                         }
                     } 
@@ -134,7 +134,7 @@ namespace PSO2SERVER.Object
         {
             if (!allTheObjects.ContainsKey(ID))
             {
-                Logger.WriteWarning("[OBJ] Client requested object {0} which we don't know about. Investigate.", ID);
+                Logger.WriteWarning("[OBJ] 客户端请求的对象 {0} 服务端未解析. 等待分析.", ID);
                 return new PSOObject() { Header = new ObjectHeader(ID, EntityType.Object), Name = "Unknown" };
             }
 

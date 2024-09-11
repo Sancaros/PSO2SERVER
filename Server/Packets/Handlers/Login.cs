@@ -16,23 +16,23 @@ namespace PSO2SERVER.Packets.Handlers
         {
             var reader = new PacketReader(data, position, size);
 
-            var info = string.Format("[<--] 接收到的数据 (hex): ");
-            Logger.WriteHex(info, data);
+            //var info = string.Format("[<--] 接收到的数据 (hex): ");
+            //Logger.WriteHex(info, data);
 
             reader.BaseStream.Seek(0x2C, SeekOrigin.Current);
 
             var macCount = reader.ReadMagic(0x5E6, 107);
             reader.BaseStream.Seek(0x1C * macCount, SeekOrigin.Current);
 
-			reader.BaseStream.Seek(0x154, SeekOrigin.Current);
+			reader.BaseStream.Seek(0x280, SeekOrigin.Current);
 
-            //var username = reader.ReadFixedLengthAscii(64);
-            //var password = reader.ReadFixedLengthAscii(64);
+            var username = reader.ReadFixedLengthAscii(0x60);
+            var password = reader.ReadFixedLengthAscii(0x60);
 
-            var username = "sancaros";
-            var password = "12345678";
+            //var username = "sancaros";
+            //var password = "12345678";
 
-            Logger.Write("用户名 {0} 密码 {1}", username, password);
+            //Logger.Write("用户名 {0} 密码 {1}", username, password);
 
             // What am I doing here even
             using (var db = new ServerEf())
@@ -73,17 +73,21 @@ namespace PSO2SERVER.Packets.Handlers
                         db.Players.Add(user);
                         db.SaveChanges();
 
-                        // context.SendPacket(0x11, 0x1e, 0x0, new byte[0x44]); // Request nickname
+                        context.SendPacket(0x11, 0x1e, 0x0, new byte[0x44]); // Request nickname
                     }
                 }
                 else
                 {
                     user = users.First();
-                    //if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
-                    //{
-                    //    error = "密码错误.";
-                    //    user = null;
-                    //}
+
+                    if(password != user.Password)
+                    {
+                        if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+                        {
+                            error = "密码错误.";
+                            user = null;
+                        }
+                    }
                 }
 
                 /* Mystery packet

@@ -24,7 +24,7 @@ namespace PSO2SERVER.Packets.Handlers
             PackedData theFlags = (PackedData)dataFlags;
 
             // Debug
-            Logger.WriteInternal("[MOV] Movement packet from {0} contains {1} data.", context.Character.Name, theFlags);
+            Logger.WriteInternal("[MOV] Movement 数据包来自 {0} 包含 {1} 数据.", context.Character.Name, theFlags);
 
             // TODO: Maybe do this better someday
             FullMovementData dstData = new FullMovementData();
@@ -129,7 +129,7 @@ namespace PSO2SERVER.Packets.Handlers
             }
 
 
-            Logger.WriteInternal("[MOV] Player moving! {0} -> ({1}, {2}, {3})", context.Character.Name, context.CurrentLocation.PosX,
+            Logger.WriteInternal("[MOV] 玩家 {0} 移动中 (坐标:{1}, {2}, {3})", context.Character.Name, context.CurrentLocation.PosX,
                 context.CurrentLocation.PosY, context.CurrentLocation.PosZ);
 
             foreach (var c in Server.Instance.Clients)
@@ -163,7 +163,7 @@ namespace PSO2SERVER.Packets.Handlers
             PacketWriter writer = new PacketWriter();
             writer.WriteStruct(movData);
 
-            Logger.WriteInternal("[MOV] {0} stopped moving at ({1}, {2}, {3})", context.Character.Name,
+            Logger.WriteInternal("[MOV] 玩家 {0} 停止移动 (坐标:{1}, {2}, {3})", context.Character.Name,
                 Helper.FloatFromHalfPrecision(movData.currentPos.x), Helper.FloatFromHalfPrecision(movData.currentPos.y),
                 Helper.FloatFromHalfPrecision(movData.currentPos.z));
 

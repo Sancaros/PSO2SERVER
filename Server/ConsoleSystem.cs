@@ -955,7 +955,7 @@ namespace PSO2SERVER
             // Couldn't find the username
             if (!foundPlayer)
             {
-                Logger.WriteError("[CMD] Could not find user " + name);
+                Logger.WriteError("[CMD] 未找到玩家 " + name);
                 return;
             }
 
@@ -976,18 +976,18 @@ namespace PSO2SERVER
 
 
 
-            //PSOLocation destination = new PSOLocation(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4]), float.Parse(args[5]),float.Parse(args[6]), float.Parse(args[7]), float.Parse(args[8]));
+            PSOLocation destination = new PSOLocation(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4]), float.Parse(args[5]), float.Parse(args[6]), float.Parse(args[7]), float.Parse(args[8]));
 
 
-            //ServerApp.Instance.Server.Clients[id].SendPacket(new TeleportTransferPacket(ObjectManager.Instance.getObjectByID("lobby", 443), destination));
+            ServerApp.Instance.Server.Clients[id].SendPacket(new TeleportTransferPacket(ObjectManager.Instance.getObjectByID("lobby", 443), destination));
 
             context.SendPacket(0x8, 0xB, 0x0, ObjectManager.Instance.getObjectByID(443).GenerateSpawnBlob());
 
-            //var objects = ObjectManager.Instance.getObjectsForZone("casino").Values;
-            //foreach (var obj in objects)
-            //{
-            //    context.SendPacket(0x8, 0xB, 0x0, obj.GenerateSpawnBlob());
-            //}
+            var objects = ObjectManager.Instance.GetObjectsForZone("casino");
+            foreach (var obj in objects)
+            {
+                context.SendPacket(0x8, 0xB, 0x0, obj.GenerateSpawnBlob());
+            }
 
 
 
