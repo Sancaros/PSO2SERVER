@@ -26,9 +26,13 @@ namespace PSO2SERVER.Packets
 
         public void WriteAscii(string str, uint xor, uint sub)
         {
-            if (str.Length == 0)
+            if(str == null || str == "")
             {
+
                 WriteMagic(0, xor, sub);
+                //if (str.Length == 0)
+                //{
+                //}
             }
             else
             {

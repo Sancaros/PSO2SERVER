@@ -20,20 +20,20 @@ namespace PSO2SERVER.Packets.Handlers
 
             // Extract the first 0x80 bytes into a separate array
             var cryptedBlob = new byte[0x80];
-            var rsaBlob = File.ReadAllBytes(ServerApp.ServerPrivateKey);
+            var rsaBlob = File.ReadAllBytes(ServerApp.ServerPrivateKeyBlob);
 
             Array.Copy(data, position, cryptedBlob, 0, 0x80);
             Array.Reverse(cryptedBlob);
 
             // Print the contents of cryptedBlob in hexadecimal format
-            var info = string.Format("[<--] 接收到的数据 (hex): ");
-            Logger.WriteHex(info, cryptedBlob);
+            //var info = string.Format("[<--] 接收到的数据 (hex): ");
+            //Logger.WriteHex(info, cryptedBlob);
 
-            // Convert cryptedBlob to a hexadecimal string
-            var hexString = BitConverter.ToString(cryptedBlob).Replace("-", "");
+            //// Convert cryptedBlob to a hexadecimal string
+            //var hexString = BitConverter.ToString(cryptedBlob).Replace("-", "");
 
-            // Save the hexadecimal string to a text file
-            File.WriteAllText("cryptedBlob.txt", hexString);
+            //// Save the hexadecimal string to a text file
+            //File.WriteAllText("cryptedBlob.txt", hexString);
 
             // FIXME
             if (Client.RsaCsp == null)

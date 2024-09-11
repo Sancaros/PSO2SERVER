@@ -14,7 +14,7 @@ namespace PSO2SERVER.Packets.Handlers
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            Logger.Write("[HI!] Recieved ping response from " + context.User.Username);
+            Logger.Write("[HI!] 收到 {0} Ping回应 ", context.User.Username);
         }
 
         #endregion
@@ -30,7 +30,7 @@ namespace PSO2SERVER.Packets.Handlers
             var reader = new PacketReader(data);
             var id = reader.ReadInt32();
 
-            Logger.Write("[CHR] {0} is deleting character with ID {1}", context.User.Username, id);
+            Logger.Write("[CHR] {0} 正在删除ID {1} 的角色", context.User.Username, id);
 
             // Delete Character
             using (var db = new ServerEf())

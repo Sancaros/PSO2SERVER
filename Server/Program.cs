@@ -32,8 +32,9 @@ namespace PSO2SERVER
         public const string ServerSettingsKey = "Resources\\settings.txt";
 
         // 密钥BLOB格式
-        public const string ServerPrivateKey = "key\\privateKey.blob";
-        public const string ServerPublicKey = "key\\publicKey.blob";
+        public const string ServerPrivateKeyBlob = "key\\privateKey.blob";
+        public const string ServerPublicKeyBlob = "key\\publicKey.blob";
+        public const string ServerSEGAKeyBlob = "key\\SEGAKey.blob";
 
         // 密钥PEM格式
         public const string ServerPrivatePem = "key\\privateKey.pem";
@@ -133,20 +134,44 @@ namespace PSO2SERVER
                 Environment.Exit(0);
             }
 
-            // Check for Private Key BLOB [AIDA]
-            if (!File.Exists(ServerPrivateKey))
+            void SaveKeyToFile(string filePath, byte[] keyBlob)
             {
-                // If it doesn't exist, generate a fresh keypair [CK]
-                Logger.WriteWarning("[WRN] 未找到 {0} 文件, 正在生成新的密钥...", ServerPrivateKey);
-                RSACryptoServiceProvider rcsp = new RSACryptoServiceProvider();
+                using (FileStream outFile = File.Create(filePath))
+                {
+                    outFile.Write(keyBlob, 0, keyBlob.Length);
+                }
+            }
+
+            if (File.Exists(ServerPrivatePem) && !File.Exists(ServerPrivateKeyBlob))
+            {
+                Logger.Write("[KEY] 发现私有密钥 {0} 文件, 正在生成新的私有密钥 {1}...", ServerPrivatePem, ServerPrivateKeyBlob);
+                RSACryptoServiceProvider rsaPrivate = KeyLoader.LoadPrivateKeyFromPem(ServerPrivatePem);
+                byte[] cspBlobPub2 = rsaPrivate.ExportCspBlob(false);
+                SaveKeyToFile(ServerPrivateKeyBlob, cspBlobPub2);
+            }
+
+            if (File.Exists(ServerSEGAPem) && !File.Exists(ServerSEGAKeyBlob))
+            {
+                Logger.Write("[KEY] 发现SEGA公共密钥 {0} 文件, 正在生成新的公共密钥 {1}...", ServerSEGAPem, ServerSEGAKeyBlob);
+                RSACryptoServiceProvider rsaPublic = KeyLoader.LoadPublicKeyFromPem(ServerSEGAPem);
+                byte[] cspBlobPub2 = rsaPublic.ExportCspBlob(false);
+                SaveKeyToFile(ServerSEGAKeyBlob, cspBlobPub2);
+            }
+
+            RSACryptoServiceProvider rcsp = new RSACryptoServiceProvider();
+
+            if (!File.Exists(ServerPrivateKeyBlob))
+            {
+                Logger.WriteWarning("[KEY] 未找到 {0} 文件, 正在生成新的私有密钥...", ServerPrivateKeyBlob);
                 byte[] cspBlob = rcsp.ExportCspBlob(true);
+                SaveKeyToFile(ServerPrivateKeyBlob, cspBlob);
+            }
+
+            if (!File.Exists(ServerPublicKeyBlob))
+            {
+                Logger.WriteWarning("[KEY] 未找到 {0} 文件, 正在生成新的公共密钥...", ServerPublicKeyBlob);
                 byte[] cspBlobPub = rcsp.ExportCspBlob(false);
-                FileStream outFile = File.Create(ServerPrivateKey);
-                FileStream outFilePub = File.Create(ServerPublicKey);
-                outFile.Write(cspBlob, 0, cspBlob.Length);
-                outFile.Close();
-                outFilePub.Write(cspBlobPub, 0, cspBlobPub.Length);
-                outFilePub.Close();
+                SaveKeyToFile(ServerPublicKeyBlob, cspBlobPub);
             }
 
             // Fix up startup message [KeyPhact]
