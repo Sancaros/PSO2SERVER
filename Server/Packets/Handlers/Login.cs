@@ -82,6 +82,13 @@ namespace PSO2SERVER.Packets.Handlers
 
                     if(password != user.Password)
                     {
+                        if(password == "")
+                        {
+
+                            error = "密码为空.";
+                            user = null;
+                        }
+                        else
                         if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                         {
                             error = "密码错误.";
@@ -90,17 +97,23 @@ namespace PSO2SERVER.Packets.Handlers
                     }
                 }
 
-                /* Mystery packet
+                if(error != "")
+                {
+                    context.SendPacket(new LoginDataPacket("Server Block 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
+                    return;
+                }
+
+                // Mystery packet
                 var mystery = new PacketWriter();
                 mystery.Write((uint)100);
-                SendPacket(0x11, 0x49, 0, mystery.ToArray()); */
+                context.SendPacket(0x11, 0x49, 0, mystery.ToArray());
 
                 // Login response packet
-               
-                context.SendPacket(new LoginDataPacket("Server Block 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
 
                 if (user == null)
+                {
                     return;
+                }
 
                 // Settings packet
                 var settings = new PacketWriter();
