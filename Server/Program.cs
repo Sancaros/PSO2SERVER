@@ -8,6 +8,11 @@ using System.Security.Cryptography;
 using PSO2SERVER.Database;
 using PSO2SERVER.Packets.Handlers;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
+using static Org.BouncyCastle.Math.EC.ECCurve;
+using System.Reflection;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace PSO2SERVER
 {
@@ -21,7 +26,7 @@ namespace PSO2SERVER
         public const string ServerAuthor = "Sancaros (https://github.com/Sancaros/PSO2SERVER)";
         public const string ServerCopyright = "(C) 2024 Sancaros.";
         public const string ServerLicense = "All licenced under AGPL.";
-        public const string ServerVersion = "v0.1.1";
+        public const string ServerVersion = "v0.1.2";
         public const string ServerVersionName = "Sancaros";
 
         public const string ServerSettingsKey = "Resources\\settings.txt";
@@ -61,7 +66,37 @@ namespace PSO2SERVER
                         case "-b":
                         case "--bind-address":
                             if (++i < args.Length)
-                                BindAddress = IPAddress.Parse(args[i]);
+                            {
+                                var value = args[i];
+                                try
+                                {
+                                    if (IPAddress.TryParse(value, out IPAddress ipAddress))
+                                    {
+                                        // IP address is valid
+                                        BindAddress = ipAddress;
+                                    }
+                                    else
+                                    {
+                                        // Not an IP address, try resolving as a domain name
+                                        var addresses = Dns.GetHostAddresses(value);
+                                        if (addresses.Length > 0)
+                                        {
+
+                                            // Prefer IPv4 addresses over IPv6
+                                            ipAddress = addresses.FirstOrDefault(addr => addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) ?? addresses[0];
+                                            BindAddress = ipAddress; // Use the first resolved IP address
+                                        }
+                                        else
+                                        {
+                                            Logger.WriteError($"No IP addresses found for domain: {value}");
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logger.WriteError($"Error resolving domain {value}: {ex.Message}");
+                                }
+                            }
                             break;
 
                         case "-s":

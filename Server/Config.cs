@@ -189,8 +189,36 @@ namespace PSO2SERVER
             }
 
             // IP Address
-            if (field.GetValue(this).GetType() == typeof(IPAddress))
-                field.SetValue(this, IPAddress.Parse(value));
+            if (field.GetValue(this) is IPAddress)
+            {
+                try
+                {
+                    IPAddress ipAddress;
+                    if (IPAddress.TryParse(value, out ipAddress))
+                    {
+                        field.SetValue(this, ipAddress);
+                    }
+                    else
+                    {
+                        // Try resolving domain name to IP address
+                        var addresses = Dns.GetHostAddresses(value);
+                        if (addresses.Length > 0)
+                        {
+                            // Prefer IPv4 addresses over IPv6
+                            ipAddress = addresses.FirstOrDefault(addr => addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) ?? addresses[0];
+                            field.SetValue(this, ipAddress);
+                        }
+                        else
+                        {
+                            Logger.WriteError($"No IP addresses found for domain: {value}");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteError($"Error resolving domain {value}: {ex.Message}");
+                }
+            }
 
             // Add more handling for special/custom types as needed
         }
