@@ -69,9 +69,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\PSO2SERVER\PSO2SERVER.csproj">
+    <ProjectReference Include="..\Server\Server.csproj">
       <Project>{E54FC88C-B212-4F47-B2F1-927D39EE3DBA}</Project>
-      <Name>PSO2SERVER</Name>
+      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <ProjectExtensions>
