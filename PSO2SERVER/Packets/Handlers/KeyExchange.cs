@@ -32,6 +32,12 @@ namespace PSO2SERVER.Packets.Handlers
             var info = string.Format("[<--] 接收到的数据 (hex): ");
             Logger.WriteHex(info, cryptedBlob);
 
+            // Convert cryptedBlob to a hexadecimal string
+            var hexString = BitConverter.ToString(cryptedBlob).Replace("-", "");
+
+            // Save the hexadecimal string to a text file
+            File.WriteAllText("cryptedBlob.txt", hexString);
+
             // FIXME
             if (Client.RsaCsp == null)
             {

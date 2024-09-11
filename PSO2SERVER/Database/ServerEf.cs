@@ -137,7 +137,7 @@ namespace PSO2SERVER.Database
             }
         }
 
-        public bool TestDatabaseConnection()
+        public bool TestDatabaseConnection2()
         {
             try
             {
@@ -152,7 +152,26 @@ namespace PSO2SERVER.Database
             }
             catch (Exception ex)
             {
-                Logger.WriteException("[DBT] 数据库连接异常", ex);
+                Logger.WriteException("数据库连接异常", ex);
+                return false;
+            }
+        }
+
+        public bool TestDatabaseConnection()
+        {
+            try
+            {
+                using (var context = new ServerEf())
+                {
+                    context.Database.Initialize(force: false);
+
+                    Logger.WriteInternal("[DBT] 数据库连接成功。");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteException("数据库连接异常", ex);
                 return false;
             }
         }

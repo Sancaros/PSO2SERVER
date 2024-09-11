@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 
 using PSO2SERVER.Database;
 using PSO2SERVER.Packets.Handlers;
+using System.Threading.Tasks;
 
 namespace PSO2SERVER
 {
@@ -122,31 +123,50 @@ namespace PSO2SERVER
             Thread.Sleep(1000);
             //System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseIfModelChanges<ServerEf>());
             Instance = new ServerApp();
-            Instance.Start();
+            _ = Instance.StartAsync();
         }
-
-        public void Start()
+        public async Task StartAsync()
         {
             Server = new Server();
 
-            Config.Load();
-
-            PacketHandlers.LoadPacketHandlers();
-
-            Logger.WriteInternal("[DBC] 载入数据库...");
-            using (var db = new ServerEf())
-            {
-                db.TestDatabaseConnection();
-
-                db.SetupDB();
-            }
-
-            for (var i = 0; i < 10; i++)
-                QueryServers.Add(new QueryServer(QueryMode.ShipList, 12099 + (100 * i)));
+            await InitializeConfigurationAsync();
+            await InitializeDatabaseAsync();
+            InitializeQueryServers(); // Assuming this is synchronous
 
             Logger.WriteInternal("服务器启动完成 " + DateTime.Now);
             Server.Run();
         }
+
+        private async Task InitializeConfigurationAsync()
+        {
+            await Task.Run(() =>
+            {
+                Config.Load();
+                PacketHandlers.LoadPacketHandlers();
+            });
+        }
+
+        private async Task InitializeDatabaseAsync()
+        {
+            Logger.WriteInternal("[DBC] 载入数据库...");
+            await Task.Run(() =>
+            {
+                using (var db = new ServerEf())
+                {
+                    db.TestDatabaseConnection();
+                    db.SetupDB();
+                }
+            });
+        }
+
+        private void InitializeQueryServers()
+        {
+            for (var i = 0; i < 10; i++)
+            {
+                QueryServers.Add(new QueryServer(QueryMode.ShipList, 12099 + (100 * i)));
+            }
+        }
+
 
         private static void Exit(object sender, EventArgs e)
         {

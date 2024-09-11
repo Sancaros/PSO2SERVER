@@ -8,6 +8,7 @@ using System.Threading;
 
 using PSO2SERVER.Models;
 using PSO2SERVER.Packets;
+using System.Threading.Tasks;
 
 namespace PSO2SERVER
 {
@@ -19,9 +20,7 @@ namespace PSO2SERVER
 
     public class QueryServer
     {
-        private delegate void OnConnection(Socket server);
-
-        public static List<Thread> RunningServers = new List<Thread>();
+        public static List<Task> RunningServers = new List<Task>();
 
         private readonly QueryMode _mode;
         private readonly int _port;
@@ -30,25 +29,24 @@ namespace PSO2SERVER
         {
             _mode = mode;
             _port = port;
-            var queryThread = new Thread(Run);
-            queryThread.Start();
-            RunningServers.Add(queryThread);
+            var queryTask = Task.Run(() => RunAsync());
+            RunningServers.Add(queryTask);
             Logger.WriteInternal("[QSP] 开始监听端口 " + port);
         }
 
-        private void Run()
+        private async Task RunAsync()
         {
-            OnConnection c;
+            Func<Socket, Task> connectionHandler;
             switch (_mode)
             {
-                default:
-                    c = DoShipList;
-                    break;
                 case QueryMode.Block:
-                    c = DoBlockBalance;
+                    connectionHandler = DoBlockBalanceAsync;
                     break;
                 case QueryMode.ShipList:
-                    c = DoShipList;
+                    connectionHandler = DoShipListAsync;
+                    break;
+                default:
+                    connectionHandler = DoShipListAsync;
                     break;
             }
 
@@ -59,14 +57,15 @@ namespace PSO2SERVER
             var ep = new IPEndPoint(IPAddress.Any, _port);
             serverSocket.Bind(ep); // TODO: Custom bind address.
             serverSocket.Listen(5);
+
             while (true)
             {
-                var newConnection = serverSocket.Accept();
-                c(newConnection);
+                var newConnection = await Task.Factory.FromAsync(serverSocket.BeginAccept, serverSocket.EndAccept, null);
+                _ = connectionHandler(newConnection); // Fire-and-forget pattern for handling connections
             }
         }
 
-        private void DoShipList(Socket socket)
+        private async Task DoShipListAsync(Socket socket)
         {
             var writer = new PacketWriter();
             var entries = new List<ShipEntry>();
@@ -92,12 +91,15 @@ namespace PSO2SERVER
             writer.Write((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
             writer.Write(1);
 
-            socket.Send(writer.ToArray());
+            var buffer = writer.ToArray();
+            await Task.Factory.FromAsync(
+                (cb, state) => socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, cb, state),
+                socket.EndSend,
+                null);
             socket.Close();
-
         }
 
-        private void DoBlockBalance(Socket socket)
+        private async Task DoBlockBalanceAsync(Socket socket)
         {
             var writer = new PacketWriter();
             writer.WriteStruct(new PacketHeader(0x90, 0x11, 0x2C, 0x0, 0x0));
@@ -106,7 +108,11 @@ namespace PSO2SERVER
             writer.Write((UInt16)12205);
             writer.Write(new byte[0x90 - 0x6A]);
 
-            socket.Send(writer.ToArray());
+            var buffer = writer.ToArray();
+            await Task.Factory.FromAsync(
+                (cb, state) => socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, cb, state),
+                socket.EndSend,
+                null);
             socket.Close();
         }
     }
