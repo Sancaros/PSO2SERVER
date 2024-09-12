@@ -718,7 +718,7 @@ namespace PSO2SERVER
             };
             client.SendPacket(fakePacket);
 
-            Logger.WriteCommand(client, "[CMD] Spawned a clone of {0} named {1}", name, playerName);
+            Logger.WriteCommand(client, "[CMD] 克隆 {0} 玩家名称 {1} 生成", name, playerName);
         }
 
         private void SendPacket(string[] args, int length, string full, Client client)
@@ -738,7 +738,7 @@ namespace PSO2SERVER
             // Couldn't find the username
             if (!foundPlayer)
             {
-                Logger.WriteCommand(client, "[CMD] Could not find user " + name);
+                Logger.WriteCommand(client, "[CMD] 无法找到 " + name);
                 return;
             }
 

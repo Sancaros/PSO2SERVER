@@ -101,6 +101,10 @@ namespace PSO2SERVER
                     if (j + (i * 16) >= array.Length)
                         break;
 
+                    // Append the hex byte with an extra space for every 8 bytes
+                    if (j % 8 == 0 && j > 0)
+                        hexString += ' ';
+
                     hexString += string.Format("{0:X2} ", array[j + (i * 16)]);
                 }
 

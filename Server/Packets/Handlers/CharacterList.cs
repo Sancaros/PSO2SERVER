@@ -52,6 +52,12 @@ namespace PSO2SERVER.Packets.Handlers
             // --- 
             // CK note: Extra data is likely current equipment, playtime, etc.
             // All of that data is currently unaccounted for at the moment.
+            //忍者注意:这个包后面可能有额外的数据，
+            //在固定长度的字符数据结构数组之后。
+            //需要更多的调查。
+            // ---
+            // CK注:额外的数据可能是当前设备，游戏时间等。
+            //所有这些数据目前都是未知的。
 
             context.SendPacket(0x11, 0x03, 0, writer.ToArray());
         }

@@ -165,7 +165,7 @@ namespace PSO2SERVER.Zone
 
             Clients.Add(c);
 
-            Logger.Write("[MAP] {0} has spawned in {1}.", c.User.Username, Name);
+            Logger.Write("[MAP] {0} 已生成至 {1}.", c.User.Username, Name);
 
             if (InstanceName != null && ZoneManager.Instance.playerCounter.ContainsKey(InstanceName))
             {

@@ -15,7 +15,7 @@ namespace PSO2SERVER.Packets.Handlers
             var reader = new PacketReader(data, position, size);
             var charId = reader.ReadUInt32();
 
-            Logger.Write("id {0}", charId);
+            //Logger.Write("id {0}", charId);
 
             if (context.User == null)
                 return;

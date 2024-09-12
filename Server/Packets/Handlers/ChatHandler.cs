@@ -12,16 +12,13 @@ namespace PSO2SERVER.Packets.Handlers
         {
             if (context.Character == null)
                 return;
-
             var info = string.Format("[<--] 接收到的数据 (hex): ");
             Logger.WriteHex(info, data);
 
             var reader = new PacketReader(data, position, size);
             reader.BaseStream.Seek(0xC, SeekOrigin.Begin);
             var channel = reader.ReadUInt32();
-            var message = reader.ReadUtf16(0x9D7B, 0x44);
-
-            //Logger.Write("频道 {0} 对话 {1}", channel, message);
+            var message = reader.ReadUtf16(0x9D3F, 0x44);
 
             if (message.StartsWith(ServerApp.Config.CommandPrefix))
             {

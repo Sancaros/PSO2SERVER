@@ -23,37 +23,37 @@ namespace PSO2SERVER
                                               Path.DirectorySeparatorChar + "Server.cfg";
 
         // Settings
-        [ConfigComment("The address to bind to")]
+        [ConfigComment("服务器对外绑定的地址(支持域名或者IP,优先获取IPV4)")]
         public IPAddress BindAddress = IPAddress.Loopback;
 
-        [ConfigComment("The prefix to check for to send a command from the client to the server")]
+        [ConfigComment("从客户端向服务器发送命令时要检查的前缀")]
         public string CommandPrefix = "|";
 
-        [ConfigComment("Address of the database server")]
+        [ConfigComment("数据库地址")]
         public string DatabaseAddress = "127.0.0.1";
 
-        [ConfigComment("Port of the database server")]
+        [ConfigComment("数据库端口")]
         public string DatabasePort = "3306";
 
-        [ConfigComment("Name of the database which contains the Server data")]
+        [ConfigComment("数据库表名称")]
         public string DatabaseName = "pso2server";
 
-        [ConfigComment("Username for logging into the database server")]
+        [ConfigComment("数据库用户名")]
         public string DatabaseUsername = "root";
 
-        [ConfigComment("Password for logging into the database server")]
+        [ConfigComment("数据库密码")]
         public string DatabasePassword = "root";
 
-        [ConfigComment("Message of the day to display to users upon login.")]
+        [ConfigComment("登录时显示给用户的当天消息")]
         public string motd = "Wellcom PSO2SERVER";
 
-        [ConfigComment("Time in seconds to perform a ping of all connected clients to the server")]
+        [ConfigComment("对所有连接到服务器的客户机执行ping操作的时间(以秒为单位)")]
         public double PingTime = 60;
 
-        [ConfigComment("Enable foreground colors for console text (Unstable on linux)")]
+        [ConfigComment("为控制台文本启用前景色(在linux上不稳定)")]
         public bool UseConsoleColors = true;
 
-        [ConfigComment("Log the data sent and recieved from packets")]
+        [ConfigComment("记录从数据包发送和接收的数据")]
         public bool VerbosePackets = false;
 
         public void Load()
