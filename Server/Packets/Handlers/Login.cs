@@ -97,16 +97,12 @@ namespace PSO2SERVER.Packets.Handlers
                     }
                 }
 
-                if(error != "")
-                {
-                    context.SendPacket(new LoginDataPacket("Server Block 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
-                    return;
-                }
+                context.SendPacket(new LoginDataPacket("Server Block 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
 
                 // Mystery packet
-                var mystery = new PacketWriter();
-                mystery.Write((uint)100);
-                context.SendPacket(0x11, 0x49, 0, mystery.ToArray());
+                //var mystery = new PacketWriter();
+                //mystery.Write((uint)100);
+                //context.SendPacket(0x11, 0x49, 0, mystery.ToArray());
 
                 // Login response packet
 

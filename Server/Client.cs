@@ -217,6 +217,7 @@ namespace PSO2SERVER
             LogPacket(true, typeA, typeB, flags1, flags2, packet);
        
             if (handler != null)
+
                 handler.HandlePacket(this, flags1, packet, 0, size);
             else
             {
