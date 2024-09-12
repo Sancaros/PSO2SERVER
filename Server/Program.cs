@@ -70,12 +70,6 @@ namespace PSO2SERVER
             // 设置 AssemblyResolve 事件处理程序
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(ResolveAssembly);
 
-            // 继续程序逻辑
-            Logger.Write("Application started.");
-
-            // 继续程序逻辑
-            Logger.Write("Base directory set to: " + AppDomain.CurrentDomain.BaseDirectory);
-
             Config = new Config();
 
             ConsoleSystem = new ConsoleSystem { Thread = new Thread(ConsoleSystem.StartThread) };
