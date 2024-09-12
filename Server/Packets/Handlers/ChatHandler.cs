@@ -46,7 +46,7 @@ namespace PSO2SERVER.Packets.Handlers
             }
             else
             {
-                Logger.Write("[CHT] <{0}> <{1}>", context.Character.Name, message);
+                Logger.Write("[CHT] <{0}> 频道{1}说 {2}", context.Character.Name, channel, message);
 
                 var writer = new PacketWriter();
                 writer.WritePlayerHeader((uint) context.User.PlayerId);
