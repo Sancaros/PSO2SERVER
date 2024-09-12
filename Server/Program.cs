@@ -200,9 +200,9 @@ namespace PSO2SERVER
             await InitializeConfigurationAsync();
             await InitializeDatabaseAsync();
 
-            InitializeQueryServers(QueryMode.AuthList, ServerShipProt, ServerShipProtNums); // Assuming this is synchronous
+            await InitializeQueryServers(QueryMode.AuthList, ServerShipProt, ServerShipProtNums); // Assuming this is synchronous
 
-            InitializeQueryServers(QueryMode.ShipList, ServerShipListProt, ServerShipListProtNums); // Assuming this is synchronous
+            await InitializeQueryServers(QueryMode.ShipList, ServerShipListProt, ServerShipListProtNums); // Assuming this is synchronous
 
             Logger.WriteInternal("服务器启动完成 " + DateTime.Now);
 
@@ -236,18 +236,21 @@ namespace PSO2SERVER
             });
         }
 
-        public void InitializeQueryServers(QueryMode queryMode, int port, int portnums)
+        public async Task InitializeQueryServers(QueryMode queryMode, int port, int portnums)
         {
-            if (portnums <= 0)
-                portnums = 1;
-
-            if (portnums > 0)
+            await Task.Run(() =>
             {
-                for (var i = 0; i < portnums; i++)
+                if (portnums <= 0)
+                    portnums = 1;
+
+                if (portnums > 0)
                 {
-                    QueryServers.Add(new QueryServer(queryMode, "舰船", port + (100 * i)));
+                    for (var i = 0; i < portnums; i++)
+                    {
+                        QueryServers.Add(new QueryServer(queryMode, "舰船", port + (100 * i)));
+                    }
                 }
-            }
+            });
         }
 
         //private void InitializeQueryServers()
