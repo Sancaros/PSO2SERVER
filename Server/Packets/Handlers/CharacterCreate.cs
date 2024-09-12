@@ -3,6 +3,8 @@ using System.Data.Entity;
 using PSO2SERVER.Models;
 using PSO2SERVER.Packets.PSOPackets;
 using PSO2SERVER.Database;
+using System.Linq;
+using System;
 
 namespace PSO2SERVER.Packets.Handlers
 {
@@ -17,12 +19,14 @@ namespace PSO2SERVER.Packets.Handlers
                 return;
 
             var reader = new PacketReader(data, position, size);
+            var info = string.Format("[<--] 接收到的数据 (hex): ");
+            Logger.WriteHex(info, data);
 
             reader.ReadBytes(12); // 12 unknown bytes
             reader.ReadByte(); // VoiceType
             reader.ReadBytes(5); // 5 unknown bytes
             reader.ReadUInt16(); // VoiceData
-            var name = reader.ReadFixedLengthUtf16(16);
+            var name = reader.ReadFixedLengthUtf16(16);//玩家名称 宽字符
 
             reader.BaseStream.Seek(0x4, SeekOrigin.Current); // Padding
             var looks = reader.ReadStruct<Character.LooksParam>();
@@ -39,7 +43,22 @@ namespace PSO2SERVER.Packets.Handlers
 
             // Add to database
             using (var db = new ServerEf())
-            { 
+            {
+                // Check if any characters exist for this player
+                var existingCharacters = db.Characters.Where(c => c.Player.PlayerId == context.User.PlayerId).ToList();
+                if (existingCharacters.Count > 0)
+                {
+                    // Increment ID if characters already exist
+                    newCharacter.CharacterId = existingCharacters.Max(c => c.CharacterId) + 1;
+                }
+                else
+                {
+                    // Start with ID 1 if no characters exist
+                    newCharacter.CharacterId = 1;
+                }
+
+                Logger.Write("newCharacter.CharacterId {0} {1}", newCharacter.CharacterId, context.User.PlayerId);
+
                 db.Characters.Add(newCharacter);
                 db.Entry(newCharacter.Player).State = EntityState.Modified;
                 db.SaveChanges();

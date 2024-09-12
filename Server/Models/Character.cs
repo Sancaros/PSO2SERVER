@@ -141,6 +141,8 @@ namespace PSO2SERVER.Models
 
         // Probably more info than this
         [Key]
+        public int Id { get; set; }
+
         public int CharacterId { get; set; }
 
         public virtual Player Player { get; set; }

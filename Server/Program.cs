@@ -179,6 +179,7 @@ namespace PSO2SERVER
             Server = new Server();
 
             await InitializeConfigurationAsync();
+
             await InitializeDatabaseAsync();
 
             await InitializeQueryServers(QueryMode.AuthList, ServerShipProt, ServerShipProtNums); // Assuming this is synchronous
