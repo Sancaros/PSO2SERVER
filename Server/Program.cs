@@ -53,8 +53,29 @@ namespace PSO2SERVER
         public List<QueryServer> QueryServers = new List<QueryServer>();
         public Server Server;
 
+        private static Assembly ResolveAssembly(object sender, ResolveEventArgs args)
+        {
+            string libDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "lib");
+            string assemblyPath = Path.Combine(libDir, new AssemblyName(args.Name).Name + ".dll");
+
+            if (File.Exists(assemblyPath))
+            {
+                return Assembly.LoadFrom(assemblyPath);
+            }
+            return null;
+        }
+
         public static void Main(string[] args)
         {
+            // 设置 AssemblyResolve 事件处理程序
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(ResolveAssembly);
+
+            // 继续程序逻辑
+            Logger.Write("Application started.");
+
+            // 继续程序逻辑
+            Logger.Write("Base directory set to: " + AppDomain.CurrentDomain.BaseDirectory);
+
             Config = new Config();
 
             ConsoleSystem = new ConsoleSystem { Thread = new Thread(ConsoleSystem.StartThread) };

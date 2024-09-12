@@ -57,13 +57,15 @@ namespace PSO2SERVER
 
         private void HandleDataReceived(byte[] data, int size)
         {
-            Logger.Write("[<--] 接收到 {0} 字节", size);
             if ((_readBufferSize + size) > _readBuffer.Length)
             {
+                Logger.WriteError("[<--] 接收到 {0} 字节大于预设buf长度", size);
                 // Buffer overrun
                 // TODO: Drop the connection when this occurs?
                 return;
             }
+
+            Logger.Write("[<--] 接收到 {0} 字节", size);
 
             Array.Copy(data, 0, _readBuffer, _readBufferSize, size);
 
