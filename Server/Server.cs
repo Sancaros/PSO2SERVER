@@ -28,8 +28,6 @@ namespace PSO2SERVER
             PingTimer = new Timer(1000 * ServerApp.Config.PingTime); // 1 Minute default
             PingTimer.Elapsed += PingClients;
             PingTimer.Start();
-
-            new QueryServer(QueryMode.Block, "认证", 12200); // Block
         }
 
         public void Run()

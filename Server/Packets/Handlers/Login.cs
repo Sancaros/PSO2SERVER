@@ -97,7 +97,7 @@ namespace PSO2SERVER.Packets.Handlers
                     }
                 }
 
-                context.SendPacket(new LoginDataPacket("Server Block 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
+                context.SendPacket(new LoginDataPacket("Server AuthList 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
 
                 // Mystery packet
                 //var mystery = new PacketWriter();

@@ -29,6 +29,12 @@ namespace PSO2SERVER
         public const string ServerVersion = "v0.1.2";
         public const string ServerVersionName = "Sancaros";
 
+        public const int ServerShipProtNums = 10;
+        public const int ServerShipProt = 12000;
+
+        public const int ServerShipListProtNums = 10;
+        public const int ServerShipListProt = 12099;
+
         public const string ServerSettingsKey = "Resources\\settings.txt";
 
         // 密钥BLOB格式
@@ -36,7 +42,7 @@ namespace PSO2SERVER
         public const string ServerPublicKeyBlob = "key\\publicKey.blob";
         public const string ServerSEGAKeyBlob = "key\\SEGAKey.blob";
 
-        // 密钥PEM格式
+        // 密钥PEM格式 来自Schthack
         public const string ServerPrivatePem = "key\\privateKey.pem";
         public const string ServerSEGAPem = "key\\SEGAKey.pem";
 
@@ -193,7 +199,10 @@ namespace PSO2SERVER
 
             await InitializeConfigurationAsync();
             await InitializeDatabaseAsync();
-            InitializeQueryServers(); // Assuming this is synchronous
+
+            InitializeQueryServers(QueryMode.AuthList, ServerShipProt, ServerShipProtNums); // Assuming this is synchronous
+
+            InitializeQueryServers(QueryMode.ShipList, ServerShipListProt, ServerShipListProtNums); // Assuming this is synchronous
 
             Logger.WriteInternal("服务器启动完成 " + DateTime.Now);
 
@@ -227,13 +236,27 @@ namespace PSO2SERVER
             });
         }
 
-        private void InitializeQueryServers()
+        public void InitializeQueryServers(QueryMode queryMode, int port, int portnums)
         {
-            for (var i = 0; i < 10; i++)
+            if (portnums <= 0)
+                portnums = 1;
+
+            if (portnums > 0)
             {
-                QueryServers.Add(new QueryServer(QueryMode.ShipList, "舰船", 12099 + (100 * i)));
+                for (var i = 0; i < portnums; i++)
+                {
+                    QueryServers.Add(new QueryServer(queryMode, "舰船", port + (100 * i)));
+                }
             }
         }
+
+        //private void InitializeQueryServers()
+        //{
+        //    for (var i = 0; i < 10; i++)
+        //    {
+        //        QueryServers.Add(new QueryServer(QueryMode.ShipList, "舰船", 12099 + (100 * i)));
+        //    }
+        //}
 
 
         private static void Exit(object sender, EventArgs e)

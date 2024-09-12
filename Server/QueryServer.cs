@@ -15,7 +15,7 @@ namespace PSO2SERVER
     public enum QueryMode
     {
         ShipList,/*12100 - 12900*/
-        Block
+        AuthList
     }
 
     public class QueryServer
@@ -39,7 +39,7 @@ namespace PSO2SERVER
             Func<Socket, Task> connectionHandler;
             switch (_mode)
             {
-                case QueryMode.Block:
+                case QueryMode.AuthList:
                     connectionHandler = DoBlockBalanceAsync;
                     break;
                 case QueryMode.ShipList:
@@ -65,6 +65,17 @@ namespace PSO2SERVER
             }
         }
 
+        public ShipStatus CheckShipStatus(int port)
+        {
+            //TODO 还有其他状态要判断
+            if (PortChecker.IsPortListening(port))
+            {
+                return ShipStatus.Online;
+            }
+
+            return ShipStatus.Offline;
+        }
+
         private async Task DoShipListAsync(Socket socket)
         {
             var writer = new PacketWriter();
@@ -77,7 +88,7 @@ namespace PSO2SERVER
                     order = (ushort)i,
                     number = (uint)i,
                     //status = i == 2 ? ShipStatus.Online : ShipStatus.Full, // Maybe move to Config?
-                    status = ShipStatus.Online, // Maybe move to Config?
+                    status = CheckShipStatus(ServerApp.ServerShipProt + (100 * (i - 1))), // Maybe move to Config?
                     name = String.Format("Ship{0:0#}", i),
                     ip = ServerApp.BindAddress.GetAddressBytes()
                 };
