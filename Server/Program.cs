@@ -140,45 +140,9 @@ namespace PSO2SERVER
                 Environment.Exit(0);
             }
 
-            void SaveKeyToFile(string filePath, byte[] keyBlob)
-            {
-                using (FileStream outFile = File.Create(filePath))
-                {
-                    outFile.Write(keyBlob, 0, keyBlob.Length);
-                }
-            }
+            Instance = new ServerApp();
 
-            if (File.Exists(ServerPrivatePem) && !File.Exists(ServerPrivateKeyBlob))
-            {
-                Logger.Write("[KEY] 发现私有密钥 {0} 文件, 正在生成新的私有密钥 {1}...", ServerPrivatePem, ServerPrivateKeyBlob);
-                RSACryptoServiceProvider rsaPrivate = KeyLoader.LoadPrivateKeyFromPem(ServerPrivatePem);
-                byte[] cspBlobPub2 = rsaPrivate.ExportCspBlob(false);
-                SaveKeyToFile(ServerPrivateKeyBlob, cspBlobPub2);
-            }
-
-            if (File.Exists(ServerSEGAPem) && !File.Exists(ServerSEGAKeyBlob))
-            {
-                Logger.Write("[KEY] 发现SEGA公共密钥 {0} 文件, 正在生成新的公共密钥 {1}...", ServerSEGAPem, ServerSEGAKeyBlob);
-                RSACryptoServiceProvider rsaPublic = KeyLoader.LoadPublicKeyFromPem(ServerSEGAPem);
-                byte[] cspBlobPub2 = rsaPublic.ExportCspBlob(false);
-                SaveKeyToFile(ServerSEGAKeyBlob, cspBlobPub2);
-            }
-
-            RSACryptoServiceProvider rcsp = new RSACryptoServiceProvider();
-
-            if (!File.Exists(ServerPrivateKeyBlob))
-            {
-                Logger.WriteWarning("[KEY] 未找到 {0} 文件, 正在生成新的私有密钥...", ServerPrivateKeyBlob);
-                byte[] cspBlob = rcsp.ExportCspBlob(true);
-                SaveKeyToFile(ServerPrivateKeyBlob, cspBlob);
-            }
-
-            if (!File.Exists(ServerPublicKeyBlob))
-            {
-                Logger.WriteWarning("[KEY] 未找到 {0} 文件, 正在生成新的公共密钥...", ServerPublicKeyBlob);
-                byte[] cspBlobPub = rcsp.ExportCspBlob(false);
-                SaveKeyToFile(ServerPublicKeyBlob, cspBlobPub);
-            }
+            Instance.GenerateKeys();
 
             // Fix up startup message [KeyPhact]
             Logger.WriteHeader();
@@ -188,9 +152,26 @@ namespace PSO2SERVER
 
             Thread.Sleep(1000);
             //System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseIfModelChanges<ServerEf>());
-            Instance = new ServerApp();
             _ = Instance.StartAsync();
         }
+
+        public void GenerateKeys()
+        {
+            // Process private key files
+            KeyLoader.ProcessKeyFiles(ServerPrivatePem, ServerPrivateKeyBlob, true, File.Exists(ServerPrivatePem));
+
+            // Process SEGA public key files
+            KeyLoader.ProcessKeyFiles(ServerSEGAPem, ServerSEGAKeyBlob, false, File.Exists(ServerSEGAPem));
+
+            // Process general RSA keys
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+            {
+                // Process private and public RSA keys
+                KeyLoader.GenerateAndSaveKeyIfNotExists(rsa, ServerPrivateKeyBlob, true);
+                KeyLoader.GenerateAndSaveKeyIfNotExists(rsa, ServerPublicKeyBlob, false);
+            }
+        }
+
         public async Task StartAsync()
         {
             var startTime = DateTime.Now;  // 记录启动开始时间
