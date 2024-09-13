@@ -201,7 +201,7 @@ namespace PSO2SERVER.Packets.Handlers
             byte[] final = reader.ReadBytes(4);
 
 
-            Logger.WriteInternal("[ACT] {0} is preforming {1}", context.Character.Name, command);
+            Logger.WriteInternal("[ACT] {0} 发送动作 {1}", context.Character.Name, command);
 
             foreach (var c in Server.Instance.Clients)
             {

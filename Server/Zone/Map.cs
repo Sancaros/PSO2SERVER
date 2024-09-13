@@ -74,7 +74,7 @@ namespace PSO2SERVER.Zone
                     break;
 
                 case MapType.Casino:
-                    location = new PSOLocation(0, 1f, 0, 0, 2, 6, 102);
+                    location = new PSOLocation(0f, 1f, 0f, 0f, 2f, 6f, 102f);
                     break;
 
                 default:
