@@ -7,7 +7,7 @@ using PSO2SERVER.Models;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x11, 0x0)]
+    [PacketHandlerAttr(0x11, 0x00)]
     public class Login : PacketHandler
     {
         #region implemented abstract members of PacketHandler

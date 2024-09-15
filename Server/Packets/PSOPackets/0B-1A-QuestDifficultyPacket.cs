@@ -49,7 +49,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0xB, 0x1A, 0x4);
+            return new PacketHeader(0x0B, 0x1A, 0x4);
         }
 
         //Size: 308 bytes, confirmed in unpacker

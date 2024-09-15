@@ -28,7 +28,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0x2F, 0x7, PacketFlags.PACKED);
+            return new PacketHeader(0x2F, 0x07, PacketFlags.PACKED);
         }
     }
 }

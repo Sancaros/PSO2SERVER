@@ -123,7 +123,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0xB, 0x16);
+            return new PacketHeader(0x0B, 0x16);
         }
     }
 }

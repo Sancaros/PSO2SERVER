@@ -7,7 +7,7 @@ using PSO2SERVER.Zone;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x3, 0x12)]
+    [PacketHandlerAttr(0x03, 0x12)]
     class CampshipTeleport : PacketHandler
     {
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)

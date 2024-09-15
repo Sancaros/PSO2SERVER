@@ -9,7 +9,7 @@ using System.Text;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x4, 0x14)]
+    [PacketHandlerAttr(0x04, 0x14)]
     class ObjectInteract : PacketHandler
     {
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)

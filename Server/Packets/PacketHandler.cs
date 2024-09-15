@@ -34,8 +34,8 @@ namespace PSO2SERVER.Packets.Handlers
                             where attrs.Length > 0
                             select new
                             {
-                                Type = attrs[0].Type,
-                                Subtype = attrs[0].Subtype,
+                                attrs[0].Type,
+                                attrs[0].Subtype,
                                 HandlerType = t
                             }).ToList();
 

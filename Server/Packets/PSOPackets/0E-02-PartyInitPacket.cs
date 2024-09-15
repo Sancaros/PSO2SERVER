@@ -79,7 +79,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0xE, 0x2, PacketFlags.PACKED);
+            return new PacketHeader(0x0E, 0x02, PacketFlags.PACKED);
         }
     }
 }

@@ -1,16 +1,16 @@
-﻿using PSO2SERVER.Models;
-using PSO2SERVER.Object;
-using PSO2SERVER.Packets.PSOPackets;
-using PSO2SERVER.Zone;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using PSO2SERVER.Models;
+using PSO2SERVER.Object;
+using PSO2SERVER.Packets.PSOPackets;
+using PSO2SERVER.Zone;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x3, 0x34)]
+    [PacketHandlerAttr(0x03, 0x34)]
     class ReturnToLobbyHandler : PacketHandler
     {
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)

@@ -5,7 +5,7 @@ using PSO2SERVER.Crypto;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x11, 0xB)]
+    [PacketHandlerAttr(0x11, 0x0B)]
     public class KeyExchange : PacketHandler
     {
         #region implemented abstract members of PacketHandler

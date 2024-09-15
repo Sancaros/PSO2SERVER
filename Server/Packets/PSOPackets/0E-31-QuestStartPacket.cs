@@ -30,7 +30,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0xE, 0x31);
+            return new PacketHeader(0x0E, 0x31);
         }
     }
 }

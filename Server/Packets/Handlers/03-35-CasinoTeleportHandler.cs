@@ -9,7 +9,7 @@ using System.Text;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x3, 0x35)]
+    [PacketHandlerAttr(0x03, 0x35)]
     class CasinoTeleportHandler : PacketHandler
     {
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)

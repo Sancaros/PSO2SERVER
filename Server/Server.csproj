@@ -170,29 +170,46 @@
     <Compile Include="Models\Quest.cs" />
     <Compile Include="Network\PortChecker.cs" />
     <Compile Include="Object\ObjectManager.cs" />
-    <Compile Include="Packets\Handlers\CampshipTeleport.cs" />
-    <Compile Include="Packets\Handlers\CasinoTeleportHandler.cs" />
-    <Compile Include="Packets\Handlers\CharacterSpawn.cs" />
-    <Compile Include="Packets\Handlers\ObjectInteract.cs" />
-    <Compile Include="Packets\Handlers\QuestCounterHandler.cs" />
-    <Compile Include="Packets\Handlers\ReturnToLobbyHandler.cs" />
-    <Compile Include="Packets\Handlers\SymbolArtHandler.cs" />
-    <Compile Include="Packets\PSOPackets\GuildInfoPacket.cs" />
-    <Compile Include="Packets\PSOPackets\LoginDataPacket.cs" />
-    <Compile Include="Packets\PSOPackets\MovementPacket.cs" />
-    <Compile Include="Packets\PSOPackets\ObjectActionPacket.cs" />
-    <Compile Include="Packets\PSOPackets\PalettePacket.cs" />
-    <Compile Include="Packets\PSOPackets\PartyInitPacket.cs" />
-    <Compile Include="Packets\PSOPackets\QuestStartPacket.cs" />
-    <Compile Include="Packets\PSOPackets\QuestDifficultyPacket.cs" />
-    <Compile Include="Packets\PSOPackets\QuestAvailablePacket.cs" />
-    <Compile Include="Packets\PSOPackets\QuestListPacket.cs" />
-    <Compile Include="Packets\PSOPackets\SetCurrencyPacket.cs" />
-    <Compile Include="Packets\PSOPackets\SetMesetaPacket.cs" />
-    <Compile Include="Packets\PSOPackets\SetQuestPacket.cs" />
-    <Compile Include="Packets\PSOPackets\SetScenePacket.cs" />
-    <Compile Include="Packets\PSOPackets\SymbolArtList.cs" />
-    <Compile Include="Packets\PSOPackets\TeleportTransferPacket.cs" />
+    <Compile Include="Packets\Handlers\03-03-InitialLoad.cs" />
+    <Compile Include="Packets\Handlers\03-0C-PingResponse.cs" />
+    <Compile Include="Packets\Handlers\03-10-DoItMaybe.cs" />
+    <Compile Include="Packets\Handlers\03-12-CampshipTeleport.cs" />
+    <Compile Include="Packets\Handlers\03-35-CasinoTeleportHandler.cs" />
+    <Compile Include="Packets\Handlers\04-08-MovementActionHandler.cs" />
+    <Compile Include="Packets\Handlers\04-3C-ActionUpdateHandler.cs" />
+    <Compile Include="Packets\Handlers\04-71-MovementEndHandler.cs" />
+    <Compile Include="Packets\Handlers\0B-09-UNK.cs" />
+    <Compile Include="Packets\Handlers\0B-15-QuestCounterAvailableHander.cs" />
+    <Compile Include="Packets\Handlers\0B-17-QuestListRequestHandler.cs" />
+    <Compile Include="Packets\Handlers\0B-19-QuestDifficultyRequestHandler.cs" />
+    <Compile Include="Packets\Handlers\0B-30-QuestCounterHandler.cs" />
+    <Compile Include="Packets\Handlers\0E-19-UNK.cs" />
+    <Compile Include="Packets\Handlers\11-06-DeleteCharacter.cs" />
+    <Compile Include="Packets\Handlers\11-0D-PingTimestampResponse.cs" />
+    <Compile Include="Packets\Handlers\11-1D-GuildInfoRequest.cs" />
+    <Compile Include="Packets\Handlers\11-2B-LogOutRequest.cs" />
+    <Compile Include="Packets\Handlers\11-3E-CharacterSpawn.cs" />
+    <Compile Include="Packets\Handlers\04-14-ObjectInteract.cs" />
+    <Compile Include="Packets\Handlers\0E-0C-QuestCounterHandler.cs" />
+    <Compile Include="Packets\Handlers\03-34-ReturnToLobbyHandler.cs" />
+    <Compile Include="Packets\Handlers\11-41-CreateCharacterOne.cs" />
+    <Compile Include="Packets\Handlers\2F-06-SymbolArtHandler.cs" />
+    <Compile Include="Packets\PSOPackets\1C-1F-GuildInfoPacket.cs" />
+    <Compile Include="Packets\PSOPackets\11-01-LoginDataPacket.cs" />
+    <Compile Include="Packets\PSOPackets\04-07-MovementPacket.cs" />
+    <Compile Include="Packets\PSOPackets\04-15-ObjectActionPacket.cs" />
+    <Compile Include="Packets\PSOPackets\21-01-PalettePacket.cs" />
+    <Compile Include="Packets\PSOPackets\0E-02-PartyInitPacket.cs" />
+    <Compile Include="Packets\PSOPackets\0E-31-QuestStartPacket.cs" />
+    <Compile Include="Packets\PSOPackets\0B-1A-QuestDifficultyPacket.cs" />
+    <Compile Include="Packets\PSOPackets\0B-16-QuestAvailablePacket.cs" />
+    <Compile Include="Packets\PSOPackets\0B-18-QuestListPacket.cs" />
+    <Compile Include="Packets\PSOPackets\11-1C-SetCurrencyPacket.cs" />
+    <Compile Include="Packets\PSOPackets\0F-14-SetMesetaPacket.cs" />
+    <Compile Include="Packets\PSOPackets\0E-25-SetQuestPacket.cs" />
+    <Compile Include="Packets\PSOPackets\UN-UN-SetScenePacket.cs" />
+    <Compile Include="Packets\PSOPackets\2F-07-SymbolArtList.cs" />
+    <Compile Include="Packets\PSOPackets\04-02-TeleportTransferPacket.cs" />
     <Compile Include="Party\Party.cs" />
     <Compile Include="Party\PartyManager.cs" />
     <Compile Include="Program.cs" />
@@ -201,11 +218,11 @@
     <Compile Include="Network\SocketClient.cs" />
     <Compile Include="Network\SocketServer.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="Packets\Handlers\PacketHandler.cs" />
-    <Compile Include="Packets\Handlers\KeyExchange.cs" />
-    <Compile Include="Packets\Handlers\Login.cs" />
+    <Compile Include="Packets\PacketHandler.cs" />
+    <Compile Include="Packets\Handlers\11-0B-KeyExchange.cs" />
+    <Compile Include="Packets\Handlers\11-00-Login.cs" />
     <Compile Include="Models\Character.cs" />
-    <Compile Include="Packets\Handlers\SimplePackets.cs" />
+    <Compile Include="Packets\Handlers\11-54-CreateCharacterTwo.cs" />
     <Compile Include="Packets\PacketWriter.cs" />
     <Compile Include="Models\FixedPackets.cs" />
     <Compile Include="QueryServer.cs" />
@@ -215,15 +232,15 @@
     <Compile Include="Crypto\ARC4Managed.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Packets\PacketReader.cs" />
-    <Compile Include="Packets\Handlers\CharacterCreate.cs" />
-    <Compile Include="Packets\Handlers\CharacterList.cs" />
+    <Compile Include="Packets\Handlers\11-05-CharacterCreate.cs" />
+    <Compile Include="Packets\Handlers\11-02-CharacterList.cs" />
     <Compile Include="Packets\Packet.cs" />
-    <Compile Include="Packets\PSOPackets\SystemMessagePacket.cs" />
-    <Compile Include="Packets\Handlers\StartGame.cs" />
-    <Compile Include="Packets\PSOPackets\NoPayloadPacket.cs" />
-    <Compile Include="Packets\PSOPackets\CharacterSpawnPacket.cs" />
-    <Compile Include="Packets\Handlers\MovementHandlers.cs" />
-    <Compile Include="Packets\Handlers\ChatHandler.cs" />
+    <Compile Include="Packets\PSOPackets\19-01-SystemMessagePacket.cs" />
+    <Compile Include="Packets\Handlers\11-04-StartGame.cs" />
+    <Compile Include="Packets\NoPayloadPacket.cs" />
+    <Compile Include="Packets\PSOPackets\08-04-CharacterSpawnPacket.cs" />
+    <Compile Include="Packets\Handlers\04-07-MovementHandlers.cs" />
+    <Compile Include="Packets\Handlers\07-00-ChatHandler.cs" />
     <Compile Include="Zone\Map.cs" />
     <Compile Include="Zone\ZoneManager.cs" />
   </ItemGroup>
@@ -263,6 +280,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>

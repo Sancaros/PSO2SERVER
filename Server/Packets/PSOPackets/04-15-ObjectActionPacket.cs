@@ -40,7 +40,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0x4, 0x15, (PacketFlags.OBJECT_RELATED | PacketFlags.PACKED));
+            return new PacketHeader(0x04, 0x15, (PacketFlags.OBJECT_RELATED | PacketFlags.PACKED));
         }
     }
 }
