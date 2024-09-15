@@ -46,7 +46,7 @@ namespace PSO2SERVER.Packets.Handlers
 
             // memset packet - Enables menus
             // Also holds event items and likely other stuff too
-            var memSetPacket = File.ReadAllBytes("Resources/setMemoryPacket.bin");
+            var memSetPacket = File.ReadAllBytes(ServerApp.ServerMemoryPacket);
             context.SendPacket(memSetPacket);
         }
 

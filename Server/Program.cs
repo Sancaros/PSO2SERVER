@@ -36,6 +36,7 @@ namespace PSO2SERVER
         public const int ServerShipListProt = 12099;
 
         public const string ServerSettingsKey = "Resources\\settings.txt";
+        public const string ServerMemoryPacket = "Resources\\setMemoryPacket.bin";
 
         // 密钥BLOB格式
         public const string ServerPrivateKeyBlob = "key\\privateKey.blob";
@@ -197,9 +198,9 @@ namespace PSO2SERVER
 
             await InitializeDatabaseAsync();
 
-            await InitializeQueryServers(QueryMode.AuthList, ServerShipProt, ServerShipProtNums); // Assuming this is synchronous
+            await InitializeQueryServers(QueryMode.AuthList, "认证", ServerShipProt, ServerShipProtNums);
 
-            await InitializeQueryServers(QueryMode.ShipList, ServerShipListProt, ServerShipListProtNums); // Assuming this is synchronous
+            await InitializeQueryServers(QueryMode.ShipList, "舰船", ServerShipListProt, ServerShipListProtNums);
 
             Logger.WriteInternal("服务器启动完成 " + DateTime.Now);
 
@@ -222,18 +223,27 @@ namespace PSO2SERVER
 
         private async Task InitializeDatabaseAsync()
         {
-            Logger.WriteInternal("[DBC] 载入数据库...");
-            await Task.Run(() =>
+            try
             {
+                Logger.WriteInternal("[DBC] 载入数据库...");
                 using (var db = new ServerEf())
                 {
-                    db.TestDatabaseConnection();
-                    db.SetupDB();
+                    await Task.Run(() =>
+                    {
+                        db.TestDatabaseConnection();
+                        db.SetupDB();
+                    });
+                    Logger.WriteInternal("[DBC] 数据库初始化完成。");
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteException("[DBC] 数据库初始化异常", ex);
+                throw; // 重新抛出异常，或者根据需要处理它
+            }
         }
 
-        public async Task InitializeQueryServers(QueryMode queryMode, int port, int portnums)
+        public async Task InitializeQueryServers(QueryMode queryMode, string portname, int port, int portnums)
         {
             await Task.Run(() =>
             {
@@ -244,20 +254,11 @@ namespace PSO2SERVER
                 {
                     for (var i = 0; i < portnums; i++)
                     {
-                        QueryServers.Add(new QueryServer(queryMode, "舰船", port + (100 * i)));
+                        QueryServers.Add(new QueryServer(queryMode, portname, port + (100 * i)));
                     }
                 }
             });
         }
-
-        //private void InitializeQueryServers()
-        //{
-        //    for (var i = 0; i < 10; i++)
-        //    {
-        //        QueryServers.Add(new QueryServer(QueryMode.ShipList, "舰船", 12099 + (100 * i)));
-        //    }
-        //}
-
 
         private static void Exit(object sender, EventArgs e)
         {

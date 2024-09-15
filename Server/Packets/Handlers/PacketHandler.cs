@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace PSO2SERVER.Packets.Handlers
 {
@@ -27,27 +27,33 @@ namespace PSO2SERVER.Packets.Handlers
 
         public static void LoadPacketHandlers()
         {
-            var classes = from t in Assembly.GetExecutingAssembly().GetTypes()
-                where
-                    t.IsClass && t.Namespace == "PSO2SERVER.Packets.Handlers" &&
-                    t.IsSubclassOf(typeof (PacketHandler))
-                select t;
+            var handlers = (from t in Assembly.GetExecutingAssembly().GetTypes()
+                            where t.IsClass && t.Namespace == "PSO2SERVER.Packets.Handlers" &&
+                                  t.IsSubclassOf(typeof(PacketHandler))
+                            let attrs = (PacketHandlerAttr[])t.GetCustomAttributes(typeof(PacketHandlerAttr), false)
+                            where attrs.Length > 0
+                            select new
+                            {
+                                Type = attrs[0].Type,
+                                Subtype = attrs[0].Subtype,
+                                HandlerType = t
+                            }).ToList();
 
-            foreach (var t in classes.ToList())
+            // Sort handlers by Type and Subtype
+            handlers = handlers.OrderBy(h => h.Type).ThenBy(h => h.Subtype).ToList();
+
+            foreach (var handler in handlers)
             {
-                var attrs = (Attribute[]) t.GetCustomAttributes(typeof (PacketHandlerAttr), false);
+                Logger.WriteInternal("[数据] 数据包 0x{0:X2} - 0x{1:X2} 处理已载入 {2} ."
+                    , handler.Type
+                    , handler.Subtype
+                    , handler.HandlerType.Name
+                    );
 
-                if (attrs.Length > 0)
+                ushort packetTypeUShort = Helper.PacketTypeToUShort(handler.Type, handler.Subtype);
+                if (!Handlers.ContainsKey(packetTypeUShort))
                 {
-                    var attr = (PacketHandlerAttr) attrs[0];
-                    Logger.WriteInternal("[数据] 数据包 0x{0:X2} - 0x{1:X2} {2} 处理已载入 ."
-                        , attr.Type
-                        , attr.Subtype
-                        , t.Name
-                        );
-                    if (!Handlers.ContainsKey(Helper.PacketTypeToUShort(attr.Type, attr.Subtype)))
-                        Handlers.Add(Helper.PacketTypeToUShort(attr.Type, attr.Subtype),
-                            (PacketHandler) Activator.CreateInstance(t));
+                    Handlers.Add(packetTypeUShort, (PacketHandler)Activator.CreateInstance(handler.HandlerType));
                 }
             }
         }

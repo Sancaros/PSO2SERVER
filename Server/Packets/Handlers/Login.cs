@@ -61,7 +61,7 @@ namespace PSO2SERVER.Packets.Handlers
                     }
                     else // We're all good!
                     {
-                        // Insert new player into database
+                        // 直接插入新账户至数据库
                         user = new Player
                         {
                             Username = username.ToLower(),
@@ -84,7 +84,6 @@ namespace PSO2SERVER.Packets.Handlers
                     {
                         if(password == "")
                         {
-
                             error = "密码为空.";
                             user = null;
                         }

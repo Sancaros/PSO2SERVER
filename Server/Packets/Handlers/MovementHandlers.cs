@@ -24,7 +24,7 @@ namespace PSO2SERVER.Packets.Handlers
             PackedData theFlags = (PackedData)dataFlags;
 
             // Debug
-            Logger.WriteInternal("[MOV] Movement 数据包来自 {0} 包含 {1} 数据.", context.Character.Name, theFlags);
+            //Logger.WriteInternal("[移动] Movement 数据包来自 {0} 包含 {1} 数据.", context.Character.Name, theFlags);
 
             // TODO: Maybe do this better someday
             FullMovementData dstData = new FullMovementData();
@@ -129,8 +129,8 @@ namespace PSO2SERVER.Packets.Handlers
             }
 
 
-            Logger.WriteInternal("[MOV] 玩家 {0} 移动中 (坐标:{1}, {2}, {3})", context.Character.Name, context.CurrentLocation.PosX,
-                context.CurrentLocation.PosY, context.CurrentLocation.PosZ);
+            //Logger.WriteInternal("[移动] 玩家 {0} 移动中 (坐标: X{1}, Y{2}, Z{3})", context.Character.Name, context.CurrentLocation.PosX,
+                //context.CurrentLocation.PosY, context.CurrentLocation.PosZ);
 
             foreach (var c in Server.Instance.Clients)
             {
@@ -163,9 +163,9 @@ namespace PSO2SERVER.Packets.Handlers
             PacketWriter writer = new PacketWriter();
             writer.WriteStruct(movData);
 
-            Logger.WriteInternal("[MOV] 玩家 {0} 停止移动 (坐标:{1}, {2}, {3})", context.Character.Name,
-                Helper.FloatFromHalfPrecision(movData.currentPos.x), Helper.FloatFromHalfPrecision(movData.currentPos.y),
-                Helper.FloatFromHalfPrecision(movData.currentPos.z));
+            //Logger.WriteInternal("[移动] 玩家 {0} 停止移动 (坐标:{1}, {2}, {3})", context.Character.Name,
+            //    Helper.FloatFromHalfPrecision(movData.currentPos.x), Helper.FloatFromHalfPrecision(movData.currentPos.y),
+            //    Helper.FloatFromHalfPrecision(movData.currentPos.z));
 
             foreach (var c in Server.Instance.Clients)
             {
@@ -201,7 +201,7 @@ namespace PSO2SERVER.Packets.Handlers
             byte[] final = reader.ReadBytes(4);
 
 
-            Logger.WriteInternal("[ACT] {0} 发送动作 {1}", context.Character.Name, command);
+            //Logger.WriteInternal("[动作] {0} 发送动作 {1}", context.Character.Name, command);
 
             foreach (var c in Server.Instance.Clients)
             {

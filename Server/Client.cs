@@ -136,21 +136,22 @@ namespace PSO2SERVER
 
             if (name != null)
             {
-                sendName = $"{name} ({typeA:X}-{typeB:X})";
+                sendName = $"0x{typeA:X2} - 0x{typeB:X2} ({name})";
             }
             else
             {
-                sendName = $"{typeA:X}-{typeB:X}";
+                sendName = $"0x{typeA:X2} - 0x{typeB:X2}";
             }
 
-            Logger.Write($"[接收] 数据 {sendName} (Flags {(PacketFlags)flags1}) ({blob.Length} 字节)");
+            Logger.Write($"[接收] 数据包 {sendName} (Flags {(PacketFlags)flags1}) ({blob.Length} 字节)");
 
             if (Logger.VerbosePackets)
             {
-                var info = string.Format("[接收] {0:X}-{1:X} 数据包:", typeA, typeB);
+                var info = string.Format("[接收] 0x{0:X2} - 0x{1:X2} 数据包:", typeA, typeB);
                 Logger.WriteHex(info, blob);
-                LogPacket(false, typeA, typeB, flags1, flags2, blob);
             }
+
+            LogPacket(false, typeA, typeB, flags1, flags2, blob);
 
             OutputArc4?.TransformBlock(blob, 0, blob.Length, blob, 0);
 
@@ -197,11 +198,11 @@ namespace PSO2SERVER
             string packetName;
             if (handler != null)
             {
-                packetName = $"{handler.GetType().Name} ({typeA:X}-{typeB:X})";
+                packetName = $"0x{typeA:X2} - 0x{typeB:X2} ({handler.GetType().Name})";
             }
             else
             {
-                packetName = $"{typeA:X}-{typeB:X}";
+                packetName = $"0x{typeA:X2} - 0x{typeB:X2}";
             }
             Logger.Write($"[发送] 数据包 {packetName} (Flags {(PacketFlags)flags1}) ({size + 8} 字节)");
             var packet = new byte[size];
@@ -213,16 +214,17 @@ namespace PSO2SERVER
                 for (var i = 0; i < size; i++)
                     dataTrimmed[i] = data[i];
 
-                var info = string.Format("[发送] {0:X}-{1:X} 数据:", typeA, typeB);
+                var info = string.Format("[发送] 0x{0:X2} - 0x{1:X2} 数据包:", typeA, typeB);
                 Logger.WriteHex(info, dataTrimmed);
-                LogPacket(true, typeA, typeB, flags1, flags2, packet);
             }
+
+            LogPacket(true, typeA, typeB, flags1, flags2, packet);
 
             if (handler != null)
                 handler.HandlePacket(this, flags1, packet, 0, size);
             else
             {
-                Logger.WriteWarning("[!!!] 未解析数据包 {0:X}-{1:X} - (Flags {2}) ({3} 字节)", typeA,
+                Logger.WriteWarning("[未解析] 0x{0:X2} - 0x{1:X2} (未解析数据包) (Flags {2}) ({3} 字节)", typeA,
                     typeB, (PacketFlags)flags1, size);
                 LogUnkClientPacket(typeA, typeB, flags1, flags2, packet);
             }
@@ -234,19 +236,18 @@ namespace PSO2SERVER
         {
             // Check for and create packets directory if it doesn't exist
             var packetPath = string.Format(
-                "packets/{0}-{1}/0x{2:X2} - 0x{3:X2}",
-                _server.StartTime.ToShortDateString().Replace('/', '-'),
-                _server.StartTime.ToShortTimeString().Replace(':', '-').Replace('/', '-'),
-                typeA, typeB
+                "packets/{0}/0x{1:X2} - 0x{2:X2}"
+                , _server.StartTime.ToShortDateString().Replace('/', '-')
+                , typeA, typeB
             );
 
             if (!Directory.Exists(packetPath))
                 Directory.CreateDirectory(packetPath);
 
-            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}-{4}.bin"
+            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}.bin"
                 , packetPath
                 , typeA, typeB
-                , _packetId++
+                //, _packetId++
                 , fromClient ? "C" : "S"
                 );
 
@@ -267,18 +268,17 @@ namespace PSO2SERVER
         {
             // Check for and create packets directory if it doesn't exist
             var packetPath = string.Format(
-                "UnkClientPackets/{0}-{1}/0x{2:X2} - 0x{3:X2}",
-                _server.StartTime.ToShortDateString().Replace('/', '-'),
-                _server.StartTime.ToShortTimeString().Replace(':', '-').Replace('/', '-'),
-                typeA, typeB
+                "UnkClientPackets/{0}/0x{1:X2} - 0x{2:X2}"
+                , _server.StartTime.ToShortDateString().Replace('/', '-')
+                , typeA, typeB
             );
             if (!Directory.Exists(packetPath))
                 Directory.CreateDirectory(packetPath);
 
-            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}-{4}.bin"
+            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}.bin"
                 , packetPath
                 , typeA, typeB
-                , _packetId++
+                //, _packetId++
                 , "C-unk"
                 );
 
