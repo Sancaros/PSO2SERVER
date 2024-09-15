@@ -59,13 +59,13 @@ namespace PSO2SERVER
         {
             if ((_readBufferSize + size) > _readBuffer.Length)
             {
-                Logger.WriteError("[<--] 接收到 {0} 字节大于预设buf长度", size);
+                Logger.WriteError("[接收] 接收到 {0} 字节大于预设buf长度", size);
                 // Buffer overrun
                 // TODO: Drop the connection when this occurs?
                 return;
             }
 
-            Logger.Write("[<--] 接收到 {0} 字节", size);
+            Logger.Write("[接收] 接收到 {0} 字节", size);
 
             Array.Copy(data, 0, _readBuffer, _readBufferSize, size);
 
@@ -143,13 +143,13 @@ namespace PSO2SERVER
                 sendName = $"{typeA:X}-{typeB:X}";
             }
 
-            Logger.Write($"[<--] 数据 {sendName} (Flags {(PacketFlags)flags1}) ({blob.Length} 字节)");
-            LogPacket(false, typeA, typeB, flags1, flags2, blob);
+            Logger.Write($"[接收] 数据 {sendName} (Flags {(PacketFlags)flags1}) ({blob.Length} 字节)");
 
             if (Logger.VerbosePackets)
             {
-                var info = string.Format("[<--] {0:X}-{1:X} 数据包:", typeA, typeB);
+                var info = string.Format("[接收] {0:X}-{1:X} 数据包:", typeA, typeB);
                 Logger.WriteHex(info, blob);
+                LogPacket(false, typeA, typeB, flags1, flags2, blob);
             }
 
             OutputArc4?.TransformBlock(blob, 0, blob.Length, blob, 0);
@@ -203,28 +203,28 @@ namespace PSO2SERVER
             {
                 packetName = $"{typeA:X}-{typeB:X}";
             }
-            Logger.Write($"[-->] 数据包 {packetName} (Flags {(PacketFlags)flags1}) ({size + 8} 字节)");
+            Logger.Write($"[发送] 数据包 {packetName} (Flags {(PacketFlags)flags1}) ({size + 8} 字节)");
+            var packet = new byte[size];
+            Array.Copy(data, position, packet, 0, size);
+
             if (Logger.VerbosePackets && size > 0) // TODO: This is trimming too far?
             {
                 var dataTrimmed = new byte[size];
                 for (var i = 0; i < size; i++)
                     dataTrimmed[i] = data[i];
 
-                var info = string.Format("[-->] {0:X}-{1:X} 数据:", typeA, typeB);
+                var info = string.Format("[发送] {0:X}-{1:X} 数据:", typeA, typeB);
                 Logger.WriteHex(info, dataTrimmed);
+                LogPacket(true, typeA, typeB, flags1, flags2, packet);
             }
 
-            var packet = new byte[size];
-            Array.Copy(data, position, packet, 0, size);
-            LogPacket(true, typeA, typeB, flags1, flags2, packet);
-       
             if (handler != null)
-
                 handler.HandlePacket(this, flags1, packet, 0, size);
             else
             {
                 Logger.WriteWarning("[!!!] 未解析数据包 {0:X}-{1:X} - (Flags {2}) ({3} 字节)", typeA,
                     typeB, (PacketFlags)flags1, size);
+                LogUnkClientPacket(typeA, typeB, flags1, flags2, packet);
             }
 
             // throw new NotImplementedException();
@@ -233,13 +233,22 @@ namespace PSO2SERVER
         private void LogPacket(bool fromClient, byte typeA, byte typeB, byte flags1, byte flags2, byte[] packet)
         {
             // Check for and create packets directory if it doesn't exist
-            var packetPath = "packets/" + _server.StartTime.ToShortDateString().Replace('/', '-') + "-" +
-                             _server.StartTime.ToShortTimeString().Replace('/', '-').Replace(':', '-');
+            var packetPath = string.Format(
+                "packets/{0}-{1}/0x{2:X2} - 0x{3:X2}",
+                _server.StartTime.ToShortDateString().Replace('/', '-'),
+                _server.StartTime.ToShortTimeString().Replace(':', '-').Replace('/', '-'),
+                typeA, typeB
+            );
+
             if (!Directory.Exists(packetPath))
                 Directory.CreateDirectory(packetPath);
 
-            var filename = string.Format("{0}/{1}.{2:X}.{3:X}.{4}.bin", packetPath, _packetId++, typeA, typeB,
-                fromClient ? "C" : "S");
+            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}-{4}.bin"
+                , packetPath
+                , typeA, typeB
+                , _packetId++
+                , fromClient ? "C" : "S"
+                );
 
             using (var stream = File.OpenWrite(filename))
             {
@@ -250,6 +259,35 @@ namespace PSO2SERVER
                     stream.WriteByte(flags1);
                     stream.WriteByte(flags2);
                 }
+                stream.Write(packet, 0, packet.Length);
+            }
+        }
+
+        private void LogUnkClientPacket(byte typeA, byte typeB, byte flags1, byte flags2, byte[] packet)
+        {
+            // Check for and create packets directory if it doesn't exist
+            var packetPath = string.Format(
+                "UnkClientPackets/{0}-{1}/0x{2:X2} - 0x{3:X2}",
+                _server.StartTime.ToShortDateString().Replace('/', '-'),
+                _server.StartTime.ToShortTimeString().Replace(':', '-').Replace('/', '-'),
+                typeA, typeB
+            );
+            if (!Directory.Exists(packetPath))
+                Directory.CreateDirectory(packetPath);
+
+            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}-{4}.bin"
+                , packetPath
+                , typeA, typeB
+                , _packetId++
+                , "C-unk"
+                );
+
+            using (var stream = File.OpenWrite(filename))
+            {
+                stream.WriteByte(typeA);
+                stream.WriteByte(typeB);
+                stream.WriteByte(flags1);
+                stream.WriteByte(flags2);
                 stream.Write(packet, 0, packet.Length);
             }
         }

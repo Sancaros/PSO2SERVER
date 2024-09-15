@@ -20,7 +20,7 @@ namespace PSO2SERVER
     public class Config
     {
         private readonly string _configFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
-                                              Path.DirectorySeparatorChar + "Server.cfg";
+                                              Path.DirectorySeparatorChar + "config\\Server.cfg";
 
         // Settings
         [ConfigComment("服务器对外绑定的地址(支持域名或者IP,优先获取IPV4)")]
@@ -89,7 +89,7 @@ namespace PSO2SERVER
                     // Check length
                     if (split.Length != 2)
                     {
-                        Logger.WriteWarning("[CFG] 发现分割大小不正确的配置行");
+                        Logger.WriteWarning("[设置] 发现分割大小不正确的配置行");
                         continue;
                     }
 
@@ -100,7 +100,7 @@ namespace PSO2SERVER
             }
             catch (Exception ex)
             {
-                Logger.WriteException("[CFG] 设置文件载入错误", ex);
+                Logger.WriteException("[设置] 设置文件载入错误", ex);
             }
 
             // Display all settings
@@ -109,7 +109,7 @@ namespace PSO2SERVER
             // Some settings require manual refreshing
             SettingsChanged();
 
-            Logger.WriteInternal("[CFG] 设置文件载入完成");
+            Logger.WriteInternal("[设置] 设置文件载入完成");
         }
 
         private void DisplaySettings()
@@ -118,7 +118,7 @@ namespace PSO2SERVER
             foreach (var field in fields)
             {
                 var value = field.GetValue(this);
-                Logger.WriteInternal($"[CFG] 设置项 {field.Name} = {value}");
+                Logger.WriteInternal($"[设置] 设置项 {field.Name} = {value}");
             }
         }
 
@@ -140,7 +140,7 @@ namespace PSO2SERVER
             }
 
             if (!silent)
-                Logger.WriteInternal("[CFG] 设置已保存");
+                Logger.WriteInternal("[设置] 设置已保存");
         }
 
         public void SettingsChanged()

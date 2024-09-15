@@ -31,7 +31,7 @@ namespace PSO2SERVER
             _port = port;
             var queryTask = Task.Run(() => RunAsync());
             RunningServers.Add(queryTask);
-            Logger.WriteInternal("[QSP] 开始监听" + desc + "端口 " + port);
+            Logger.WriteInternal("[监听] 开始监听" + desc + "端口 " + port);
         }
 
         private async Task RunAsync()

@@ -40,8 +40,11 @@ namespace PSO2SERVER.Packets.Handlers
                 if (attrs.Length > 0)
                 {
                     var attr = (PacketHandlerAttr) attrs[0];
-                    Logger.WriteInternal("[PKT] 载入数据包处理 {0} 数据包 {1:X}-{2:X}.", t.Name, attr.Type,
-                        attr.Subtype);
+                    Logger.WriteInternal("[数据] 数据包 0x{0:X2} - 0x{1:X2} {2} 处理已载入 ."
+                        , attr.Type
+                        , attr.Subtype
+                        , t.Name
+                        );
                     if (!Handlers.ContainsKey(Helper.PacketTypeToUShort(attr.Type, attr.Subtype)))
                         Handlers.Add(Helper.PacketTypeToUShort(attr.Type, attr.Subtype),
                             (PacketHandler) Activator.CreateInstance(t));
