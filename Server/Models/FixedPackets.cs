@@ -33,14 +33,20 @@ namespace PSO2SERVER.Models
         }
     }
 
+    /// Packet flags.
     [Flags]
     public enum PacketFlags : byte
     {
-        None,
-        PACKED = 0x04,
-        FLAG_10 = 0x10,
-        FULL_MOVEMENT = 0x20,
-        OBJECT_RELATED = 0x40
+        /// 0x00
+        None = 0x00,
+        /// Set when the packet contains variable length data. 0x04
+        PACKED = 1 << 2,
+        /// 0x10
+        FLAG_10 = 1 << 4,
+        /// Set when the [`Packet::Movement`] has all fields set. 0x20
+        FULL_MOVEMENT = 1 << 5,
+        /// Set for all (?) of (0x04) packets. 0x40
+        OBJECT_RELATED = 1 << 6
     }
 }
 

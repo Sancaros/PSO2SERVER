@@ -191,6 +191,7 @@
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-17-QuestListRequestHandler.cs" />
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-19-QuestDifficultyRequestHandler.cs" />
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-30-QuestCounterHandler.cs" />
+    <Compile Include="Packets\Handlers\--UNK.cs" />
     <Compile Include="Packets\Handlers\0E-PartyHandler\0E-19-UNK.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-06-DeleteCharacter.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-0D-PingTimestampResponse.cs" />
@@ -202,6 +203,8 @@
     <Compile Include="Packets\Handlers\03-ServerHandler\03-34-TeleportCasinoToLobby.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-41-CreateCharacterOne.cs" />
     <Compile Include="Packets\Handlers\2F-SymbolHandler\2F-06-SymbolArtHandler.cs" />
+    <Compile Include="Packets\PSOPackets\04-ObjectPacket\04-06-DespawnObjectPacket.cs" />
+    <Compile Include="Packets\PSOPackets\00-00-UnkPacket.cs" />
     <Compile Include="Packets\PSOPackets\03-ServerPacket\03-2B-UnlockControlsPacket.cs" />
     <Compile Include="Packets\PSOPackets\03-ServerPacket\03-24-LoadingLevelPacket.cs" />
     <Compile Include="Packets\PSOPackets\03-ServerPacket\03-23-LoadingScreenRemovePacket.cs" />

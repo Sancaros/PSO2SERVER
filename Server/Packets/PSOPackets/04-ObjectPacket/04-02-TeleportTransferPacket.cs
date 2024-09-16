@@ -5,6 +5,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 {
     class TeleportTransferPacket : Packet
     {
+        /// (0x04, 0x02) Object Teleport Location.
         private PSOObject src;
         private PSOLocation dst;
 
