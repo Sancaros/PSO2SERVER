@@ -8,9 +8,9 @@ namespace PSO2SERVER.Models
 {
     public enum EntityType : UInt16
     {
-        Player = 0x4,
-        Map = 0x5,
-        Object = 0x6
+        Player = 0x04,
+        Map = 0x05,
+        Object = 0x06
     }
 
     public struct ObjectHeader
