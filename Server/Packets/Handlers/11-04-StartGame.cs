@@ -42,11 +42,11 @@ namespace PSO2SERVER.Packets.Handlers
 
             }
 
-            // Initialize you in an empty party
+            // 将客户端加入空余的队伍中
             PartyManager.Instance.CreateNewParty(context);
 
-            // Transition to the loading screen
-            context.SendPacket(new NoPayloadPacket(0x03, 0x04));
+            // 告诉客户端切换到加载界面
+            context.SendPacket(new LoadingScreenTransitionPacket());
 
             // TODO Set area, Set character, possibly more. See PolarisLegacy for more.
         }
