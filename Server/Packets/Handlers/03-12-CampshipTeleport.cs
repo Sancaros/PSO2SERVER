@@ -24,23 +24,4 @@ namespace PSO2SERVER.Packets.Handlers
             campship.SpawnClient(context, new PSOLocation(0, 1, 0, 0, 0, 0, 0), context.currentParty.currentQuest.name);
         }
     }
-
-    [PacketHandlerAttr(0x4, 0x13)]
-    class CampshipTeleportDown : PacketHandler
-    {
-        public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
-        {
-            if (context.currentParty.currentQuest == null)
-                return;
-
-            // TODO: WTF terribad hax?
-            if (context.CurrentLocation.PosZ >= 20)
-            {
-                var instanceName = String.Format("{0}-{1}", context.currentParty.currentQuest.name, context.User.Nickname);
-
-                Map forest = ZoneManager.Instance.MapFromInstance("area1", instanceName);
-                forest.SpawnClient(context, new PSOLocation(0, 1, 0, -0, -37, 0.314f, 145.5f));
-            }
-        }
-    }
 }

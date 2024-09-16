@@ -175,6 +175,8 @@
     <Compile Include="Packets\Handlers\03-03-InitialLoad.cs" />
     <Compile Include="Packets\Handlers\03-0C-PingResponse.cs" />
     <Compile Include="Packets\Handlers\03-10-DoItMaybe.cs" />
+    <Compile Include="Packets\Handlers\03-16-CampshipTeleportDown.cs" />
+    <Compile Include="Packets\Handlers\04-13-UNK.cs" />
     <Compile Include="Packets\Handlers\03-12-CampshipTeleport.cs" />
     <Compile Include="Packets\Handlers\03-35-CasinoTeleportHandler.cs" />
     <Compile Include="Packets\Handlers\04-08-MovementActionHandler.cs" />
