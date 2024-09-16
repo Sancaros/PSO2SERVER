@@ -1,11 +1,34 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace PSO2SERVER.Packets.Handlers
 {
+
     [PacketHandlerAttr(0x07, 0x00)]
     public class ChatHandler : PacketHandler
     {
+        //public uint Unk1 { get; set; }
+        //public uint Unk2 { get; set; }
+        //public uint Unk3 { get; set; }
+        //public byte[] VerId { get; set; } = new byte[0x20];
+        //public List<NetInterface> Interfaces { get; set; } = new List<NetInterface>();
+        //public byte[] Unk4 { get; set; } = new byte[0x90];
+        //public byte[] Unk5 { get; set; } = new byte[0x10];
+        //public Language TextLang { get; set; }
+        //public Language VoiceLang { get; set; }
+        //public Language TextLang2 { get; set; }
+        //public Language LangLang { get; set; }
+        //public string Language { get; set; } = new string(' ', 0x10);
+        //public uint Unk6 { get; set; }
+        //public uint Unk7 { get; set; }
+        //public uint Magic1 { get; set; }
+        //public byte[] Unk8 { get; set; } = new byte[0x20];
+        //public byte[] Unk9 { get; set; } = new byte[0x44];
+        //public string Username { get; set; } = new string(' ', 0x40);
+        //public string Password { get; set; } = new string(' ', 0x40);
+        //public uint Unk10 { get; set; }
+        //public string Unk11 { get; set; }
         #region implemented abstract members of PacketHandler
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
@@ -67,4 +90,25 @@ namespace PSO2SERVER.Packets.Handlers
 
         #endregion
     }
+    public enum MessageChannel : byte
+    {
+        // Map channel.
+        Map = 0,
+
+        // Party channel.
+        Party = 1,
+
+        // Alliance channel.
+        Alliance = 2,
+
+        // Whisper channel.
+        Whisper = 3,
+
+        // Group channel.
+        Group = 4,
+
+        // Undefined channel.
+        Undefined = 0xFF
+    }
+
 }

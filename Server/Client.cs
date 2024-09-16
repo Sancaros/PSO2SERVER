@@ -6,6 +6,7 @@ using PSO2SERVER.Models;
 using PSO2SERVER.Network;
 using PSO2SERVER.Packets;
 using PSO2SERVER.Packets.Handlers;
+using PSO2SERVER.Packets.PSOPackets;
 using PSO2SERVER.Zone;
 
 namespace PSO2SERVER
@@ -34,12 +35,7 @@ namespace PSO2SERVER
             InputArc4 = null;
             OutputArc4 = null;
 
-            var welcome = new PacketWriter();
-            welcome.Write((ushort)3);
-            welcome.Write((ushort)201);
-            welcome.Write((ushort)0);
-            welcome.Write((ushort)0);
-            SendPacket(0x03, 0x08, 0, welcome.ToArray());
+            SendPacket(new ServerHelloPacket());
         }
 
         public bool IsClosed { get; private set; }
@@ -65,7 +61,7 @@ namespace PSO2SERVER
                 return;
             }
 
-            Logger.Write("[接收] 接收到 {0} 字节", size);
+            //Logger.Write("[接收] 接收到 {0} 字节", size);
 
             Array.Copy(data, 0, _readBuffer, _readBufferSize, size);
 

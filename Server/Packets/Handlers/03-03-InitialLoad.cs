@@ -9,6 +9,13 @@ namespace PSO2SERVER.Packets.Handlers
     [PacketHandlerAttr(0x03, 0x03)]
     public class InitialLoad : PacketHandler
     {
+        /// (0x03, 0x03) Initial Load (?).
+        ///
+        /// (C -> S) Sent when the client loads for the first time in the session.
+        ///
+        /// Response to: [`Packet::LoadingScreenTransition`] (?).
+        ///
+        /// Respond with: lobby map setup.
         // Ninji note: 3-3 may not be the correct place to do this
         // Once we have better state tracking, we should make sure that
         // 3-3 only does anything at the points where the client is supposed
@@ -26,7 +33,7 @@ namespace PSO2SERVER.Packets.Handlers
             // Set Player ID
             var setPlayerId = new PacketWriter();
             setPlayerId.WritePlayerHeader((uint)context.User.PlayerId);
-            context.SendPacket(6, 0, 0, setPlayerId.ToArray());
+            context.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
 
             // Spawn Player
             new CharacterSpawn().HandlePacket(context, flags, data, position, size);

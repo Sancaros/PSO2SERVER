@@ -78,7 +78,7 @@ namespace PSO2SERVER.Packets.Handlers
             var decryptedToken = new byte[16];
             tempDecryptor.TransformBlock(decryptedBlob, 0, 0x10, decryptedToken, 0);
 
-            context.SendPacket(0x11, 0xC, 0, decryptedToken);
+            context.SendPacket(0x11, 0x0C, 0, decryptedToken);
         }
 
         #endregion

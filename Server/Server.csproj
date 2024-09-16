@@ -170,6 +170,8 @@
     <Compile Include="Models\Quest.cs" />
     <Compile Include="Network\PortChecker.cs" />
     <Compile Include="Object\ObjectManager.cs" />
+    <Compile Include="Packets\Handlers\03-06-UNK.cs" />
+    <Compile Include="Packets\Handlers\03-00-MapTransfer.cs" />
     <Compile Include="Packets\Handlers\03-03-InitialLoad.cs" />
     <Compile Include="Packets\Handlers\03-0C-PingResponse.cs" />
     <Compile Include="Packets\Handlers\03-10-DoItMaybe.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="Packets\Handlers\03-34-ReturnToLobbyHandler.cs" />
     <Compile Include="Packets\Handlers\11-41-CreateCharacterOne.cs" />
     <Compile Include="Packets\Handlers\2F-06-SymbolArtHandler.cs" />
+    <Compile Include="Packets\PSOPackets\03-08-ServerHelloPacket.cs" />
     <Compile Include="Packets\PSOPackets\1C-1F-GuildInfoPacket.cs" />
     <Compile Include="Packets\PSOPackets\11-01-LoginDataPacket.cs" />
     <Compile Include="Packets\PSOPackets\04-07-MovementPacket.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="Packets\PSOPackets\11-1C-SetCurrencyPacket.cs" />
     <Compile Include="Packets\PSOPackets\0F-14-SetMesetaPacket.cs" />
     <Compile Include="Packets\PSOPackets\0E-25-SetQuestPacket.cs" />
+    <Compile Include="Packets\PSOPackets\03-04-LoadingScreenTransitionPacket.cs" />
     <Compile Include="Packets\PSOPackets\UN-UN-SetScenePacket.cs" />
     <Compile Include="Packets\PSOPackets\2F-07-SymbolArtList.cs" />
     <Compile Include="Packets\PSOPackets\04-02-TeleportTransferPacket.cs" />

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x11, 0x4)]
+    [PacketHandlerAttr(0x11, 0x04)]
     public class StartGame : PacketHandler
     {
         #region implemented abstract members of PacketHandler
@@ -46,7 +46,7 @@ namespace PSO2SERVER.Packets.Handlers
             PartyManager.Instance.CreateNewParty(context);
 
             // Transition to the loading screen
-            context.SendPacket(new NoPayloadPacket(0x3, 0x4));
+            context.SendPacket(new NoPayloadPacket(0x03, 0x04));
 
             // TODO Set area, Set character, possibly more. See PolarisLegacy for more.
         }

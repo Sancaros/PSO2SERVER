@@ -28,9 +28,11 @@ namespace PSO2SERVER.Packets.Handlers
             }
             else if(srcObject.EntityType == EntityType.Player)
             {
-                srcObj = new PSOObject();
-                srcObj.Header = srcObject;
-                srcObj.Name = "Player";
+                srcObj = new PSOObject
+                {
+                    Header = srcObject,
+                    Name = "Player"
+                };
             }
             else
             {
