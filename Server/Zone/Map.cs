@@ -102,7 +102,7 @@ namespace PSO2SERVER.Zone
             if (questOveride != "") // TODO: This is a temporary hack, fix me!!
             {
                 var setAreaPacket = File.ReadAllBytes("Resources/quests/" + questOveride + ".bin");
-                c.SendPacket(0x03, 0x24, 4, setAreaPacket);
+                c.SendPacket(0x03, 0x24, 0x04, setAreaPacket);
             }
             else
             {
@@ -161,7 +161,7 @@ namespace PSO2SERVER.Zone
             }
 
             // Unlock Controls
-            c.SendPacket(new NoPayloadPacket(0x03, 0x2B)); // Inital spawn only, move this!
+            c.SendPacket(new UnlockControlsPacket()); // Inital spawn only, move this!
 
             Clients.Add(c);
 

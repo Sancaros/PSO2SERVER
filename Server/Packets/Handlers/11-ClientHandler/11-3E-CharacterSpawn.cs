@@ -37,7 +37,7 @@ namespace PSO2SERVER.Packets.Handlers
             lobbyMap.SpawnClient(context, lobbyMap.GetDefaultLocation(), "lobby");
             
             // Unlock Controls
-            context.SendPacket(new NoPayloadPacket(0x03, 0x2B));
+            context.SendPacket(new UnlockControlsPacket());
 
             //context.SendPacket(File.ReadAllBytes("testbed/237.23-7.210.189.208.30.bin"));
 

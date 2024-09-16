@@ -17,7 +17,7 @@ namespace PSO2SERVER.Packets.Handlers
             if (context.User == null || context.Character == null)
                 return;
 
-            context.SendPacket(new NoPayloadPacket(0x03, 0x23));
+            context.SendPacket(new LoadingScreenRemovePacket());
         }
 
         #endregion

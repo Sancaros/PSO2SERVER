@@ -991,7 +991,7 @@ namespace PSO2SERVER
 
 
 
-            context.SendPacket(new NoPayloadPacket(0x03, 0x2B));
+            context.SendPacket(new UnlockControlsPacket());
 
         }
 

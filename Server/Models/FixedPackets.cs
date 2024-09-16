@@ -37,7 +37,7 @@ namespace PSO2SERVER.Models
     public enum PacketFlags : byte
     {
         None,
-        PACKED = 0x4,
+        PACKED = 0x04,
         FLAG_10 = 0x10,
         FULL_MOVEMENT = 0x20,
         OBJECT_RELATED = 0x40

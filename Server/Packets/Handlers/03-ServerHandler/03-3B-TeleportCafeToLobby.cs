@@ -10,9 +10,10 @@ using PSO2SERVER.Zone;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x03, 0x34)]
-    class ReturnToLobbyHandler : PacketHandler
+    [PacketHandlerAttr(0x03, 0x3B)]
+    class TeleportCafeToLobby : PacketHandler
     {
+        /// (0x03, 0x3B) Move Cafe -> Lobby.
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
             PacketReader reader = new PacketReader(data);

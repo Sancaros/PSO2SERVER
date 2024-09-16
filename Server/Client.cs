@@ -232,9 +232,8 @@ namespace PSO2SERVER
         {
             // Check for and create packets directory if it doesn't exist
             var packetPath = string.Format(
-                "packets/{0}/0x{1:X2} - 0x{2:X2}"
+                "packets/{0}"
                 , _server.StartTime.ToShortDateString().Replace('/', '-')
-                , typeA, typeB
             );
 
             if (!Directory.Exists(packetPath))
@@ -264,9 +263,8 @@ namespace PSO2SERVER
         {
             // Check for and create packets directory if it doesn't exist
             var packetPath = string.Format(
-                "UnkClientPackets/{0}/0x{1:X2} - 0x{2:X2}"
+                "UnkClientPackets/{0}"
                 , _server.StartTime.ToShortDateString().Replace('/', '-')
-                , typeA, typeB
             );
             if (!Directory.Exists(packetPath))
                 Directory.CreateDirectory(packetPath);
