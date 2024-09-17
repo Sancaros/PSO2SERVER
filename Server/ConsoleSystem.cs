@@ -981,12 +981,12 @@ namespace PSO2SERVER
 
             ServerApp.Instance.Server.Clients[id].SendPacket(new TeleportTransferPacket(ObjectManager.Instance.getObjectByID("lobby", 443), destination));
 
-            context.SendPacket(0x8, 0xB, 0x0, ObjectManager.Instance.getObjectByID(443).GenerateSpawnBlob());
+            context.SendPacket(new ObjectSpawnPacket(ObjectManager.Instance.getObjectByID(443)));
 
             var objects = ObjectManager.Instance.GetObjectsForZone("casino");
             foreach (var obj in objects)
             {
-                context.SendPacket(0x8, 0xB, 0x0, obj.GenerateSpawnBlob());
+                context.SendPacket(new ObjectSpawnPacket(obj));
             }
 
 
@@ -1021,7 +1021,7 @@ namespace PSO2SERVER
                 Things = new PSOObject.PSOObjectThing[0]
             };
 
-            client.SendPacket(0x8, 0xB, 0x0, obj.GenerateSpawnBlob());
+            client.SendPacket(new ObjectSpawnPacket(obj));
         }
 
         private void RunLUA(string[] args, int length, string full, Client client)

@@ -23,10 +23,6 @@ namespace PSO2SERVER.Packets.Handlers
             //var info = string.Format("[<--] 接收到的数据 (hex): ");
             //Logger.WriteHex(info, data);
             var setting = reader.ReadStruct<Character.CharParam>();
-            //reader.ReadBytes(12); // 12 unknown bytes
-            //reader.ReadByte(); // VoiceType
-            //reader.ReadBytes(5); // 5 unknown bytes
-            //reader.ReadUInt16(); // VoiceData
 
             var name = reader.ReadFixedLengthUtf16(16);//玩家名称 宽字符
 
@@ -76,10 +72,6 @@ namespace PSO2SERVER.Packets.Handlers
             context.Character = newCharacter;
 
             // Set Player ID
-            //var writer = new PacketWriter();
-            //writer.Write(0);
-            //writer.Write((uint) context.User.PlayerId);
-            //context.SendPacket(0x11, 0x07, 0, writer.ToArray());
             context.SendPacket(new CharacterCreateResponsePacket(CharacterCreateResponsePacket.CharacterCreationStatus.Success, (uint)context.User.PlayerId));
 
             // Spawn

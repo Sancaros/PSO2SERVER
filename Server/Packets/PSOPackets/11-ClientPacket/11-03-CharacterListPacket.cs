@@ -58,7 +58,7 @@ namespace PSO2SERVER.Packets.PSOPackets
                     writer.Write(ch.voice_pitch);
                     writer.WriteFixedLengthUtf16(ch.Name, 16);
                     writer.Write((uint)0);
-                    writer.WriteStruct(ch.Looks); // Note: 第4集之前创造的外观似乎不再有效了
+                    writer.WriteStruct(ch.Looks);
                     writer.WriteStruct(ch.Jobs);
 
                     for (var i = 0; i < 0x90; i++)

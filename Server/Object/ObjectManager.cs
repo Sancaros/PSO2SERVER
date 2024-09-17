@@ -89,7 +89,7 @@ namespace PSO2SERVER.Object
 
         }
 
-        internal PSONPC[] getNPCSForZone(string zone)
+        internal PSONPC[] GetNpcSForZone(string zone)
         {
             List<PSONPC> npcs = new List<PSONPC>();
             using (var db = new ServerEf())

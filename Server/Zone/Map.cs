@@ -60,7 +60,7 @@ namespace PSO2SERVER.Zone
             GenerationArgs = new GenParam();
 
             Objects = ObjectManager.Instance.GetObjectsForZone(Name);
-            NPCs = ObjectManager.Instance.getNPCSForZone(Name);
+            NPCs = ObjectManager.Instance.GetNpcSForZone(Name);
         }
 
         public PSOLocation GetDefaultLocation()
@@ -101,29 +101,38 @@ namespace PSO2SERVER.Zone
             // Set area
             if (questOveride != "") // TODO: This is a temporary hack, fix me!!
             {
-                var setAreaPacket = File.ReadAllBytes("Resources/quests/" + questOveride + ".bin");
-                c.SendPacket(0x03, 0x24, 0x04, setAreaPacket);
+                //var setAreaPacket = File.ReadAllBytes("Resources\\quests\\" + questOveride + ".bin");
+                //c.SendPacket(0x03, 0x24, 0x04, setAreaPacket);
+
+                c.SendPacket(new LoadingLevelPacket(questOveride));
             }
             else
             {
-                PacketWriter writer = new PacketWriter();
-                writer.WriteStruct(new ObjectHeader(3, EntityType.Map));
-                writer.WriteStruct(new ObjectHeader((uint)c.User.PlayerId, EntityType.Player));
-                writer.Write(0x1); // 8 Zeros
-                writer.Write(0); // 8 Zeros
-                writer.Write(~(uint)Type); // F4 FF FF FF
-                writer.Write(MapID); // Map ID maybe
-                writer.Write((uint)Flags);
-                writer.Write(GenerationArgs.seed); // 81 8F E6 19 (Maybe seed)
-                writer.Write(VariantID); // Randomgen enable / disable maybe
-                writer.Write(GenerationArgs.xsize); // X Size
-                writer.Write(GenerationArgs.ysize); // Y Size
-                writer.Write(1);
-                writer.Write(1);
-                writer.Write(~0); // FF FF FF FF FF FF FF FF
-                writer.Write(0x301);
+                //PacketWriter writer = new PacketWriter();
+                //writer.WriteStruct(new ObjectHeader(3, EntityType.Map));
+                //writer.WriteStruct(new ObjectHeader((uint)c.User.PlayerId, EntityType.Player));
+                //writer.Write(0x1); // 8 Zeros
+                //writer.Write(0); // 8 Zeros
+                //writer.Write(~(uint)Type); // F4 FF FF FF
+                //writer.Write(MapID); // Map ID maybe
+                //writer.Write((uint)Flags);
+                //writer.Write(GenerationArgs.seed); // 81 8F E6 19 (Maybe seed)
+                //writer.Write(VariantID); // Randomgen enable / disable maybe
+                //writer.Write(GenerationArgs.xsize); // X Size
+                //writer.Write(GenerationArgs.ysize); // Y Size
+                //writer.Write(1);
+                //writer.Write(1);
+                //writer.Write(~0); // FF FF FF FF FF FF FF FF
+                //writer.Write(0x301);
 
-                c.SendPacket(0x3, 0x0, 0x0, writer.ToArray());
+                //c.SendPacket(0x3, 0x0, 0x0, writer.ToArray());
+
+                var _map = new Map("", MapID, VariantID, Type, Flags);
+                _map.GenerationArgs.seed = GenerationArgs.seed;
+                _map.GenerationArgs.xsize = GenerationArgs.xsize;
+                _map.GenerationArgs.ysize = GenerationArgs.ysize;
+
+                c.SendPacket(new MapTransferPacket(_map, c.User.PlayerId));
             }
 
             if (c.CurrentZone != null)
@@ -131,9 +140,10 @@ namespace PSO2SERVER.Zone
                 c.CurrentZone.RemoveClient(c);
             }
 
-            var setPlayerId = new PacketWriter();
-            setPlayerId.WritePlayerHeader((uint)c.User.PlayerId);
-            c.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
+            //var setPlayerId = new PacketWriter();
+            //setPlayerId.WritePlayerHeader((uint)c.User.PlayerId);
+            //c.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
+            c.SendPacket(new SetPlayerIDPacket((uint)c.User.PlayerId));
 
             // Spawn Character
             c.SendPacket(new CharacterSpawnPacket(c.Character, location));
@@ -143,13 +153,13 @@ namespace PSO2SERVER.Zone
             // Objects
             foreach (PSOObject obj in Objects)
             {
-                c.SendPacket(0x08, 0x0B, 0x0, obj.GenerateSpawnBlob());
+                c.SendPacket(new ObjectSpawnPacket(obj));
             }
 
             // NPCs
             foreach (PSONPC npc in NPCs)
             {
-                c.SendPacket(0x08, 0xC, 0x4, npc.GenerateSpawnBlob());
+                c.SendPacket(new NPCSpawnPacket(npc));
             }
 
             // Spawn for others, Spawn others for me
@@ -184,10 +194,11 @@ namespace PSO2SERVER.Zone
 
             foreach (Client other in Clients)
             {
-                PacketWriter writer = new PacketWriter();
-                writer.WriteStruct(new ObjectHeader((uint)other.User.PlayerId, EntityType.Player));
-                writer.WriteStruct(new ObjectHeader((uint)c.User.PlayerId, EntityType.Player));
-                other.SendPacket(0x4, 0x3B, 0x40, writer.ToArray());
+                //PacketWriter writer = new PacketWriter();
+                //writer.WriteStruct(new ObjectHeader((uint)other.User.PlayerId, EntityType.Player));
+                //writer.WriteStruct(new ObjectHeader((uint)c.User.PlayerId, EntityType.Player));
+                //other.SendPacket(0x4, 0x3B, 0x40, writer.ToArray());
+                other.SendPacket(new DespawnPlayerPacket(other.User.PlayerId, c.User.PlayerId));
             }
 
             if (InstanceName != null && ZoneManager.Instance.playerCounter.ContainsKey(InstanceName))

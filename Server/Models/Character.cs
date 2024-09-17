@@ -160,7 +160,7 @@ namespace PSO2SERVER.Models
             public sbyte Value3;
         }
 
-        public enum SkinColor
+        public enum SkinColor : byte
         {
             RaceDefined,
             Human,
