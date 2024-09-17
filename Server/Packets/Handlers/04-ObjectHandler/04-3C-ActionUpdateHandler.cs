@@ -1,4 +1,5 @@
 ﻿using PSO2SERVER.Models;
+using PSO2SERVER.Packets.PSOPackets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,13 @@ namespace PSO2SERVER.Packets.Handlers
             {
                 if (c == context || c.Character == null || c.CurrentZone != context.CurrentZone)
                     continue;
-                PacketWriter writer = new PacketWriter();
-                writer.WriteStruct(new ObjectHeader((uint)c.User.PlayerId, EntityType.Player));
-                writer.WriteStruct(actor);
-                writer.Write(rest);
+                //PacketWriter writer = new PacketWriter();
+                //writer.WriteStruct(new ObjectHeader((uint)c.User.PlayerId, EntityType.Player));
+                //writer.WriteStruct(actor);
+                //writer.Write(rest);
 
-                c.SendPacket(0x4, 0x81, 0x40, writer.ToArray());
+                //c.SendPacket(0x4, 0x81, 0x40, writer.ToArray());
+                c.SendPacket(new ActionUpdateServerPacket(c.User.PlayerId, actor, rest));
             }
 
         }

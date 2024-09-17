@@ -1,4 +1,5 @@
 ﻿using PSO2SERVER.Models;
+using PSO2SERVER.Packets.PSOPackets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,19 +36,20 @@ namespace PSO2SERVER.Packets.Handlers
             {
                 if (c == context || c.Character == null || c.CurrentZone != context.CurrentZone)
                     continue;
-                PacketWriter output = new PacketWriter();
-                output.WriteStruct(new ObjectHeader((uint)context.User.PlayerId, EntityType.Player));
-                output.WriteStruct(preformer);
-                output.Write(preData);
-                output.WriteAscii(command, 0x4315, 0x7A);
-                output.Write(rest);
-                output.WriteMagic(thingCount, 0x4315, 0x7A);
-                output.Write(things);
-                output.Write(final);
+                //PacketWriter output = new PacketWriter();
+                //output.WriteStruct(new ObjectHeader((uint)context.User.PlayerId, EntityType.Player));
+                //output.WriteStruct(preformer);
+                //output.Write(preData);
+                //output.WriteAscii(command, 0x4315, 0x7A);
+                //output.Write(rest);
+                //output.WriteMagic(thingCount, 0x4315, 0x7A);
+                //output.Write(things);
+                //output.Write(final);
 
-                c.SendPacket(0x4, 0x80, 0x44, output.ToArray());
+                //c.SendPacket(0x4, 0x80, 0x44, output.ToArray());
 
-
+                c.SendPacket(new MovementActionServerPacket(context.User.PlayerId, preformer, preData
+                    , command, rest, thingCount, things, final));
             }
         }
     }

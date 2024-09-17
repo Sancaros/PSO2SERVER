@@ -46,7 +46,9 @@ namespace PSO2SERVER.Models
         /// Set when the [`Packet::Movement`] has all fields set. 0x20
         FULL_MOVEMENT = 1 << 5,
         /// Set for all (?) of (0x04) packets. 0x40
-        OBJECT_RELATED = 1 << 6
+        OBJECT_RELATED = 1 << 6,
+        /// 0x44
+        unk0x44 = 0x44
     }
 }
 

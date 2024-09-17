@@ -14,10 +14,12 @@ namespace PSO2SERVER.Packets.Handlers
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            var writer = new PacketWriter();
-            writer.Write((uint) 0);
+            //var writer = new PacketWriter();
+            //writer.Write((uint) 0);
 
-            context.SendPacket(0x11, 0x55, 0x0, writer.ToArray());
+            //context.SendPacket(0x11, 0x55, 0x0, writer.ToArray());
+
+            context.SendPacket(new CreateCharacterTwoResponsePacket(0));
         }
 
         #endregion
