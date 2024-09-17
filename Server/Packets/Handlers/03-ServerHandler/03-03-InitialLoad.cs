@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSO2SERVER.Packets.PSOPackets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,9 +32,10 @@ namespace PSO2SERVER.Packets.Handlers
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
             // Set Player ID
-            var setPlayerId = new PacketWriter();
-            setPlayerId.WritePlayerHeader((uint)context.User.PlayerId);
-            context.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
+            //var setPlayerId = new PacketWriter();
+            //setPlayerId.WritePlayerHeader((uint)context.User.PlayerId);
+            //context.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
+            context.SendPacket(new SetPlayerIDPacket(context.User.PlayerId));
 
             // Spawn Player
             new CharacterSpawn().HandlePacket(context, flags, data, position, size);

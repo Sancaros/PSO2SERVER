@@ -8,9 +8,9 @@ namespace PSO2SERVER.Packets.PSOPackets
 {
     public class SetPlayerIDPacket : Packet
     {
-        private readonly uint _PlayerId;
+        private readonly int _PlayerId;
 
-        public SetPlayerIDPacket(uint PlayerId)
+        public SetPlayerIDPacket(int PlayerId)
         {
             _PlayerId = PlayerId;
         }
@@ -20,7 +20,7 @@ namespace PSO2SERVER.Packets.PSOPackets
         public override byte[] Build()
         {
             var pkt = new PacketWriter();
-            pkt.WritePlayerHeader(_PlayerId);
+            pkt.WritePlayerHeader((uint)_PlayerId);
             return pkt.ToArray();
         }
 

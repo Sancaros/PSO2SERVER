@@ -137,7 +137,8 @@ namespace PSO2SERVER.Packets.Handlers
                 if (c.Character == null || c == context || c.CurrentZone != context.CurrentZone)
                     continue;
 
-                c.SendPacket(0x4, 0x7, flags, data);
+                c.SendPacket(0x04, 0x07, flags, data);
+                //c.SendPacket(new MovementPacket(dstData));
             }
         }
 

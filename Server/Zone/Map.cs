@@ -143,7 +143,7 @@ namespace PSO2SERVER.Zone
             //var setPlayerId = new PacketWriter();
             //setPlayerId.WritePlayerHeader((uint)c.User.PlayerId);
             //c.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
-            c.SendPacket(new SetPlayerIDPacket((uint)c.User.PlayerId));
+            c.SendPacket(new SetPlayerIDPacket(c.User.PlayerId));
 
             // Spawn Character
             c.SendPacket(new CharacterSpawnPacket(c.Character, location));
