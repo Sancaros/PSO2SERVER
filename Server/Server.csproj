@@ -170,8 +170,6 @@
     <Compile Include="Models\Quest.cs" />
     <Compile Include="Network\PortChecker.cs" />
     <Compile Include="Object\ObjectManager.cs" />
-    <Compile Include="Packets\Handlers\03-ServerHandler\03-06-UNK.cs" />
-    <Compile Include="Packets\Handlers\03-ServerHandler\03-00-MapTransfer.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-03-InitialLoad.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-0C-PingResponse.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-10-DoItMaybe.cs" />
@@ -203,6 +201,7 @@
     <Compile Include="Packets\Handlers\03-ServerHandler\03-34-TeleportCasinoToLobby.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-41-CreateCharacterOne.cs" />
     <Compile Include="Packets\Handlers\2F-SymbolHandler\2F-06-SymbolArtHandler.cs" />
+    <Compile Include="Packets\PSOPackets\03-ServerPacket\03-06-Unk0306Packet.cs" />
     <Compile Include="Packets\PSOPackets\03-ServerPacket\03-00-MapTransferPacket.cs" />
     <Compile Include="Packets\PSOPackets\04-ObjectPacket\04-80-MovementActionServerPacket.cs" />
     <Compile Include="Packets\PSOPackets\04-ObjectPacket\04-81-ActionUpdateServerPacket.cs" />

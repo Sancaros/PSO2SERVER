@@ -35,7 +35,7 @@ namespace PSO2SERVER
             InputArc4 = null;
             OutputArc4 = null;
 
-            SendPacket(new ServerHelloPacket());
+            SendPacket(new ServerHelloPacket(0x03, 201, 0));
         }
 
         public bool IsClosed { get; private set; }

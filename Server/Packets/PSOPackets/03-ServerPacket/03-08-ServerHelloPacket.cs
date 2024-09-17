@@ -6,38 +6,24 @@ namespace PSO2SERVER.Packets.PSOPackets
 {
     class ServerHelloPacket : Packet
     {
+        private readonly ushort _Unk1;
+        private readonly ushort _BlockId;
+        private readonly uint _Unk2;
 
-        /// <summary>
-        /// Unknown. Seems to be always 0x03.
-        /// </summary>
-        public ushort Unk1 { get; set; }
-
-        /// <summary>
-        /// Block Id.
-        /// </summary>
-        public ushort BlockId { get; set; }
-
-        public uint Unk2 { get; set; }
-
-        public ServerHelloPacket()
+        public ServerHelloPacket(ushort Unk1, ushort BlockId, uint Unk2)
         {
-            Unk1 = 0x03; // Initialize Unk1 with default value
+            _Unk1 = Unk1;
+            _BlockId = BlockId;
+            _Unk2 = Unk2;
         }
 
         public override byte[] Build()
         {
-
-            //var welcome = new PacketWriter();
-            //welcome.Write((ushort)3);
-            //welcome.Write((ushort)201);
-            //welcome.Write((ushort)0);
-            //welcome.Write((ushort)0);
-
             PacketWriter writer = new PacketWriter();
-            writer.Write(Unk1);
+            writer.Write(_Unk1);
             writer.Seek(4, SeekOrigin.Current); // Skip 4 bytes
-            writer.Write(BlockId);
-            writer.Write(Unk2);
+            writer.Write(_BlockId);
+            writer.Write(_Unk2);
             return writer.ToArray();
         }
 
