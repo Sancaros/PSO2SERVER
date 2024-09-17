@@ -5,6 +5,7 @@ using PSO2SERVER.Packets.PSOPackets;
 using PSO2SERVER.Database;
 using System.Linq;
 using System;
+using System.Runtime.InteropServices;
 
 namespace PSO2SERVER.Packets.Handlers
 {
@@ -21,20 +22,22 @@ namespace PSO2SERVER.Packets.Handlers
             var reader = new PacketReader(data, position, size);
             //var info = string.Format("[接收] 接收到的数据 (hex): ");
             //Logger.WriteHex(info, data);
+            var setting = reader.ReadStruct<Character.CharParam>();
+            //reader.ReadBytes(12); // 12 unknown bytes
+            //reader.ReadByte(); // VoiceType
+            //reader.ReadBytes(5); // 5 unknown bytes
+            //reader.ReadUInt16(); // VoiceData
 
-            reader.ReadBytes(12); // 12 unknown bytes
-            reader.ReadByte(); // VoiceType
-            reader.ReadBytes(5); // 5 unknown bytes
-            reader.ReadUInt16(); // VoiceData
             var name = reader.ReadFixedLengthUtf16(16);//玩家名称 宽字符
 
-            reader.BaseStream.Seek(0x4, SeekOrigin.Current); // Padding
+            //reader.BaseStream.Seek(0x04, SeekOrigin.Current); // Padding
             var looks = reader.ReadStruct<Character.LooksParam>();
             var jobs = reader.ReadStruct<Character.JobParam>();
 
             //Logger.WriteInternal("[CHR] {0} 创建了名为 {1} 的新角色.", context.User.Username, name);
             var newCharacter = new Character
             {
+                CharSet = setting,
                 Name = name,
                 Jobs = jobs,
                 Looks = looks,
@@ -68,10 +71,11 @@ namespace PSO2SERVER.Packets.Handlers
             context.Character = newCharacter;
 
             // Set Player ID
-            var writer = new PacketWriter();
-            writer.Write(0);
-            writer.Write((uint) context.User.PlayerId);
-            context.SendPacket(0x11, 0x07, 0, writer.ToArray());
+            //var writer = new PacketWriter();
+            //writer.Write(0);
+            //writer.Write((uint) context.User.PlayerId);
+            //context.SendPacket(0x11, 0x07, 0, writer.ToArray());
+            context.SendPacket(new CharacterCreateResponsePacket(CharacterCreateResponsePacket.CharacterCreationStatus.Success, (uint)context.User.PlayerId));
 
             // Spawn
             context.SendPacket(new NoPayloadPacket(0x11, 0x3E));

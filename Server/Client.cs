@@ -239,11 +239,12 @@ namespace PSO2SERVER
             if (!Directory.Exists(packetPath))
                 Directory.CreateDirectory(packetPath);
 
-            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}.bin"
+            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}-{4}.bin"
                 , packetPath
                 , typeA, typeB
                 //, _packetId++
                 , fromClient ? "C" : "S"
+                , _server.StartTime.ToShortTimeString().Replace('/', '-').Replace(':', '-')
                 );
 
             using (var stream = File.OpenWrite(filename))
@@ -269,11 +270,12 @@ namespace PSO2SERVER
             if (!Directory.Exists(packetPath))
                 Directory.CreateDirectory(packetPath);
 
-            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}.bin"
+            var filename = string.Format("{0}/0x{1:X2}-0x{2:X2}-{3}-{4}.bin"
                 , packetPath
                 , typeA, typeB
                 //, _packetId++
                 , "C-unk"
+                , _server.StartTime.ToShortTimeString().Replace('/', '-').Replace(':', '-')
                 );
 
             using (var stream = File.OpenWrite(filename))

@@ -25,7 +25,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0x0B, 0x18, 0x04);
+            return new PacketHeader(0x0B, 0x18, PacketFlags.PACKED);
         }
 
         // Hoo boy, this is 468 bytes!

@@ -9,43 +9,179 @@ namespace PSO2SERVER.Models
 {
     public class Character
     {
+        public enum ClassType : byte
+        {
+            Unknown = 0xFF,
+            Hunter = 0,
+            Ranger,
+            Force,
+            Fighter,
+            Gunner,
+            Techer,
+            Braver,
+            Bouncer,
+            Challenger,
+            Summoner,
+            BattleWarrior,
+            Hero,
+            Phantom,
+            Etole,
+            Luster,
+        }
+
+    //    每个枚举成员的值是通过位移操作计算的：
+
+    //Hunter：1 << 0，即 1（0x0001）
+    //Ranger：1 << 1，即 2（0x0002）
+    //Force：1 << 2，即 4（0x0004）
+    //Fighter：1 << 3，即 8（0x0008）
+    //Gunner：1 << 4，即 16（0x0010）
+    //Techer：1 << 5，即 32（0x0020）
+    //Braver：1 << 6，即 64（0x0040）
+    //Bouncer：1 << 7，即 128（0x0080）
+    //Challenger：1 << 8，即 256（0x0100）
+    //Summoner：1 << 9，即 512（0x0200）
+    //BattleWarrior：1 << 10，即 1024（0x0400）
+    //Hero：1 << 11，即 2048（0x0800）
+    //Phantom：1 << 12，即 4096（0x1000）
+    //Etole：1 << 13，即 8192（0x2000）
+    //Luster：1 << 14，即 16384（0x4000）
+
+        [Flags]
+        public enum ClassTypeField : ushort
+        {
+            Unknown = 0xFF,
+            None = 0,
+            Hunter = 1 << 0,
+            Ranger = 1 << 1,
+            Force = 1 << 2,
+            Fighter = 1 << 3,
+            Gunner = 1 << 4,
+            Techer = 1 << 5,
+            Braver = 1 << 6,
+            Bouncer = 1 << 7,
+            Challenger = 1 << 8,
+            Summoner = 1 << 9,
+            BattleWarrior = 1 << 10,
+            Hero = 1 << 11,
+            Phantom = 1 << 12,
+            Etole = 1 << 13,
+            Luster = 1 << 14
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public unsafe struct CharParam
+        {
+            public uint character_id;
+            public uint player_id;
+            public uint unk1;
+            public uint voice_type;
+            public ushort unk2;
+            public short voice_pitch;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct JobEntry
+        {
+            public ushort level;
+            public ushort level2; // Usually the same as the above, what is this used for?
+            public uint exp;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Entries
+        {
+            public JobEntry 
+                hunter
+                , ranger
+                , force
+                , fighter
+                , gunner
+                , techer
+                , braver
+                , bouncer
+                , Challenger
+                , Summoner
+                , BattleWarrior
+                , Hero
+                , Phantom
+                , Etole
+                , Luster
+                , unk16
+                , unk17
+                , unk18
+                , unk19
+                , unk20
+                , unk21
+                , unk22
+                , unk23
+                , unk24
+                ;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public unsafe struct JobParam
+        {
+            //public fixed byte unknown_0[4];
+            public ClassType mainClass;
+            public ClassType subClass;
+            public fixed byte uknown_6[2];
+            public ClassTypeField enabledClasses;
+            public fixed byte uknown_8[2];
+            //public byte padding0;
+
+            public Entries entries; //TODO: Make this a fixed array
+
+            public fixed ushort unk_maxlevel[15];
+
+            //public ushort unknown_48, unknown_4A;
+            //public uint unknown_4C;
+            //public ushort unknown_50, unknown_52;
+            //public uint unknown_54;
+            //public ushort unknown_58, unknown_5A;
+            //public uint unknown_5C;
+            //public ushort unknown_60, unknown_62;
+            //public uint unknown_64;
+            //public uint unknown_68;
+            //public ushort unknown_6C, unknown_6E;
+            //public fixed int unknown_70[4];
+        }
+
+        public enum RunAnimation : ushort
+        {
+            Walking = 9,
+            Hovering = 11
+        }
+
         public enum Race : ushort
         {
+            Unknown = 0xFFFF,
             Human = 0,
             Newman,
             Cast,
-            Dewman
+            Dewman,
         }
 
         public enum Gender : ushort
         {
+            Unknown = 0xFFFF,
             Male = 0,
-            Female
+            Female,
         }
 
-        public enum ClassType : byte
+        public struct AccessoryData
         {
-            Hunter = 0,
-            Fighter,
-            Ranger,
-            Gunner,
-            Force,
-            Techer,
-            Braver,
-            Bouncer,
+            public sbyte Value1;
+            public sbyte Value2;
+            public sbyte Value3;
         }
 
-        [Flags]
-        public enum ClassTypeField : byte
+        public enum SkinColor
         {
-            Hunter = 1,
-            Fighter = 2,
-            Ranger = 4,
-            Gunner = 8,
-            Force = 16,
-            Techer = 32,
-            Braver = 64,
-            Bouncer = 128
+            RaceDefined,
+            Human,
+            Deuman,
+            Cast
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -61,82 +197,116 @@ namespace PSO2SERVER.Models
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct JobEntry
-        {
-            public ushort level;
-            public ushort level2; // Usually the same as the above, what is this used for?
-            public uint exp;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Entries
-        {
-            public JobEntry hunter, fighter, ranger, gunner, force, techer, braver, bouncer;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public unsafe struct JobParam
-        {
-            public fixed byte unknown_0[4];
-            public ClassType mainClass;
-            public ClassType subClass;
-            public fixed byte uknown_6[2];
-            public ClassTypeField enabledClasses;
-            public fixed byte uknown_8[2];
-            public byte padding0;
-
-            public Entries entries; //TODO: Make this a fixed array
-
-            public ushort unknown_48, unknown_4A;
-            public uint unknown_4C;
-            public ushort unknown_50, unknown_52;
-            public uint unknown_54;
-            public ushort unknown_58, unknown_5A;
-            public uint unknown_5C;
-            public ushort unknown_60, unknown_62;
-            public uint unknown_64;
-            public uint unknown_68;
-            public ushort unknown_6C, unknown_6E;
-            public fixed int unknown_70[4];
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
         public unsafe struct LooksParam
         {
-            public fixed byte padding[4];
-            public ushort height;
-            public fixed byte charData[80]; // Figure Data, needs more work
-            public ushort accessoryData1;
-            public ushort accessoryData2;
-            public ushort accessoryData3;
-            public ushort accessoryData4;
-            public HSVColor costumeColor;
-            public HSVColor mainColor;
-            public HSVColor sub1Color;
-            public HSVColor sub2Color;
-            public HSVColor sub3Color;
-            public HSVColor eyeColor;
-            public HSVColor hairColor;
-            public int modelID;
-            public ushort mainParts;
-            public ushort bodyPaint;
-            public ushort emblem;
-            public ushort eyePattern;
-            public ushort eyelashes;
-            public ushort eyebrows;
-            public ushort face;
-            public ushort facePaint1;
-            public ushort hairstyle;
-            public ushort accessory1;
-            public ushort accessory2;
-            public ushort accessory3;
-            public ushort facePaint2;
-            public ushort arms;
-            public ushort legs;
-            public ushort accessory4;
-            public ushort costume;
+            public RunAnimation running_animation;
             public Race race;
             public Gender gender;
+            //public fixed byte padding[4];
+            public ushort Muscule;
+            public Figure Body;
+            public Figure Arms;
+            public Figure Legs;
+            public Figure Chest;
+            public Figure FaceShape;
+            public Figure FaceParts;
+            public Figure Eyes;
+            public Figure NoseSize;
+            public Figure NoseHeight;
+            public Figure Mouth;
+            public Figure Ears;
+            public Figure Neck;
+            public Figure Waist;
+            public Figure Body2;
+            public Figure Arms2;
+            public Figure Legs2;
+            public Figure Chest2;
+            public Figure Neck2;
+            public Figure Waist2;
+            public fixed byte Unk1[0x20];
+            public fixed byte Unk2[0x0A];
+            public AccessoryData Acc1Location;
+            public AccessoryData Acc2Location;
+            public AccessoryData Acc3Location;
+            public AccessoryData Acc4Location;
+
+
+
+
+
+
+
+
+            //public ushort height;
+            //public fixed byte charData[80]; // Figure Data, needs more work
+            //public ushort accessoryData1;
+            //public ushort accessoryData2;
+            //public ushort accessoryData3;
+            //public ushort accessoryData4;
+            public HSVColor UnkColor;
+            public HSVColor CostumeColor;
+            public HSVColor MainColor;
+            public HSVColor Sub1Color;
+            public HSVColor Sub2Color;
+            public HSVColor Sub3Color;
+            public HSVColor EyeColor;
+            public HSVColor HairColor;
+            public fixed byte Unk3[0x20];
+            public fixed byte Unk4[0x10];
+            public ushort CostumeId;
+            public ushort BodyPaint1;
+            public ushort StickerId;
+            public ushort RightEyeId;
+            public ushort EyebrowId;
+            public ushort EyelashId;
+            public ushort FaceId1;
+            public ushort FaceId2;
+            public ushort Facemakeup1Id;
+            public ushort HairstyleId;
+            public ushort Acc1Id;
+            public ushort Acc2Id;
+            public ushort Acc3Id;
+            public ushort Facemakeup2Id;
+            public ushort LegId;
+            public ushort ArmId;
+            public ushort Acc4Id;
+            public fixed byte Unk5[0x04];
+            public ushort BodyPaint2;
+            public ushort LeftEyeId;
+            public fixed byte Unk6[0x12];
+            public AccessoryData Acc1Size;
+            public AccessoryData Acc2Size;
+            public AccessoryData Acc3Size;
+            public AccessoryData Acc4Size;
+            public AccessoryData Acc1Rotation;
+            public AccessoryData Acc2Rotation;
+            public AccessoryData Acc3Rotation;
+            public AccessoryData Acc4Rotation;
+            public ushort Unk7;
+            public fixed byte Unk8[0x08];
+            public SkinColor SkinColorType;
+            public sbyte EyebrowThickness;
+
+            //public int modelID;
+            //public ushort mainParts;
+            //public ushort bodyPaint;
+            //public ushort emblem;
+            //public ushort eyePattern;
+            //public ushort eyelashes;
+            //public ushort eyebrows;
+            //public ushort face;
+            //public ushort facePaint1;
+            //public ushort hairstyle;
+            //public ushort accessory1;
+            //public ushort accessory2;
+            //public ushort accessory3;
+            //public ushort facePaint2;
+            //public ushort arms;
+            //public ushort legs;
+            //public ushort accessory4;
+            //public ushort costume;
+            //public Race race;
+            //public Gender gender;
         }
 
         // Probably more info than this
@@ -146,6 +316,24 @@ namespace PSO2SERVER.Models
         public int CharacterId { get; set; }
 
         public virtual Player Player { get; set; }
+        public byte[] CharSetBinary
+        {
+            get
+            {
+                PacketWriter w = new PacketWriter();
+                w.WriteStruct(CharSet);
+                return w.ToArray();
+            }
+
+            set
+            {
+                CharSet = Helper.ByteArrayToStructure<CharParam>(value);
+            }
+
+        }
+
+        public CharParam CharSet { get; set; }
+
         public string Name { get; set; }
 
         public byte[] LooksBinary
@@ -164,6 +352,8 @@ namespace PSO2SERVER.Models
 
         }
 
+        public LooksParam Looks { get; set; }
+
         public byte[] JobsBinary
         {
             get
@@ -180,7 +370,6 @@ namespace PSO2SERVER.Models
 
         }
 
-        public LooksParam Looks { get; set; }
         public JobParam Jobs { get; set; }
     }
 

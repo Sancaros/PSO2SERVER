@@ -33,6 +33,7 @@ namespace PSO2SERVER.Packets.Handlers
                     db.ChangeTracker.DetectChanges();
             }
 
+            // 将客户端发送至默认大厅
             Map lobbyMap = ZoneManager.Instance.MapFromInstance("lobby", "lobby");
             lobbyMap.SpawnClient(context, lobbyMap.GetDefaultLocation(), "lobby");
             
@@ -41,7 +42,7 @@ namespace PSO2SERVER.Packets.Handlers
 
             //context.SendPacket(File.ReadAllBytes("testbed/237.23-7.210.189.208.30.bin"));
 
-            // Give a blank palette
+            // 先给一个空的 Palette
             context.SendPacket(new PalettePacket());
 
             // memset packet - Enables menus
