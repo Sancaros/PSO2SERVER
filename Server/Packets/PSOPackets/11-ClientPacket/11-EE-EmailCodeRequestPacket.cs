@@ -6,10 +6,10 @@ using System.Text;
 
 namespace PSO2SERVER.Packets.PSOPackets
 {
-    public class UnkPacket : Packet
+    public class EmailCodeRequestPacket : Packet
     {
 
-        public UnkPacket()
+        public EmailCodeRequestPacket()
         {
         }
 
@@ -23,7 +23,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0x00, 0x00, PacketFlags.None);
+            return new PacketHeader(0x11, 0xEE, PacketFlags.None);
         }
 
         #endregion

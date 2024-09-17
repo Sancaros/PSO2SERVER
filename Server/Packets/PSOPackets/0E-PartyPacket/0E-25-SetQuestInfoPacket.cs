@@ -1,17 +1,18 @@
-﻿using System;
+﻿using PSO2SERVER.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PSO2SERVER.Models;
 
 namespace PSO2SERVER.Packets.PSOPackets
 {
-    class SetQuestPacket : Packet
+    public class SetQuestInfoPacket : Packet
     {
+
         QuestDefiniton questdef;
         Database.Player p;
 
-        public SetQuestPacket(QuestDefiniton questdef, Database.Player p)
+        public SetQuestInfoPacket(QuestDefiniton questdef, Database.Player p)
         {
             this.questdef = questdef;
             this.p = p;
@@ -35,10 +36,9 @@ namespace PSO2SERVER.Packets.PSOPackets
             writer.Write(0);
             return writer.ToArray();
         }
-
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0xE, 0x25);
+            return new PacketHeader(0x0E, 0x25, PacketFlags.None);
         }
     }
 }
