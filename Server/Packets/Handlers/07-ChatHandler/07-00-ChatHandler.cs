@@ -14,7 +14,7 @@ namespace PSO2SERVER.Packets.Handlers
         {
             if (context.Character == null)
                 return;
-            var info = string.Format("[接收] 接收到的数据 (hex): ");
+            var info = string.Format("[<--] 接收到的数据 (hex): ");
             Logger.WriteHex(info, data);
 
             var reader = new PacketReader(data, position, size);

@@ -26,7 +26,7 @@ namespace PSO2SERVER.Packets.Handlers
             Array.Reverse(cryptedBlob);
 
             // Print the contents of cryptedBlob in hexadecimal format
-            //var info = string.Format("[接收] 接收到的数据 (hex): ");
+            //var info = string.Format("[<--] 接收到的数据 (hex): ");
             //Logger.WriteHex(info, cryptedBlob);
 
             //// Convert cryptedBlob to a hexadecimal string

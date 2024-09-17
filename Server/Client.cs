@@ -55,13 +55,13 @@ namespace PSO2SERVER
         {
             if ((_readBufferSize + size) > _readBuffer.Length)
             {
-                Logger.WriteError("[接收] 接收到 {0} 字节大于预设buf长度", size);
+                Logger.WriteError("[<--] 接收到 {0} 字节大于预设buf长度", size);
                 // Buffer overrun
                 // TODO: Drop the connection when this occurs?
                 return;
             }
 
-            //Logger.Write("[接收] 接收到 {0} 字节", size);
+            //Logger.Write("[<--] 接收到 {0} 字节", size);
 
             Array.Copy(data, 0, _readBuffer, _readBufferSize, size);
 
@@ -139,11 +139,11 @@ namespace PSO2SERVER
                 sendName = $"0x{typeA:X2} - 0x{typeB:X2}";
             }
 
-            Logger.Write($"[接收] 数据包 {sendName} (Flags {(PacketFlags)flags1}) ({blob.Length} 字节)");
+            Logger.Write($"[-->] {sendName} (Flags {(PacketFlags)flags1}) ({blob.Length} 字节)");
 
             if (Logger.VerbosePackets)
             {
-                var info = string.Format("[接收] 0x{0:X2} - 0x{1:X2} 数据包:", typeA, typeB);
+                var info = string.Format("[-->] 0x{0:X2} - 0x{1:X2} 数据包:", typeA, typeB);
                 Logger.WriteHex(info, blob);
             }
 
@@ -163,22 +163,30 @@ namespace PSO2SERVER
 
         public void SendPacket(byte typeA, byte typeB, byte flags, byte[] data, string name = null)
         {
-            var packet = new byte[8 + data.Length];
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data), "Data array cannot be null.");
+            }
 
-            // TODO: Use BinaryWriter here maybe?
-            var dataLen = (uint)data.Length + 8;
-            packet[0] = (byte)(dataLen & 0xFF);
-            packet[1] = (byte)((dataLen >> 8) & 0xFF);
-            packet[2] = (byte)((dataLen >> 16) & 0xFF);
-            packet[3] = (byte)((dataLen >> 24) & 0xFF);
-            packet[4] = typeA;
-            packet[5] = typeB;
-            packet[6] = flags;
-            packet[7] = 0;
+            using (var memoryStream = new MemoryStream())
+            using (var binaryWriter = new BinaryWriter(memoryStream))
+            {
+                // 写入数据长度（总长度为头部4字节 + typeA(1) + typeB(1) + flags(1) + 额外字节的长度））
+                uint dataLen = (uint)data.Length + 8;
+                binaryWriter.Write(dataLen); // 自动处理为小端序
 
-            Array.Copy(data, 0, packet, 8, data.Length);
+                // 写入类型A、类型B和标志
+                binaryWriter.Write(typeA);
+                binaryWriter.Write(typeB);
+                binaryWriter.Write(flags);
+                binaryWriter.Write((byte)0); // 额外的字节
 
-            SendPacket(packet, name);
+                // 写入数据
+                binaryWriter.Write(data);
+
+                // 调用实际发送数据的方法
+                SendPacket(memoryStream.ToArray(), name);
+            }
         }
 
         public void SendPacket(Packet packet)
@@ -200,7 +208,7 @@ namespace PSO2SERVER
             {
                 packetName = $"0x{typeA:X2} - 0x{typeB:X2}";
             }
-            Logger.Write($"[发送] 数据包 {packetName} (Flags {(PacketFlags)flags1}) ({size + 8} 字节)");
+            Logger.Write($"[<--] {packetName} (Flags {(PacketFlags)flags1}) ({size + 8} 字节)");
             var packet = new byte[size];
             Array.Copy(data, position, packet, 0, size);
 
@@ -210,7 +218,7 @@ namespace PSO2SERVER
                 for (var i = 0; i < size; i++)
                     dataTrimmed[i] = data[i];
 
-                var info = string.Format("[发送] 0x{0:X2} - 0x{1:X2} 数据包:", typeA, typeB);
+                var info = string.Format("[<--] 0x{0:X2} - 0x{1:X2} 数据包:", typeA, typeB);
                 Logger.WriteHex(info, dataTrimmed);
             }
 
@@ -220,7 +228,7 @@ namespace PSO2SERVER
                 handler.HandlePacket(this, flags1, packet, 0, size);
             else
             {
-                Logger.WriteWarning("[未解析] 0x{0:X2} - 0x{1:X2} (未解析数据包) (Flags {2}) ({3} 字节)", typeA,
+                Logger.WriteWarning("[<--未解析] 0x{0:X2} - 0x{1:X2} (UNK) (Flags {2}) ({3} 字节)", typeA,
                     typeB, (PacketFlags)flags1, size);
                 LogUnkClientPacket(typeA, typeB, flags1, flags2, packet);
             }

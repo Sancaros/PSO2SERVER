@@ -72,8 +72,8 @@ namespace PSO2SERVER.Models
         [StructLayout(LayoutKind.Sequential)]
         public unsafe struct CharParam
         {
-            public uint character_id;
-            public uint player_id;
+            public int character_id;
+            public int player_id;
             public uint unk1;
             public uint voice_type;
             public ushort unk2;
@@ -122,29 +122,13 @@ namespace PSO2SERVER.Models
         [StructLayout(LayoutKind.Sequential)]
         public unsafe struct JobParam
         {
-            //public fixed byte unknown_0[4];
             public ClassType mainClass;
             public ClassType subClass;
-            public fixed byte uknown_6[2];
+            public ushort unk2;
             public ClassTypeField enabledClasses;
-            public fixed byte uknown_8[2];
-            //public byte padding0;
-
+            public ushort unk3;
             public Entries entries; //TODO: Make this a fixed array
-
             public fixed ushort unk_maxlevel[15];
-
-            //public ushort unknown_48, unknown_4A;
-            //public uint unknown_4C;
-            //public ushort unknown_50, unknown_52;
-            //public uint unknown_54;
-            //public ushort unknown_58, unknown_5A;
-            //public uint unknown_5C;
-            //public ushort unknown_60, unknown_62;
-            //public uint unknown_64;
-            //public uint unknown_68;
-            //public ushort unknown_6C, unknown_6E;
-            //public fixed int unknown_70[4];
         }
 
         public enum RunAnimation : ushort
@@ -202,7 +186,6 @@ namespace PSO2SERVER.Models
             public RunAnimation running_animation;
             public Race race;
             public Gender gender;
-            //public fixed byte padding[4];
             public ushort Muscule;
             public Figure Body;
             public Figure Arms;
@@ -229,20 +212,6 @@ namespace PSO2SERVER.Models
             public AccessoryData Acc2Location;
             public AccessoryData Acc3Location;
             public AccessoryData Acc4Location;
-
-
-
-
-
-
-
-
-            //public ushort height;
-            //public fixed byte charData[80]; // Figure Data, needs more work
-            //public ushort accessoryData1;
-            //public ushort accessoryData2;
-            //public ushort accessoryData3;
-            //public ushort accessoryData4;
             public HSVColor UnkColor;
             public HSVColor CostumeColor;
             public HSVColor MainColor;
@@ -286,27 +255,6 @@ namespace PSO2SERVER.Models
             public fixed byte Unk8[0x08];
             public SkinColor SkinColorType;
             public sbyte EyebrowThickness;
-
-            //public int modelID;
-            //public ushort mainParts;
-            //public ushort bodyPaint;
-            //public ushort emblem;
-            //public ushort eyePattern;
-            //public ushort eyelashes;
-            //public ushort eyebrows;
-            //public ushort face;
-            //public ushort facePaint1;
-            //public ushort hairstyle;
-            //public ushort accessory1;
-            //public ushort accessory2;
-            //public ushort accessory3;
-            //public ushort facePaint2;
-            //public ushort arms;
-            //public ushort legs;
-            //public ushort accessory4;
-            //public ushort costume;
-            //public Race race;
-            //public Gender gender;
         }
 
         // Probably more info than this
@@ -314,25 +262,11 @@ namespace PSO2SERVER.Models
         public int Id { get; set; }
 
         public int CharacterId { get; set; }
-
-        public virtual Player Player { get; set; }
-        public byte[] CharSetBinary
-        {
-            get
-            {
-                PacketWriter w = new PacketWriter();
-                w.WriteStruct(CharSet);
-                return w.ToArray();
-            }
-
-            set
-            {
-                CharSet = Helper.ByteArrayToStructure<CharParam>(value);
-            }
-
-        }
-
-        public CharParam CharSet { get; set; }
+        public int player_id { get; set; }
+        public uint unk1 { get; set; }
+        public uint voice_type { get; set; }
+        public ushort unk2 { get; set; }
+        public short voice_pitch { get; set; }
 
         public string Name { get; set; }
 
@@ -354,6 +288,8 @@ namespace PSO2SERVER.Models
 
         public LooksParam Looks { get; set; }
 
+        public uint unk3 { get; set; }
+
         public byte[] JobsBinary
         {
             get
@@ -371,6 +307,10 @@ namespace PSO2SERVER.Models
         }
 
         public JobParam Jobs { get; set; }
+
+        public string unk4 { get; set; }
+
+        public virtual Player Player { get; set; }
     }
 
 

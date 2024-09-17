@@ -20,7 +20,7 @@ namespace PSO2SERVER.Packets.Handlers
                 return;
 
             var reader = new PacketReader(data, position, size);
-            //var info = string.Format("[接收] 接收到的数据 (hex): ");
+            //var info = string.Format("[<--] 接收到的数据 (hex): ");
             //Logger.WriteHex(info, data);
             var setting = reader.ReadStruct<Character.CharParam>();
             //reader.ReadBytes(12); // 12 unknown bytes
@@ -37,7 +37,6 @@ namespace PSO2SERVER.Packets.Handlers
             //Logger.WriteInternal("[CHR] {0} 创建了名为 {1} 的新角色.", context.User.Username, name);
             var newCharacter = new Character
             {
-                CharSet = setting,
                 Name = name,
                 Jobs = jobs,
                 Looks = looks,
@@ -59,6 +58,12 @@ namespace PSO2SERVER.Packets.Handlers
                     // Start with ID 1 if no characters exist
                     newCharacter.CharacterId = 1;
                 }
+
+                newCharacter.player_id = context.User.PlayerId;
+                newCharacter.unk1 = setting.unk1;
+                newCharacter.voice_type = setting.voice_type;
+                newCharacter.unk2 = setting.unk2;
+                newCharacter.voice_pitch = setting.voice_pitch;
 
                 //Logger.Write("newCharacter.CharacterId {0} {1}", newCharacter.CharacterId, context.User.PlayerId);
 

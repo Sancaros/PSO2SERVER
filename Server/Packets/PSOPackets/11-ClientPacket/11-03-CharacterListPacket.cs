@@ -50,19 +50,18 @@ namespace PSO2SERVER.Packets.PSOPackets
 
                 foreach (var ch in chars)
                 {
-                    writer.Write((uint)ch.CharacterId);
-                    writer.Write((uint)_PlayerId);
-
-                    for (var i = 0; i < 0x10; i++)
-                        writer.Write((byte)0);
-
+                    writer.Write(ch.CharacterId);
+                    writer.Write(ch.player_id);
+                    writer.Write(ch.unk1);
+                    writer.Write(ch.voice_type);
+                    writer.Write(ch.unk2);
+                    writer.Write(ch.voice_pitch);
                     writer.WriteFixedLengthUtf16(ch.Name, 16);
                     writer.Write((uint)0);
-
                     writer.WriteStruct(ch.Looks); // Note: 第4集之前创造的外观似乎不再有效了
                     writer.WriteStruct(ch.Jobs);
 
-                    for (var i = 0; i < 0xFC; i++)
+                    for (var i = 0; i < 0x90; i++)
                         writer.Write((byte)0);
                 }
             }

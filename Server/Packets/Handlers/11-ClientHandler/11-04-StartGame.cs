@@ -8,12 +8,22 @@ namespace PSO2SERVER.Packets.Handlers
     [PacketHandlerAttr(0x11, 0x04)]
     public class StartGame : PacketHandler
     {
+        public struct StartGamePacket
+        {
+            /// <summary>
+            /// Selected character ID.
+            /// </summary>
+            public uint CharId;
+            public uint Unk1;
+            public uint Unk2;
+        }
+
         #region implemented abstract members of PacketHandler
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
             var reader = new PacketReader(data, position, size);
-            var charId = reader.ReadUInt32();
+            var pkt = reader.ReadStruct<StartGamePacket>();
 
             //Logger.Write("id {0}", charId);
 
@@ -24,13 +34,13 @@ namespace PSO2SERVER.Packets.Handlers
             {
                 using (var db = new ServerEf())
                 {
-                    var character = db.Characters.Where(c => c.CharacterId == charId).First();
+                    var character = db.Characters.Where(c => c.CharacterId == pkt.CharId).First();
 
                     if (character == null || character.Player.PlayerId != context.User.PlayerId)
                     {
                         Logger.WriteError("数据库中未找到 {0} 角色ID {1} ({2})"
                             , context.User.Username
-                            , charId
+                            , pkt.CharId
                             , context.User.PlayerId
                             );
                         context.Socket.Close();

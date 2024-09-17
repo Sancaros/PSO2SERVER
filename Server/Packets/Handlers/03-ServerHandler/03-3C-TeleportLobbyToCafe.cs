@@ -23,7 +23,15 @@ namespace PSO2SERVER.Packets.Handlers
             context.SendPacket(0x1E, 0xC, 0x0, BitConverter.GetBytes(101));
 
             Map dstMap = ZoneManager.Instance.MapFromInstance("cafe", "lobby");
-            dstMap.SpawnClient(context, dstMap.GetDefaultLocation());
+            if(dstMap != null)
+            {
+                dstMap.SpawnClient(context, dstMap.GetDefaultLocation());
+            }
+            else
+            {
+                Logger.WriteError("cafe 区域不存在");
+                return;
+            }
 
         }
     }
