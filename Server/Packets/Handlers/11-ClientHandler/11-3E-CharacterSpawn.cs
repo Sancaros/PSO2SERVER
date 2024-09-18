@@ -43,7 +43,7 @@ namespace PSO2SERVER.Packets.Handlers
             //context.SendPacket(File.ReadAllBytes("testbed/237.23-7.210.189.208.30.bin"));
 
             // 先给一个空的 Palette
-            context.SendPacket(new PalettePacket());
+            context.SendPacket(new LoadPalettePacket());
 
             // memset packet - Enables menus
             // Also holds event items and likely other stuff too

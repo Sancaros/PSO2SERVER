@@ -6,10 +6,10 @@ using PSO2SERVER.Models;
 
 namespace PSO2SERVER.Packets.PSOPackets
 {
-    class SymbolArtList : Packet
+    class SymbolArtListPacket : Packet
     {
         ObjectHeader player;
-        public SymbolArtList(ObjectHeader player)
+        public SymbolArtListPacket(ObjectHeader player)
         {
             this.player = player;
         }

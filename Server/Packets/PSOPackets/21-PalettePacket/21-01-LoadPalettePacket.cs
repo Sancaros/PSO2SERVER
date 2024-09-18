@@ -2,7 +2,7 @@
 
 namespace PSO2SERVER.Packets.PSOPackets
 {
-    public class PalettePacket : Packet
+    public class LoadPalettePacket : Packet
     {
         #region implemented abstract members of Packet
 
@@ -22,7 +22,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0x21, 0x01);
+            return new PacketHeader(0x21, 0x01, PacketFlags.None);
         }
 
         #endregion
