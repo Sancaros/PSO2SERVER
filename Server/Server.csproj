@@ -371,7 +371,7 @@
     <Compile Include="Packets\Handlers\11-ClientHandler\11-02-CharacterList.cs" />
     <Compile Include="Packets\Packet.cs" />
     <Compile Include="Packets\PSOPackets\19-LobbyPacket\19-01-SystemMessagePacket.cs" />
-    <Compile Include="Packets\Handlers\11-ClientHandler\11-04-StartGame.cs" />
+    <Compile Include="Packets\Handlers\11-ClientHandler\11-04-CharacterSelected.cs" />
     <Compile Include="Packets\PSOPackets\NoPayloadPacket.cs" />
     <Compile Include="Packets\PSOPackets\08-SpawnPacket\08-04-CharacterSpawnPacket.cs" />
     <Compile Include="Packets\Handlers\04-ObjectHandler\04-07-MovementHandlers.cs" />

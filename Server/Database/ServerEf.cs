@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using MySql.Data.EntityFramework;
 using PSO2SERVER.Models;
+using static PSO2SERVER.Models.Character;
 
 namespace PSO2SERVER.Database
 {

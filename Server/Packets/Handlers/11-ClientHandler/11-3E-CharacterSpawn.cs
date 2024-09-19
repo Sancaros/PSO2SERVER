@@ -25,6 +25,9 @@ namespace PSO2SERVER.Packets.Handlers
             {
                 var reader = new PacketReader(data);
 
+                var info = string.Format("[<--] 接收到的数据 (hex): ");
+                Logger.WriteHex(info, data);
+
                 reader.BaseStream.Seek(0x38, SeekOrigin.Begin);
                 context.Character.Looks = reader.ReadStruct<Character.LooksParam>();
                 context.Character.Jobs = reader.ReadStruct<Character.JobParam>();

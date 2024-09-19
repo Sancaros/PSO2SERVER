@@ -25,6 +25,44 @@ namespace PSO2SERVER.Packets.PSOPackets
         //所有这些数据目前都是未知的。
 
         private int _PlayerId;
+
+        /// <summary>
+        /// Available characters.
+        /// </summary>
+        public Character[] Characters { get; set; }
+
+        //public Item[][] EquippedItems { get; set; } = new Item[10][];
+
+        /// <summary>
+        /// Character play times.
+        /// </summary>
+        public uint[] PlayTimes { get; set; } = new uint[30];
+
+        /// <summary>
+        /// Character deletion flags (flag, deletion timestamp).
+        /// </summary>
+        public (uint Flag, uint Timestamp)[] DeletionFlags { get; set; } = new (uint, uint)[30];
+
+        /// <summary>
+        /// Character ship transfer flags.
+        /// </summary>
+        public (uint Flag, uint Transfer)[] TransferFlags { get; set; } = new (uint, uint)[30];
+
+        /// <summary>
+        /// Account accessory flag (?).
+        /// </summary>
+        public ushort AccountAccessory { get; set; }
+
+        /// <summary>
+        /// Login survey flag.
+        /// </summary>
+        public uint LoginSurvey { get; set; }
+
+        /// <summary>
+        /// Ad flag (on global 12 star unit ad).
+        /// </summary>
+        public uint Ad { get; set; }
+
         public CharacterListPacket(int PlayerId)
         {
             _PlayerId = PlayerId;

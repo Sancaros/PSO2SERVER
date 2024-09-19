@@ -6,9 +6,9 @@ using System.Linq;
 namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0x04)]
-    public class StartGame : PacketHandler
+    public class CharacterSelected : PacketHandler
     {
-        public struct StartGamePacket
+        public struct CharacterSelectedPacket
         {
             /// <summary>
             /// Selected character ID.
@@ -23,7 +23,7 @@ namespace PSO2SERVER.Packets.Handlers
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
             var reader = new PacketReader(data, position, size);
-            var pkt = reader.ReadStruct<StartGamePacket>();
+            var pkt = reader.ReadStruct<CharacterSelectedPacket>();
 
             //Logger.Write("id {0}", charId);
 

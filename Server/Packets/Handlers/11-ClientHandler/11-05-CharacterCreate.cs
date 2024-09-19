@@ -19,23 +19,31 @@ namespace PSO2SERVER.Packets.Handlers
             if (context.User == null)
                 return;
 
+
+            PacketWriter w = new PacketWriter();
+
             var reader = new PacketReader(data, position, size);
-            //var info = string.Format("[<--] 接收到的数据 (hex): ");
-            //Logger.WriteHex(info, data);
+            var info = string.Format("[<--] 接收到的数据 (hex): ");
+            Logger.WriteHex(info, data);
             var setting = reader.ReadStruct<Character.CharParam>();
-
             var name = reader.ReadFixedLengthUtf16(16);//玩家名称 宽字符
-
-            //reader.BaseStream.Seek(0x04, SeekOrigin.Current); // Padding
             var looks = reader.ReadStruct<Character.LooksParam>();
+            var unk3 = reader.ReadUInt32();
             var jobs = reader.ReadStruct<Character.JobParam>();
+            w.WriteStruct(jobs);
+            Logger.WriteHex(info, w.ToArray());
 
             //Logger.WriteInternal("[CHR] {0} 创建了名为 {1} 的新角色.", context.User.Username, name);
             var newCharacter = new Character
             {
+                unk1 = setting.unk1,
+                voice_type = setting.voice_type,
+                unk2 = setting.unk2,
+                voice_pitch = setting.voice_pitch,
                 Name = name,
-                Jobs = jobs,
                 Looks = looks,
+                unk3 = unk3,
+                Jobs = jobs,
                 Player = context.User
             };
 
@@ -56,10 +64,6 @@ namespace PSO2SERVER.Packets.Handlers
                 }
 
                 newCharacter.player_id = context.User.PlayerId;
-                newCharacter.unk1 = setting.unk1;
-                newCharacter.voice_type = setting.voice_type;
-                newCharacter.unk2 = setting.unk2;
-                newCharacter.voice_pitch = setting.voice_pitch;
 
                 //Logger.Write("newCharacter.CharacterId {0} {1}", newCharacter.CharacterId, context.User.PlayerId);
 
