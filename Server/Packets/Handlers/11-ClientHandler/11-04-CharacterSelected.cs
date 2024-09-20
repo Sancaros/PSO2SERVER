@@ -22,19 +22,19 @@ namespace PSO2SERVER.Packets.Handlers
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
+            if (context.User == null)
+                return;
+
             var reader = new PacketReader(data, position, size);
             var pkt = reader.ReadStruct<CharacterSelectedPacket>();
 
             //Logger.Write("id {0}", charId);
 
-            if (context.User == null)
-                return;
-
             if (context.Character == null) // On character create, this is already set.
             {
                 using (var db = new ServerEf())
                 {
-                    var character = db.Characters.Where(c => c.CharacterId == pkt.CharId).First();
+                    var character = db.Characters.Where(c => c.CharacterID == pkt.CharId).First();
 
                     if (character == null || character.Player.PlayerId != context.User.PlayerId)
                     {

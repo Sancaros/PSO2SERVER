@@ -22,7 +22,7 @@ namespace PSO2SERVER.Packets.Handlers
             {
 
                 foreach (var character in db.Characters)
-                    if (character.CharacterId == id)
+                    if (character.CharacterID == id)
                     {
                         db.Characters.Remove(character);
                         db.ChangeTracker.DetectChanges();

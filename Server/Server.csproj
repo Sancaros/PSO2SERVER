@@ -172,7 +172,7 @@
     <Compile Include="Object\ObjectManager.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-03-InitialLoad.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-0C-PingResponse.cs" />
-    <Compile Include="Packets\Handlers\03-ServerHandler\03-10-DoItMaybe.cs" />
+    <Compile Include="Packets\Handlers\03-ServerHandler\03-10-MapLoaded.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-16-CampshipTeleportDown.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-3B-TeleportCafeToLobby.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-3C-TeleportLobbyToCafe.cs" />

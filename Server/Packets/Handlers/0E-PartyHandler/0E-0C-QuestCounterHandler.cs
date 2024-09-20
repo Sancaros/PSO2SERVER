@@ -4,7 +4,7 @@ using PSO2SERVER.Packets.PSOPackets;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0xE, 0xC)]
+    [PacketHandlerAttr(0x0E, 0x0C)]
     class QuestDifficultyStartHandler : PacketHandler
     {
         // Go go maximum code duplication (for now)

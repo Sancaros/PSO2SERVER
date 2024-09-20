@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0xB, 0x19)]
+    [PacketHandlerAttr(0x0B, 0x19)]
     class QuestDifficultyRequestHandler : PacketHandler
     {
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)

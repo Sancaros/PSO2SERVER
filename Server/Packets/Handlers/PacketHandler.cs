@@ -27,34 +27,59 @@ namespace PSO2SERVER.Packets.Handlers
 
         public static void LoadPacketHandlers()
         {
-            var handlers = (from t in Assembly.GetExecutingAssembly().GetTypes()
-                            where t.IsClass && t.Namespace == "PSO2SERVER.Packets.Handlers" &&
-                                  t.IsSubclassOf(typeof(PacketHandler))
-                            let attrs = (PacketHandlerAttr[])t.GetCustomAttributes(typeof(PacketHandlerAttr), false)
-                            where attrs.Length > 0
-                            select new
-                            {
-                                attrs[0].Type,
-                                attrs[0].Subtype,
-                                HandlerType = t
-                            }).ToList();
-
-            // Sort handlers by Type and Subtype
-            handlers = handlers.OrderBy(h => h.Type).ThenBy(h => h.Subtype).ToList();
-
-            foreach (var handler in handlers)
+            try
             {
-                Logger.WriteInternal("[数据] 数据包 0x{0:X2} - 0x{1:X2} 处理已载入 {2} ."
-                    , handler.Type
-                    , handler.Subtype
-                    , handler.HandlerType.Name
+                var handlers = (from t in Assembly.GetExecutingAssembly().GetTypes()
+                                where t.IsClass && t.Namespace == "PSO2SERVER.Packets.Handlers" &&
+                                      t.IsSubclassOf(typeof(PacketHandler))
+                                let attrs = (PacketHandlerAttr[])t.GetCustomAttributes(typeof(PacketHandlerAttr), false)
+                                where attrs.Length > 0
+                                select new
+                                {
+                                    attrs[0].Type,
+                                    attrs[0].Subtype,
+                                    HandlerType = t
+                                }).ToList();
+
+                // Sort handlers by Type and Subtype
+                handlers = handlers.OrderBy(h => h.Type).ThenBy(h => h.Subtype).ToList();
+
+                foreach (var handler in handlers)
+                {
+                    Logger.WriteInternal("[数据] 数据包 0x{0:X2} - 0x{1:X2} 处理已载入 {2}.",
+                        handler.Type,
+                        handler.Subtype,
+                        handler.HandlerType.Name
                     );
 
-                ushort packetTypeUShort = Helper.PacketTypeToUShort(handler.Type, handler.Subtype);
-                if (!Handlers.ContainsKey(packetTypeUShort))
-                {
-                    Handlers.Add(packetTypeUShort, (PacketHandler)Activator.CreateInstance(handler.HandlerType));
+                    ushort packetTypeUShort = Helper.PacketTypeToUShort(handler.Type, handler.Subtype);
+                    if (!Handlers.ContainsKey(packetTypeUShort))
+                    {
+                        // Create instance and add to dictionary
+                        var handlerInstance = (PacketHandler)Activator.CreateInstance(handler.HandlerType);
+                        Handlers.Add(packetTypeUShort, handlerInstance);
+                    }
+                    else
+                    {
+                        Logger.WriteInternal("[警告] 数据包 0x{0:X2} - 0x{1:X2} 已存在处理器 {2}.",
+                            handler.Type,
+                            handler.Subtype,
+                            handler.HandlerType.Name
+                        );
+                    }
                 }
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                // Log the exception details
+                foreach (var loaderException in ex.LoaderExceptions)
+                {
+                    Logger.WriteInternal("[错误] 加载类型时出现异常: {0}", loaderException.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteInternal("[错误] 发生异常: {0}", ex.Message);
             }
         }
 

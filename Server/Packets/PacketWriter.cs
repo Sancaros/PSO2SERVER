@@ -162,5 +162,10 @@ namespace PSO2SERVER.Packets
                 Write(b);
             }
         }
+
+        internal void WriteFixedLengthUtf16(int i, int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

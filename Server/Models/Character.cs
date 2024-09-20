@@ -261,7 +261,7 @@ namespace PSO2SERVER.Models
         [Key]
         public int Id { get; set; }
 
-        public int CharacterId { get; set; }
+        public int CharacterID { get; set; }
         public int player_id { get; set; }
         public uint unk1 { get; set; }
         public uint voice_type { get; set; }

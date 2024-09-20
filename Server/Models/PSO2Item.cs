@@ -35,8 +35,6 @@ namespace PSO2SERVER.Models
     public struct Items
     {
         [FieldOffset(0)]
-        public PSO2ItemNone None;
-        [FieldOffset(0)]
         public PSO2ItemWeapon Weapon;
         [FieldOffset(0)]
         public PSO2ItemClothing Clothing;
@@ -46,8 +44,10 @@ namespace PSO2SERVER.Models
         public PSO2ItemCamo Camo;
         [FieldOffset(0)]
         public PSO2ItemUnit Unit;
-        [FieldOffset(0)]
-        public byte[] Unknown;
+        //[FieldOffset(0)]
+        //public byte[] Unknown;
+        //[FieldOffset(0)]
+        //public PSO2ItemNone None;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
