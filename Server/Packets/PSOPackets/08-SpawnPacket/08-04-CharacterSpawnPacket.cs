@@ -37,8 +37,8 @@ namespace PSO2SERVER.Packets.PSOPackets
         {
             var writer = new PacketWriter();
 
-            // Player header
-            writer.WritePlayerHeader((uint)_character.Player.PlayerId);
+            // Account header
+            writer.WritePlayerHeader((uint)_character.Account.AccountId);
 
             // Spawn position
             writer.Write(Position);
@@ -54,7 +54,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             writer.Write((uint)(IsItMe ? 47 : 39)); // 0x58
             writer.Write((ushort)559); // 0x5C
             writer.Write((ushort)306); // 0x5E
-            writer.Write((uint)_character.Player.PlayerId); // player ID copy
+            writer.Write((uint)_character.Account.AccountId); // player ID copy
             writer.Write((uint)0); // "char array ugggghhhhh" according to PolarisLegacy
             writer.Write((uint)0); // "voiceParam_unknown4"
             writer.Write((uint)0); // "voiceParam_unknown8"
@@ -65,7 +65,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             writer.WriteFixedLengthUtf16("", 32); // title?
             writer.Write((uint)0); // 0x204
             writer.Write((uint)0); // gmflag?
-            writer.WriteFixedLengthUtf16(_character.Player.Nickname, 16); // nickname, maybe not 16 chars?
+            writer.WriteFixedLengthUtf16(_character.Account.Nickname, 16); // nickname, maybe not 16 chars?
             for (var i = 0; i < 64; i++)
                 writer.Write((byte)0);
 

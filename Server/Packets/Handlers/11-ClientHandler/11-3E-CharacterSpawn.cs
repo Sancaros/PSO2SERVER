@@ -17,7 +17,7 @@ namespace PSO2SERVER.Packets.Handlers
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            if (context.User == null || context.Character == null)
+            if (context._account == null || context.Character == null)
                 return;
 
             // Looks/Jobs

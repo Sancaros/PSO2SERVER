@@ -14,7 +14,7 @@ namespace PSO2SERVER.Packets.Handlers
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            if (context.User == null)
+            if (context._account == null)
                 return;
 
 
@@ -33,20 +33,20 @@ namespace PSO2SERVER.Packets.Handlers
             var looks = reader.ReadStruct<Character.LooksParam>();
             var jobs = reader.ReadStruct<Character.JobParam>();
 
-            Logger.WriteInternal("[CHR] {0} 创建了名为 {1} 的新角色.", context.User.Username, name);
+            Logger.WriteInternal("[CHR] {0} 创建了名为 {1} 的新角色.", context._account.Username, name);
             var newCharacter = new Character
             {
                 Name = name,
                 Jobs = jobs,
                 Looks = looks,
-                Player = context.User
+                Account = context._account
             };
 
             // Add to database
             using (var db = new ServerEf())
             {
                 // Check if any characters exist for this player
-                var existingCharacters = db.Characters.Where(c => c.Player.PlayerId == context.User.PlayerId).ToList();
+                var existingCharacters = db.Characters.Where(c => c.Account.AccountId == context._account.AccountId).ToList();
                 if (existingCharacters.Count > 0)
                 {
                     // Increment ID if characters already exist
@@ -58,18 +58,20 @@ namespace PSO2SERVER.Packets.Handlers
                     newCharacter.Character_ID = 1;
                 }
 
-                //Logger.Write("newCharacter.CharacterId {0} {1}", newCharacter.CharacterId, context.User.PlayerId);
+                newCharacter.Player_ID = context._account.AccountId;
+
+                //Logger.Write("newCharacter.CharacterId {0} {1}", newCharacter.CharacterId, context._account.AccountId);
 
                 db.Characters.Add(newCharacter);
-                db.Entry(newCharacter.Player).State = EntityState.Modified;
+                db.Entry(newCharacter.Account).State = EntityState.Modified;
                 db.SaveChanges();
             }
 
             // Assign character to player
             context.Character = newCharacter;
 
-            // Set Player ID
-            context.SendPacket(new CharacterCreateResponsePacket(CharacterCreateResponsePacket.CharacterCreationStatus.Success, (uint)context.User.PlayerId));
+            // Set Account ID
+            context.SendPacket(new CharacterCreateResponsePacket(CharacterCreateResponsePacket.CharacterCreationStatus.Success, (uint)context._account.AccountId));
 
             // Spawn
             context.SendPacket(new NoPayloadPacket(0x11, 0x3E));

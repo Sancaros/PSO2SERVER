@@ -171,7 +171,7 @@
     <Compile Include="Network\PortChecker.cs" />
     <Compile Include="Object\ObjectManager.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-03-InitialLoad.cs" />
-    <Compile Include="Packets\Handlers\03-ServerHandler\03-0C-PingResponse.cs" />
+    <Compile Include="Packets\Handlers\03-ServerHandler\03-0C-ServerPong.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-10-MapLoaded.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-16-CampshipTeleportDown.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-3B-TeleportCafeToLobby.cs" />
@@ -202,7 +202,11 @@
     <Compile Include="Packets\Handlers\0E-PartyHandler\0E-0C-QuestCounterHandler.cs" />
     <Compile Include="Packets\Handlers\03-ServerHandler\03-34-TeleportCasinoToLobby.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-41-CreateCharacterOne.cs" />
+    <Compile Include="Packets\Handlers\11-ClientHandler\11-2D-SystemInformation.cs" />
+    <Compile Include="Packets\Handlers\2B-SettingHandler\2B-01-SavePlayerSettings.cs" />
+    <Compile Include="Packets\Handlers\2B-SettingHandler\2B-00-SettingsRequest.cs" />
     <Compile Include="Packets\Handlers\2F-SymbolHandler\2F-06-SymbolArtHandler.cs" />
+    <Compile Include="Packets\PSOPackets\03-ServerPacket\03-0B-ServerPingPacket.cs" />
     <Compile Include="Packets\PSOPackets\4D-ClassicMissionPassPacket\4D-03-MissionPassPacket.cs" />
     <Compile Include="Packets\PSOPackets\4D-ClassicMissionPassPacket\4D-01-MissionPassInfoPacket.cs" />
     <Compile Include="Packets\PSOPackets\2B-SettingsPacket\2B-02-LoadSettingsPacket.cs" />
@@ -344,7 +348,6 @@
     <Compile Include="Packets\PSOPackets\2F-SymbolPacket\2F-05-SymbolArtResultPacket.cs" />
     <Compile Include="Packets\PSOPackets\2F-SymbolPacket\2F-03-SymbolArtClientDataPacket.cs" />
     <Compile Include="Packets\PSOPackets\2F-SymbolPacket\2F-01-SymbolArtDataRequestPacket.cs" />
-    <Compile Include="Packets\PSOPackets\UN-UN-SetScenePacket.cs" />
     <Compile Include="Packets\PSOPackets\2F-SymbolPacket\2F-07-SymbolArtListPacket.cs" />
     <Compile Include="Packets\PSOPackets\04-ObjectRelatedPacket\04-02-TeleportTransferPacket.cs" />
     <Compile Include="Party\Party.cs" />

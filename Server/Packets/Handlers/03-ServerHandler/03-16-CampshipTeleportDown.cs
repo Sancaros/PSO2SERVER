@@ -18,7 +18,7 @@ namespace PSO2SERVER.Packets.Handlers
             // TODO: WTF terribad hax?
             if (context.CurrentLocation.PosZ >= 20)
             {
-                var instanceName = String.Format("{0}-{1}", context.currentParty.currentQuest.name, context.User.Nickname);
+                var instanceName = String.Format("{0}-{1}", context.currentParty.currentQuest.name, context._account.Nickname);
 
                 Map forest = ZoneManager.Instance.MapFromInstance("area1", instanceName);
                 forest.SpawnClient(context, new PSOLocation(0, 1, 0, -0, -37, 0.314f, 145.5f));

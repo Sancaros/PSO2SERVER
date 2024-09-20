@@ -59,10 +59,10 @@ namespace PSO2SERVER
             // TODO: Disconnect a client if we don't get a response in a certain amount of time
             foreach (var client in Clients)
             {
-                if (client != null && client.User != null)
+                if (client != null && client._account != null)
                 {
-                    Logger.Write("[HEY] Pinging " + client.User.Username);
-                    client.SendPacket(new NoPayloadPacket(0x03, 0x0B));
+                    Logger.Write("[HEY] Pinging " + client._account.Username);
+                    client.SendPacket(new ServerPingPacket());
                 }
             }
         }

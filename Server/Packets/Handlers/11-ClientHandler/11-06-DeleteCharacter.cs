@@ -16,7 +16,7 @@ namespace PSO2SERVER.Packets.Handlers
             var reader = new PacketReader(data);
             var id = reader.ReadInt32();
 
-            Logger.Write("[CHR] {0} 正在删除ID {1} 的角色", context.User.Username, id);
+            Logger.Write("[CHR] {0} 正在删除ID {1} 的角色", context._account.Username, id);
 
             // Delete Character
             using (var db = new ServerEf())

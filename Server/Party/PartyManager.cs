@@ -41,7 +41,7 @@ namespace PSO2SERVER.Party
             if (GetCurrentPartyForClient(c) != null)
                 return; // For now
 
-            parties.Add(new Party(c.User.Username, c), c.User.Username);
+            parties.Add(new Party(c._account.Username, c), c._account.Username);
         }
 
         public void AddPlayerToParty(Client c, Party p)

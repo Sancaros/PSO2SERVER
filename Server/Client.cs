@@ -41,7 +41,7 @@ namespace PSO2SERVER
         public bool IsClosed { get; private set; }
         public SocketClient Socket { get; private set; }
         // Game properties, TODO Consider moving these somewhere else
-        public Player User { get; set; }
+        public Account _account { get; set; }
         public Character Character { get; set; }
         //public Zone.Zone CurrentZone { get; set; }
         public Map CurrentZone;
@@ -240,7 +240,8 @@ namespace PSO2SERVER
         {
             // Check for and create packets directory if it doesn't exist
             var packetPath = string.Format(
-                "packets/{0}"
+                "packets/0x{0:X2}-0x{1:X2}/{2}"
+                , typeA, typeB
                 , _server.StartTime.ToShortDateString().Replace('/', '-')
             );
 
@@ -272,9 +273,11 @@ namespace PSO2SERVER
         {
             // Check for and create packets directory if it doesn't exist
             var packetPath = string.Format(
-                "UnkClientPackets/{0}"
+                "UnkClientPackets/0x{0:X2}-0x{1:X2}/{2}"
+                , typeA, typeB
                 , _server.StartTime.ToShortDateString().Replace('/', '-')
             );
+
             if (!Directory.Exists(packetPath))
                 Directory.CreateDirectory(packetPath);
 

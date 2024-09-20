@@ -41,7 +41,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             using (var db = new ServerEf())
             {
                 var chars = db.Characters
-                    .Where(w => w.Player.PlayerId == _PlayerId)
+                    .Where(w => w.Account.AccountId == _PlayerId)
                     .OrderBy(o => o.Character_ID) // TODO: Order by last played
                     .Select(s => s);
 

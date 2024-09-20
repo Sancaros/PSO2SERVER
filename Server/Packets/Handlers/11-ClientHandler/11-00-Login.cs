@@ -37,13 +37,13 @@ namespace PSO2SERVER.Packets.Handlers
             // What am I doing here even
             using (var db = new ServerEf())
             {
-                var users = from u in db.Players
+                var users = from u in db.Account
                             where u.Username.ToLower().Equals(username.ToLower())
                             select u;
 
 
                 var error = "";
-                Player user;
+                Account user;
 
                 if (!users.Any())
                 {
@@ -62,7 +62,7 @@ namespace PSO2SERVER.Packets.Handlers
                     else // We're all good!
                     {
                         // 直接插入新账户至数据库
-                        user = new Player
+                        user = new Account
                         {
                             Username = username.ToLower(),
                             Password = BCrypt.Net.BCrypt.HashPassword(password),
@@ -70,7 +70,7 @@ namespace PSO2SERVER.Packets.Handlers
                             // Since we can't display the nickname prompt yet, just default it to the username
                             SettingsIni = File.ReadAllText(ServerApp.ServerSettingsKey)
                         };
-                        db.Players.Add(user);
+                        db.Account.Add(user);
                         db.SaveChanges();
 
                         context.SendPacket(0x11, 0x1e, 0x0, new byte[0x44]); // Request nickname
@@ -96,7 +96,7 @@ namespace PSO2SERVER.Packets.Handlers
                     }
                 }
 
-                context.SendPacket(new LoginDataPacket("Server AuthList 1", error, (user == null) ? (uint)0 : (uint)user.PlayerId));
+                context.SendPacket(new LoginDataPacket("Server AuthList 1", error, (user == null) ? (uint)0 : (uint)user.AccountId));
 
                 // Mystery packet
                 //var mystery = new PacketWriter();
@@ -110,12 +110,7 @@ namespace PSO2SERVER.Packets.Handlers
                     return;
                 }
 
-                // Settings packet
-                var settings = new PacketWriter();
-                settings.WriteAscii(user.SettingsIni, 0x54AF, 0x100);
-                context.SendPacket(0x2B, 2, 4, settings.ToArray());
-
-                context.User = user;
+                context._account = user;
 
             }
 

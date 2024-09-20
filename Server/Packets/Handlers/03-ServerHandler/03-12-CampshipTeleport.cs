@@ -15,7 +15,7 @@ namespace PSO2SERVER.Packets.Handlers
             if (context.currentParty.currentQuest == null)
                 return;
 
-            var instanceName = String.Format("{0}-{1}", context.currentParty.currentQuest.name, context.User.Nickname);
+            var instanceName = String.Format("{0}-{1}", context.currentParty.currentQuest.name, context._account.Nickname);
             ZoneManager.Instance.NewInstance(instanceName, new Map("campship", 150, 0, Map.MapType.Campship, 0));
             // todo: add next map
             ZoneManager.Instance.AddMapToInstance(instanceName, new Map("area1", 311, -1, Map.MapType.Other, (Map.MapFlags)0x6) { GenerationArgs = new Map.GenParam((uint)new Random().Next(), 2, 3)});

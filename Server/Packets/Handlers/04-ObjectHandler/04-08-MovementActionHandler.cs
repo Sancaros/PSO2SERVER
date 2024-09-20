@@ -37,7 +37,7 @@ namespace PSO2SERVER.Packets.Handlers
                 if (c == context || c.Character == null || c.CurrentZone != context.CurrentZone)
                     continue;
                 //PacketWriter output = new PacketWriter();
-                //output.WriteStruct(new ObjectHeader((uint)context.User.PlayerId, EntityType.Player));
+                //output.WriteStruct(new ObjectHeader((uint)context._account.AccountId, EntityType.Account));
                 //output.WriteStruct(preformer);
                 //output.Write(preData);
                 //output.WriteAscii(command, 0x4315, 0x7A);
@@ -48,7 +48,7 @@ namespace PSO2SERVER.Packets.Handlers
 
                 //c.SendPacket(0x4, 0x80, 0x44, output.ToArray());
 
-                c.SendPacket(new MovementActionServerPacket(context.User.PlayerId, preformer, preData
+                c.SendPacket(new MovementActionServerPacket(context._account.AccountId, preformer, preData
                     , command, rest, thingCount, things, final));
             }
         }

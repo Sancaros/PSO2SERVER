@@ -11,10 +11,10 @@ namespace PSO2SERVER.Packets.Handlers
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            if (context.User == null)
+            if (context._account == null)
                 return;
 
-            context.SendPacket(new CharacterListPacket(context.User.PlayerId));
+            context.SendPacket(new CharacterListPacket(context._account.AccountId));
         }
 
         #endregion

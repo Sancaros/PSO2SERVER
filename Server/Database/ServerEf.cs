@@ -35,7 +35,20 @@ namespace PSO2SERVER.Database
         public float PosZ { get; set; }
     }
 
-    public class Player
+    public class Account
+    {
+        [Key]
+        public int AccountId { get; set; }
+
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Nickname { get; set; }
+        public string SettingsIni { get; set; }
+        public string Cpu_Info { get; set; }
+        public string Video_Info { get; set; }
+    }
+
+    public class PlayerSystemInfo
     {
         [Key]
         public int PlayerId { get; set; }
@@ -90,7 +103,7 @@ namespace PSO2SERVER.Database
     public class ServerEf : DbContext
     {
         public DbSet<ServerInfo> ServerInfos { get; set; }
-        public DbSet<Player> Players { get; set; }
+        public DbSet<Account> Account { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Teleport> Teleports { get; set; }
         public DbSet<NPC> NPCs { get; set; }
@@ -126,7 +139,7 @@ namespace PSO2SERVER.Database
                     ServerInfos.Add(revision);
 
                     //TODO Possibly move this somewhere else?
-                    Database.ExecuteSqlCommand("ALTER TABLE Players AUTO_INCREMENT=10000000");
+                    Database.ExecuteSqlCommand("ALTER TABLE Account AUTO_INCREMENT=10000000");
                 }
                 SaveChanges();
 

@@ -10,9 +10,9 @@ namespace PSO2SERVER.Packets.PSOPackets
     {
 
         QuestDefiniton questdef;
-        Database.Player p;
+        Database.Account p;
 
-        public SetQuestInfoPacket(QuestDefiniton questdef, Database.Player p)
+        public SetQuestInfoPacket(QuestDefiniton questdef, Database.Account p)
         {
             this.questdef = questdef;
             this.p = p;
@@ -26,7 +26,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             writer.Write((ushort)0);
             writer.Write((ushort)0);
             writer.Write((ushort)1);
-            writer.WriteStruct(new ObjectHeader((uint)p.PlayerId, EntityType.Player));
+            writer.WriteStruct(new ObjectHeader((uint)p.AccountId, EntityType.Player));
             writer.Write(0);
             writer.Write((ushort)0);
             writer.Write((ushort)0);

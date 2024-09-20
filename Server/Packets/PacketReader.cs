@@ -35,6 +35,7 @@ namespace PSO2SERVER.Packets
             }
             var charCount = magic - 1;
             var padding = 4 - (charCount & 3);
+            //Logger.Write("charCount = " + charCount + " padding = " + padding);
 
             var data = ReadBytes((int) charCount);
             for (var i = 0; i < padding; i++)

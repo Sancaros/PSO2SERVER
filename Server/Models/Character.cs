@@ -309,7 +309,7 @@ namespace PSO2SERVER.Models
 
         public string Unk4 { get; set; }
 
-        public virtual Player Player { get; set; }
+        public virtual Account Account { get; set; }
     }
 
 

@@ -277,7 +277,7 @@ namespace PSO2SERVER
             // SpawnClone
             var spawnClone = new ConsoleCommand(SpawnClone, "spawnclone");
             spawnClone.Arguments.Add(new ConsoleCommandArgument("Username", false));
-            spawnClone.Arguments.Add(new ConsoleCommandArgument("Player Name", false));
+            spawnClone.Arguments.Add(new ConsoleCommandArgument("Account Name", false));
             spawnClone.Arguments.Add(new ConsoleCommandArgument("X", false));
             spawnClone.Arguments.Add(new ConsoleCommandArgument("Y", false));
             spawnClone.Arguments.Add(new ConsoleCommandArgument("Z", false));
@@ -653,7 +653,7 @@ namespace PSO2SERVER
                 // This is probably not the right way to do this
                 ServerApp.Instance.Server.Clients[i].Socket.Close();
                 Logger.WriteCommand(client,
-                    "[CMD] Logged out user " + ServerApp.Instance.Server.Clients[i].User.Username);
+                    "[CMD] Logged out user " + ServerApp.Instance.Server.Clients[i]._account.Username);
             }
 
             Logger.WriteCommand(client, "[CMD] Logged out all players successfully");
@@ -695,17 +695,17 @@ namespace PSO2SERVER
             if (z == 0)
                 z = 134.375f;
 
-            var fakePlayer = new Player
+            var fakePlayer = new Account
             {
                 Username = name,
                 Nickname = playerName,
-                PlayerId = (12345678 + new Random().Next())
+                AccountId = (12345678 + new Random().Next())
             };
 
             var fakeChar = new Character
             {
                 Character_ID = 12345678 + new Random().Next(),
-                Player = fakePlayer,
+                Account = fakePlayer,
                 Name = playerName,
                 Looks = client.Character.Looks,
                 Jobs = client.Character.Jobs
@@ -878,7 +878,7 @@ namespace PSO2SERVER
             var id = 0;
             if (client != null)
             {
-                id = client.User.PlayerId;
+                id = client._account.AccountId;
                 foundPlayer = true;
             }
             else
@@ -912,7 +912,7 @@ namespace PSO2SERVER
             var id = 0;
             if (client != null)
             {
-                id = client.User.PlayerId;
+                id = client._account.AccountId;
                 foundPlayer = true;
             }
             else

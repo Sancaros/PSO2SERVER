@@ -19,7 +19,7 @@ namespace PSO2SERVER.Packets.Handlers
                 if (c.Character == null || c.CurrentZone != context.CurrentZone)
                     continue;
 
-                c.SendPacket(new NewBusyStatePacket(context.User.PlayerId, BusyState.NotBusy));
+                c.SendPacket(new NewBusyStatePacket(context._account.AccountId, BusyState.NotBusy));
             }
         }
     }

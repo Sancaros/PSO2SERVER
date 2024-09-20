@@ -41,7 +41,7 @@ namespace PSO2SERVER.Packets.Handlers
                 questDef = def
             };
             context.currentParty.currentQuest = quest;
-            context.SendPacket(new SetQuestInfoPacket(def, context.User));
+            context.SendPacket(new SetQuestInfoPacket(def, context._account));
             context.SendPacket(new QuestStartPacket(def, diff));
             
         }

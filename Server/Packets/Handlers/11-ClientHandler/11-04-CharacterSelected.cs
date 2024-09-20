@@ -23,7 +23,7 @@ namespace PSO2SERVER.Packets.Handlers
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            if (context.User == null)
+            if (context._account == null)
                 return;
 
             var reader = new PacketReader(data, position, size);
@@ -31,7 +31,7 @@ namespace PSO2SERVER.Packets.Handlers
 
             var charId = pkt.CharId;
 
-            //Logger.Write("id {0}", charId);
+            Logger.Write("id {0}", charId);
 
             if (context.Character == null) // On character create, this is already set.
             {
@@ -39,14 +39,14 @@ namespace PSO2SERVER.Packets.Handlers
                 {
                     try
                     {
-                        var character = db.Characters.FirstOrDefault(c => c.Character_ID == charId);
+                        var character = db.Characters.FirstOrDefault(c => c.Player_ID == charId);
 
-                        if (character == null || character.Player == null || character.Player.PlayerId != context.User.PlayerId)
+                        if (character == null || character.Account == null || character.Account.AccountId != context._account.AccountId)
                         {
                             Logger.WriteError("数据库中未找到 {0} 角色ID {1} ({2})"
-                                , context.User.Username
+                                , context._account.Username
                                 , charId
-                                , context.User.PlayerId
+                                , context._account.AccountId
                             );
                             context.Socket.Close();
                             return;

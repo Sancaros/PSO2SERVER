@@ -110,7 +110,7 @@ namespace PSO2SERVER.Zone
             {
                 //PacketWriter writer = new PacketWriter();
                 //writer.WriteStruct(new ObjectHeader(3, EntityType.Map));
-                //writer.WriteStruct(new ObjectHeader((uint)c.User.PlayerId, EntityType.Player));
+                //writer.WriteStruct(new ObjectHeader((uint)c._account.AccountId, EntityType.Account));
                 //writer.Write(0x1); // 8 Zeros
                 //writer.Write(0); // 8 Zeros
                 //writer.Write(~(uint)Type); // F4 FF FF FF
@@ -132,7 +132,7 @@ namespace PSO2SERVER.Zone
                 _map.GenerationArgs.xsize = GenerationArgs.xsize;
                 _map.GenerationArgs.ysize = GenerationArgs.ysize;
 
-                c.SendPacket(new MapTransferPacket(_map, c.User.PlayerId));
+                c.SendPacket(new MapTransferPacket(_map, c._account.AccountId));
             }
 
             if (c.CurrentZone != null)
@@ -141,9 +141,9 @@ namespace PSO2SERVER.Zone
             }
 
             //var setPlayerId = new PacketWriter();
-            //setPlayerId.WritePlayerHeader((uint)c.User.PlayerId);
+            //setPlayerId.WritePlayerHeader((uint)c._account.AccountId);
             //c.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
-            c.SendPacket(new SetPlayerIDPacket(c.User.PlayerId));
+            c.SendPacket(new SetPlayerIDPacket(c._account.AccountId));
 
             // Spawn Character
             c.SendPacket(new CharacterSpawnPacket(c.Character, location));
@@ -175,7 +175,7 @@ namespace PSO2SERVER.Zone
 
             Clients.Add(c);
 
-            Logger.Write("[MAP] {0} 已生成至 {1}.", c.User.Username, Name);
+            Logger.Write("[MAP] {0} 已生成至 {1}.", c._account.Username, Name);
 
             if (InstanceName != null && ZoneManager.Instance.playerCounter.ContainsKey(InstanceName))
             {
@@ -195,10 +195,10 @@ namespace PSO2SERVER.Zone
             foreach (Client other in Clients)
             {
                 //PacketWriter writer = new PacketWriter();
-                //writer.WriteStruct(new ObjectHeader((uint)other.User.PlayerId, EntityType.Player));
-                //writer.WriteStruct(new ObjectHeader((uint)c.User.PlayerId, EntityType.Player));
+                //writer.WriteStruct(new ObjectHeader((uint)other._account.AccountId, EntityType.Account));
+                //writer.WriteStruct(new ObjectHeader((uint)c._account.AccountId, EntityType.Account));
                 //other.SendPacket(0x4, 0x3B, 0x40, writer.ToArray());
-                other.SendPacket(new DespawnPlayerPacket(other.User.PlayerId, c.User.PlayerId));
+                other.SendPacket(new DespawnPlayerPacket(other._account.AccountId, c._account.AccountId));
             }
 
             if (InstanceName != null && ZoneManager.Instance.playerCounter.ContainsKey(InstanceName))

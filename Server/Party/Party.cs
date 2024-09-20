@@ -40,7 +40,7 @@ namespace PSO2SERVER.Party
         {
             if(!members.Contains(c))
             {
-                Logger.WriteWarning("[PTY] Client {0} was trying to be removed from {1}, but he was never in {1}!", c.User.Username, name);
+                Logger.WriteWarning("[PTY] Client {0} was trying to be removed from {1}, but he was never in {1}!", c._account.Username, name);
                 return;
             }
 

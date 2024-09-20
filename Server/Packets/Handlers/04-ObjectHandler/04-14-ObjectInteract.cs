@@ -31,7 +31,7 @@ namespace PSO2SERVER.Packets.Handlers
                 srcObj = new PSOObject
                 {
                     Header = srcObject,
-                    Name = "Player"
+                    Name = "Account"
                 };
             }
             else
@@ -53,7 +53,7 @@ namespace PSO2SERVER.Packets.Handlers
                     if (teleporterEndpoint == null)
                     {
                         Logger.WriteError("[OBJ] Teleporter for {0} in {1} does not contain a destination!", srcObj.Header.ID, "lobby");
-                        // Teleport Player to default point
+                        // Teleport Account to default point
                         context.SendPacket(new TeleportTransferPacket(srcObj, new PSOLocation(0f, 1f, 0f, -0.000031f, -0.417969f, 0.000031f, 134.375f)));
                         // Unhide player
                         context.SendPacket(new ObjectActionPacket(dstObject, srcObject, new ObjectHeader(), new ObjectHeader(), "Forwarded"));
@@ -70,7 +70,7 @@ namespace PSO2SERVER.Packets.Handlers
                             PosY = teleporterEndpoint.PosY,
                             PosZ = teleporterEndpoint.PosZ,
                         };
-                        // Teleport Player
+                        // Teleport Account
                         context.SendPacket(new TeleportTransferPacket(srcObj, endpointLocation));
                         // Unhide player
                         context.SendPacket(new ObjectActionPacket(dstObject, srcObject, new ObjectHeader(), new ObjectHeader(), "Forwarded")); 
@@ -80,9 +80,9 @@ namespace PSO2SERVER.Packets.Handlers
 
             if (command == "READY")
             {
-                context.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)context.User.PlayerId, EntityType.Player), srcObj.Header, srcObj.Header,
+                context.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)context._account.AccountId, EntityType.Player), srcObj.Header, srcObj.Header,
                     new ObjectHeader(), "FavsNeutral"));
-                context.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)context.User.PlayerId, EntityType.Player), srcObj.Header, srcObj.Header,
+                context.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)context._account.AccountId, EntityType.Player), srcObj.Header, srcObj.Header,
                     new ObjectHeader(), "AP")); // Short for Appear, Thanks Zapero!
             }
 
@@ -93,7 +93,7 @@ namespace PSO2SERVER.Packets.Handlers
                     if (client.Character == null || client == context)
                         continue;
 
-                    client.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)client.User.PlayerId, EntityType.Player), srcObj.Header,
+                    client.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)client._account.AccountId, EntityType.Player), srcObj.Header,
                         new ObjectHeader(dstObject.ID, EntityType.Player), new ObjectHeader(), "SitSuccess"));
                 }
             }

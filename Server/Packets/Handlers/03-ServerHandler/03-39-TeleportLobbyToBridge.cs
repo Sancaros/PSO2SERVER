@@ -15,11 +15,11 @@ namespace PSO2SERVER.Packets.Handlers
         /// (0x03, 0x39) Move Lobby -> Bridge.
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            if (context.User == null)
+            if (context._account == null)
                 return;
 
             // Dunno what these are yet.
-            context.SendPacket(0x11, 0xA, 0x0, BitConverter.GetBytes(context.User.PlayerId));
+            context.SendPacket(0x11, 0xA, 0x0, BitConverter.GetBytes(context._account.AccountId));
             context.SendPacket(0x1E, 0xC, 0x0, BitConverter.GetBytes(101));
 
             Map bridgeMap = ZoneManager.Instance.MapFromInstance("bridge", "lobby");

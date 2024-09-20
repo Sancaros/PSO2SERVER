@@ -32,13 +32,13 @@ namespace PSO2SERVER.Packets.PSOPackets
 
             // Nickname
             // TODO: The above and below may be switched around, need more data
-            writer.WriteFixedLengthUtf16(_character.Player.Nickname, 16);
+            writer.WriteFixedLengthUtf16(_character.Account.Nickname, 16);
 
             // Padding?
             for (var i = 0; i < 36; i++)
                 writer.Write((byte) 0);
 
-            // Player name
+            // Account name
             writer.WriteFixedLengthUtf16(_character.Name, 16);
 
             // Unknown?

@@ -12,7 +12,7 @@ namespace PSO2SERVER.Packets.Handlers
     {
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            context.SendPacket(new SymbolArtListPacket(new Models.ObjectHeader((uint)context.User.PlayerId, Models.EntityType.Player)));
+            context.SendPacket(new SymbolArtListPacket(new Models.ObjectHeader((uint)context._account.AccountId, Models.EntityType.Player)));
         }
     }
 }

@@ -31,13 +31,13 @@ namespace PSO2SERVER.Packets.Handlers
 
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            // Set Player ID
+            // Set Account ID
             //var setPlayerId = new PacketWriter();
-            //setPlayerId.WritePlayerHeader((uint)context.User.PlayerId);
+            //setPlayerId.WritePlayerHeader((uint)context._account.AccountId);
             //context.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
-            context.SendPacket(new SetPlayerIDPacket(context.User.PlayerId));
+            context.SendPacket(new SetPlayerIDPacket(context._account.AccountId));
 
-            // Spawn Player
+            // Spawn Account
             new CharacterSpawn().HandlePacket(context, flags, data, position, size);
         }
 

@@ -49,7 +49,7 @@ namespace PSO2SERVER
         public static int FindPlayerByUsername(string name)
         {
             for (var i = 0; i < ServerApp.Instance.Server.Clients.Count; i++)
-                if (name.ToLower() == ServerApp.Instance.Server.Clients[i].User.Username.ToLower())
+                if (name.ToLower() == ServerApp.Instance.Server.Clients[i]._account.Username.ToLower())
                     return i;
 
             return -1;
