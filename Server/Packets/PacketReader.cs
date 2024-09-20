@@ -1,4 +1,5 @@
 ﻿using PSO2SERVER.Models;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -7,6 +8,12 @@ namespace PSO2SERVER.Packets
 {
     public class PacketReader : BinaryReader
     {
+        private byte[] _data;    // 存储数据的字节数组
+        private int _position;    // 当前读取位置
+        private int _size;        // 数据的总大小
+
+        public int Position => _position;
+
         public PacketReader(Stream s) : base(s)
         {
         }
@@ -18,11 +25,30 @@ namespace PSO2SERVER.Packets
         public PacketReader(byte[] bytes, uint position, uint size)
             : base(new MemoryStream(bytes, (int) position, (int) size))
         {
+            _data = bytes;
+            _position = (int)position;
+            _size = (int)size;
         }
 
         public uint ReadMagic(uint xor, uint sub)
         {
             return (ReadUInt32() ^ xor) - sub;
+        }
+
+        // 示例方法：读取 ASCII 字符串
+        public string ReadAsciiForPosition(int start, int length)
+        {
+            // 检查读取位置是否有效
+            if (_position + length > _size)
+            {
+                throw new ArgumentOutOfRangeException("读取超出数据边界");
+            }
+
+            // 读取数据并更新当前位置
+            var result = Encoding.ASCII.GetString(_data, _position, length);
+            _position += length; // 更新当前位置
+
+            return result;
         }
 
         public string ReadAscii(uint xor, uint sub)

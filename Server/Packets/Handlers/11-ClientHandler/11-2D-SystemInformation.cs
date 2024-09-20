@@ -2,6 +2,7 @@
 using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using PSO2SERVER.Database;
 using PSO2SERVER.Models;
 using PSO2SERVER.Packets.PSOPackets;
@@ -18,8 +19,10 @@ namespace PSO2SERVER.Packets.Handlers
             var cpu_info = reader.ReadAscii(0x883D, 0x9F);
             var video_info = reader.ReadAscii(0x883D, 0x9F);
             //reader.BaseStream.Seek(8, SeekOrigin.Current);
-            //var vram = reader.ReadInt64();
-            //var windows_version = reader.ReadAscii(0x883D, 0x9F);
+            //var vram = reader.ReadAscii(0x883D, 0x9F);
+            //var info = string.Format("[<--] 接收到的数据 (hex): ");
+            //Logger.WriteHex(info, data);
+            //var windows_version = reader.ReadAscii(0x6C, 190);
 
 
             //Logger.Write("Setting 内容: " + windows_version);
