@@ -24,7 +24,7 @@ namespace PSO2SERVER.Packets.PSOPackets
                 writer.Write((byte) 0);
 
             // Character ID
-            writer.Write((uint) _character.CharacterID);
+            writer.Write((uint) _character.Character_ID);
 
             // Padding?
             for (var i = 0; i < 4; i++)

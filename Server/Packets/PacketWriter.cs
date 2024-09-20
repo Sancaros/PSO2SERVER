@@ -139,11 +139,14 @@ namespace PSO2SERVER.Packets
 
         public unsafe void WriteStruct<T>(T structure) where T : struct
         {
-            var strArr = new byte[Marshal.SizeOf(structure)];
+            int size = Marshal.SizeOf(structure);
+            //Logger.Write($"Writing {size} bytes of structure: {structure}");
+
+            var strArr = new byte[size];
 
             fixed (byte* ptr = strArr)
             {
-                Marshal.StructureToPtr(structure, (IntPtr) ptr, false);
+                Marshal.StructureToPtr(structure, (IntPtr)ptr, false);
             }
 
             Write(strArr);

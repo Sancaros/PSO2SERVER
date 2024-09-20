@@ -50,12 +50,12 @@ namespace PSO2SERVER.Packets.Handlers
                 if (existingCharacters.Count > 0)
                 {
                     // Increment ID if characters already exist
-                    newCharacter.CharacterID = existingCharacters.Max(c => c.CharacterID) + 1;
+                    newCharacter.Character_ID = existingCharacters.Max(c => c.Character_ID) + 1;
                 }
                 else
                 {
                     // Start with ID 1 if no characters exist
-                    newCharacter.CharacterID = 1;
+                    newCharacter.Character_ID = 1;
                 }
 
                 //Logger.Write("newCharacter.CharacterId {0} {1}", newCharacter.CharacterId, context.User.PlayerId);

@@ -22,11 +22,11 @@ namespace PSO2SERVER.Packets.Handlers
 
             foreach (var client in ServerApp.Instance.Server.Clients)
             {
-                if (client.Character.CharacterID == id)
+                if (client.Character.Character_ID == id)
                 {
                     var infoPacket = new GuildInfoPacket(context.Character);
                     context.SendPacket(infoPacket);
-                    Logger.Write("[NFO] Sent guild info to " + client.Character.CharacterID);
+                    Logger.Write("[NFO] Sent guild info to " + client.Character.Character_ID);
                     break;
                 }
             }

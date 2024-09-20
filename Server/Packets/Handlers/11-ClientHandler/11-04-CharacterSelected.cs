@@ -1,6 +1,7 @@
 ﻿using PSO2SERVER.Database;
 using PSO2SERVER.Packets.PSOPackets;
 using PSO2SERVER.Party;
+using System;
 using System.Linq;
 
 namespace PSO2SERVER.Packets.Handlers
@@ -28,28 +29,37 @@ namespace PSO2SERVER.Packets.Handlers
             var reader = new PacketReader(data, position, size);
             var pkt = reader.ReadStruct<CharacterSelectedPacket>();
 
+            var charId = pkt.CharId;
+
             //Logger.Write("id {0}", charId);
 
             if (context.Character == null) // On character create, this is already set.
             {
                 using (var db = new ServerEf())
                 {
-                    var character = db.Characters.Where(c => c.CharacterID == pkt.CharId).First();
-
-                    if (character == null || character.Player.PlayerId != context.User.PlayerId)
+                    try
                     {
-                        Logger.WriteError("数据库中未找到 {0} 角色ID {1} ({2})"
-                            , context.User.Username
-                            , pkt.CharId
-                            , context.User.PlayerId
+                        var character = db.Characters.FirstOrDefault(c => c.Character_ID == charId);
+
+                        if (character == null || character.Player == null || character.Player.PlayerId != context.User.PlayerId)
+                        {
+                            Logger.WriteError("数据库中未找到 {0} 角色ID {1} ({2})"
+                                , context.User.Username
+                                , charId
+                                , context.User.PlayerId
                             );
-                        context.Socket.Close();
-                        return;
+                            context.Socket.Close();
+                            return;
+                        }
+
+                        context.Character = character;
                     }
-
-                    context.Character = character;
+                    catch (Exception ex)
+                    {
+                        Logger.WriteError("查询角色时发生异常: {0}", ex.Message);
+                        context.Socket.Close();
+                    }
                 }
-
             }
 
             // 将客户端加入空余的队伍中

@@ -2,6 +2,7 @@
 using System.IO;
 using PSO2SERVER.Packets.PSOPackets;
 using PSO2SERVER.Database;
+using static PSO2SERVER.Packets.PSOPackets.CharacterDeletionPacket;
 
 namespace PSO2SERVER.Packets.Handlers
 {
@@ -22,7 +23,7 @@ namespace PSO2SERVER.Packets.Handlers
             {
 
                 foreach (var character in db.Characters)
-                    if (character.CharacterID == id)
+                    if (character.Character_ID == id)
                     {
                         db.Characters.Remove(character);
                         db.ChangeTracker.DetectChanges();
@@ -31,12 +32,14 @@ namespace PSO2SERVER.Packets.Handlers
 
                 // Detect the deletion and save the Database
                 if (db.ChangeTracker.HasChanges())
+                {
                     db.SaveChanges();
+                }
             }
 
-            // Disconnect for now
-            // TODO: What do we do after a deletion?
-            context.Socket.Close();
+            context.SendPacket(new CharacterDeletionPacket(DeletionStatus.Success));
+
+            //context.SendPacket(new CharacterDeletionPacket(DeletionStatus.UndeletableItems));
         }
 
         #endregion

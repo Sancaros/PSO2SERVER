@@ -261,12 +261,12 @@ namespace PSO2SERVER.Models
         [Key]
         public int Id { get; set; }
 
-        public int CharacterID { get; set; }
-        public int player_id { get; set; }
-        public uint unk1 { get; set; }
-        public uint voice_type { get; set; }
-        public ushort unk2 { get; set; }
-        public short voice_pitch { get; set; }
+        public int Character_ID { get; set; }
+        public int Player_ID { get; set; }
+        public uint Unk1 { get; set; }
+        public uint Voice_Type { get; set; }
+        public ushort Unk2 { get; set; }
+        public short Voice_Pitch { get; set; }
 
         public string Name { get; set; }
 
@@ -288,7 +288,7 @@ namespace PSO2SERVER.Models
 
         public LooksParam Looks { get; set; }
 
-        public uint unk3 { get; set; }
+        public uint Unk3 { get; set; }
 
         public byte[] JobsBinary
         {
@@ -298,7 +298,6 @@ namespace PSO2SERVER.Models
                 w.WriteStruct(Jobs);
                 return w.ToArray();
             }
-
             set
             {
                 Jobs = Helper.ByteArrayToStructure<JobParam>(value);
@@ -308,7 +307,7 @@ namespace PSO2SERVER.Models
 
         public JobParam Jobs { get; set; }
 
-        public string unk4 { get; set; }
+        public string Unk4 { get; set; }
 
         public virtual Player Player { get; set; }
     }

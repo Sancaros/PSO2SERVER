@@ -42,7 +42,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             {
                 var chars = db.Characters
                     .Where(w => w.Player.PlayerId == _PlayerId)
-                    .OrderBy(o => o.CharacterID) // TODO: Order by last played
+                    .OrderBy(o => o.Character_ID) // TODO: Order by last played
                     .Select(s => s);
 
                 writer.Write((uint)chars.Count()); // Number of characters
@@ -52,20 +52,21 @@ namespace PSO2SERVER.Packets.PSOPackets
 
                 foreach (var ch in chars)
                 {
-                    writer.Write((uint)ch.CharacterID);
+                    writer.Write((uint)ch.Character_ID);
                     writer.Write((uint)_PlayerId);
 
                     for (var i = 0; i < 0x10; i++)
                         writer.Write((byte)0);
 
                     writer.WriteFixedLengthUtf16(ch.Name, 16);
+                    //Logger.WriteInternal("[CHR] 新增名为 {0} 的新角色.", ch.Name);
                     writer.Write((uint)0);
 
                     writer.WriteStruct(ch.Looks); // Note: Pre-Episode 4 created looks doesn't seem to work anymore
                     writer.WriteStruct(ch.Jobs);
 
-                    for (var i = 0; i < 0xFC; i++)
-                        writer.Write((byte)3);
+                    for (var i = 0; i < 0x94; i++)
+                        writer.Write((byte)0);
                 }
             }
 

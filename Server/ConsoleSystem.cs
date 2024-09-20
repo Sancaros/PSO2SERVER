@@ -704,7 +704,7 @@ namespace PSO2SERVER
 
             var fakeChar = new Character
             {
-                CharacterID = 12345678 + new Random().Next(),
+                Character_ID = 12345678 + new Random().Next(),
                 Player = fakePlayer,
                 Name = playerName,
                 Looks = client.Character.Looks,

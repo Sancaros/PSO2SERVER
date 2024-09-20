@@ -6,11 +6,21 @@ using System.Text;
 
 namespace PSO2SERVER.Packets.PSOPackets
 {
+    public enum BusyState
+    {
+        NotBusy,
+        Busy,
+    }
+
     public class NewBusyStatePacket : Packet
     {
+        private int _user_playerid;
+        private BusyState _state;
 
-        public NewBusyStatePacket()
+        public NewBusyStatePacket(int user_playerid, BusyState state)
         {
+            _user_playerid = user_playerid;
+            _state = state;
         }
 
         #region implemented abstract members of Packet
@@ -18,6 +28,8 @@ namespace PSO2SERVER.Packets.PSOPackets
         public override byte[] Build()
         {
             var pkt = new PacketWriter();
+            pkt.WriteStruct(new ObjectHeader((uint)_user_playerid, EntityType.Player));
+            pkt.Write((uint)_state);
             return pkt.ToArray();
         }
 
