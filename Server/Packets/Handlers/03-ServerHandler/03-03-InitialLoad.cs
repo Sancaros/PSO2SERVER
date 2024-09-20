@@ -33,7 +33,7 @@ namespace PSO2SERVER.Packets.Handlers
         {
             // Set Account ID
             //var setPlayerId = new PacketWriter();
-            //setPlayerId.WritePlayerHeader((uint)context._account.AccountId);
+            //setPlayerId.WriteAccountHeader((uint)context._account.AccountId);
             //context.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
             context.SendPacket(new SetPlayerIDPacket(context._account.AccountId));
 

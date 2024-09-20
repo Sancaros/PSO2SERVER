@@ -129,7 +129,7 @@ namespace PSO2SERVER.Packets
             Write(Helper.FloatToHalfPrecision(s.PosZ));
         }
 
-        public void WritePlayerHeader(uint id)
+        public void WriteAccountHeader(uint id)
         {
             Write(id);
             Write((uint) 0);

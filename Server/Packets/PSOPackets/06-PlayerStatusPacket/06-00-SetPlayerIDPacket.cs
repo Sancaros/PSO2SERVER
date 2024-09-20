@@ -20,7 +20,7 @@ namespace PSO2SERVER.Packets.PSOPackets
         public override byte[] Build()
         {
             var pkt = new PacketWriter();
-            pkt.WritePlayerHeader((uint)_PlayerId);
+            pkt.WriteAccountHeader((uint)_PlayerId);
             return pkt.ToArray();
         }
 

@@ -141,7 +141,7 @@ namespace PSO2SERVER.Zone
             }
 
             //var setPlayerId = new PacketWriter();
-            //setPlayerId.WritePlayerHeader((uint)c._account.AccountId);
+            //setPlayerId.WriteAccountHeader((uint)c._account.AccountId);
             //c.SendPacket(0x06, 0x00, 0, setPlayerId.ToArray());
             c.SendPacket(new SetPlayerIDPacket(c._account.AccountId));
 

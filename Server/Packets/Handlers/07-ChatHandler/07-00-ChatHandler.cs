@@ -51,7 +51,7 @@ namespace PSO2SERVER.Packets.Handlers
                 Logger.Write("[CHT] <{0}> 频道{1}说 {2}", context.Character.Name, channel, message);
 
                 var writer = new PacketWriter();
-                writer.WritePlayerHeader((uint) context._account.AccountId);
+                writer.WriteAccountHeader((uint) context._account.AccountId);
                 writer.Write(channel);
                 writer.WriteUtf16(message, 0x9D3F, 0x44);
 

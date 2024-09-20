@@ -38,7 +38,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             var writer = new PacketWriter();
 
             // Account header
-            writer.WritePlayerHeader((uint)_character.Account.AccountId);
+            writer.WriteAccountHeader((uint)_character.Account.AccountId);
 
             // Spawn position
             writer.Write(Position);
