@@ -12,7 +12,7 @@ namespace PSO2SERVER.Packets.Handlers
         {
             QuestDefiniton def = new QuestDefiniton
             {
-                dateOrSomething = "2012/01/05",
+                dateOrSomething = "2024/09/21",
                 needsToBeNonzero = 0x00000020,
                 getsSetToWord = 0x0000000B,
                 questNameString = 30010,
@@ -27,7 +27,7 @@ namespace PSO2SERVER.Packets.Handlers
 
             QuestDifficultyPacket.QuestDifficulty diff = new QuestDifficultyPacket.QuestDifficulty
             {
-                dateOrSomething = "2012/01/05",
+                dateOrSomething = "2024/09/21",
                 something = 0x20,
                 something2 = 0x0B,
                 questNameString = 30010,
@@ -41,7 +41,7 @@ namespace PSO2SERVER.Packets.Handlers
                 questDef = def
             };
             context.currentParty.currentQuest = quest;
-            context.SendPacket(new SetQuestInfoPacket(def, context._account));
+            context.SendPacket(new SetQuestInfoPacket(def, context._account.AccountId));
             context.SendPacket(new QuestStartPacket(def, diff));
             
         }

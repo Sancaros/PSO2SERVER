@@ -42,6 +42,7 @@ namespace PSO2SERVER
         public SocketClient Socket { get; private set; }
         // Game properties, TODO Consider moving these somewhere else
         public Account _account { get; set; }
+        public Flags _flags { get; set; }
         public Character Character { get; set; }
         //public Zone.Zone CurrentZone { get; set; }
         public Map CurrentZone;

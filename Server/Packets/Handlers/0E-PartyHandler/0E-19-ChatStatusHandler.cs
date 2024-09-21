@@ -9,8 +9,8 @@ namespace PSO2SERVER.Packets.Handlers
     {
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            var info = string.Format("[<--] 接收到的数据 (hex): ");
-            Logger.WriteHex(info, data);
+            //var info = string.Format("[<--] 接收到的数据 (hex): ");
+            //Logger.WriteHex(info, data);
 
             var reader = new PacketReader(data);
             var obj = reader.ReadStruct<ObjectHeader>();

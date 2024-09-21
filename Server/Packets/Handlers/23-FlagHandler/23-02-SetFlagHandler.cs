@@ -23,11 +23,14 @@ namespace PSO2SERVER.Packets.Handlers
             if (context._account == null || context.Character == null)
                 return;
 
-            var info = string.Format("[<--] 接收到的数据 (hex): ");
-            Logger.WriteHex(info, data);
+            //var info = string.Format("[<--] 接收到的数据 (hex): ");
+            //Logger.WriteHex(info, data);
 
             var reader = new PacketReader(data);
             var flag = reader.ReadStruct<SetFlagPacket>();
+
+            if (flag.flag_type == FlagType.Account)
+                context._flags.Set((int)flag.id, (byte)flag.value);
         }
     }
 }

@@ -185,6 +185,7 @@
     <Compile Include="Packets\Handlers\04-ObjectHandler\04-08-MovementActionHandler.cs" />
     <Compile Include="Packets\Handlers\04-ObjectHandler\04-3C-ActionUpdateHandler.cs" />
     <Compile Include="Packets\Handlers\04-ObjectHandler\04-71-MovementEndHandler.cs" />
+    <Compile Include="Packets\Handlers\0B-QuestHandler\0B-CD-AcceptStoryQuestHandler.cs" />
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-09-UNK.cs" />
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-15-QuestCounterAvailableHander.cs" />
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-17-QuestListRequestHandler.cs" />

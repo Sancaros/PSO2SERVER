@@ -18,11 +18,11 @@ namespace PSO2SERVER.Packets.PSOPackets
         public uint _value { get; set; }
         public uint _unk { get; set; }
 
-        public ServerSetFlagPacket(uint flag, bool value)
+        public ServerSetFlagPacket(uint flag, uint value)
         {
             _flag_type = FlagType.Account;
             _id = flag;
-            _value = value ? 1u : 0u; // 将 bool 转换为 uint;
+            _value = value;
             _unk = 0; // 设定未知字段的默认值
         }
 
