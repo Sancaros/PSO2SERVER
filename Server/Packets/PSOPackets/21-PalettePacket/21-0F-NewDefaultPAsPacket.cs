@@ -8,6 +8,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 {
     public class NewDefaultPAsPacket : Packet
     {
+        public uint[] Default { get; set; } = new uint[0x1A0]; // 默认大小为0x1A0
 
         public NewDefaultPAsPacket()
         {
@@ -17,8 +18,12 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override byte[] Build()
         {
-            var pkt = new PacketWriter();
-            return pkt.ToArray();
+            var writer = new PacketWriter();
+            foreach (var value in Default)
+            {
+                writer.Write(value);
+            }
+            return writer.ToArray();
         }
 
         public override PacketHeader GetHeader()

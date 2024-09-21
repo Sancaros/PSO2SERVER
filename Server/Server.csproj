@@ -165,6 +165,7 @@
     <Compile Include="Crypto\KeyLoader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Models\Flags.cs" />
+    <Compile Include="Models\Mission.cs" />
     <Compile Include="Models\PSO2Item.cs" />
     <Compile Include="Models\PSOData.cs" />
     <Compile Include="Models\PSOObject.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Packets\Handlers\04-ObjectHandler\04-08-MovementActionHandler.cs" />
     <Compile Include="Packets\Handlers\04-ObjectHandler\04-3C-ActionUpdateHandler.cs" />
     <Compile Include="Packets\Handlers\04-ObjectHandler\04-71-MovementEndHandler.cs" />
+    <Compile Include="Packets\Handlers\07-ChatHandler\07-3D-UNK.cs" />
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-CD-AcceptStoryQuestHandler.cs" />
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-09-UNK.cs" />
     <Compile Include="Packets\Handlers\0B-QuestHandler\0B-15-QuestCounterAvailableHander.cs" />
@@ -206,10 +208,19 @@
     <Compile Include="Packets\Handlers\03-ServerHandler\03-34-TeleportCasinoToLobby.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-41-CreateCharacterOne.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-2D-SystemInformation.cs" />
+    <Compile Include="Packets\Handlers\11-ClientHandler\11-B0-Unk11B0Packet.cs" />
+    <Compile Include="Packets\Handlers\19-UnkHandler\19-1C-Unk191CPacketHandler.cs" />
+    <Compile Include="Packets\Handlers\19-UnkHandler\19-06-UNK - 复制.cs" />
+    <Compile Include="Packets\Handlers\19-UnkHandler\19-04-UNK.cs" />
     <Compile Include="Packets\Handlers\23-FlagHandler\23-02-SetFlagHandler.cs" />
     <Compile Include="Packets\Handlers\2B-SettingHandler\2B-01-SavePlayerSettings.cs" />
     <Compile Include="Packets\Handlers\2B-SettingHandler\2B-00-SettingsRequest.cs" />
     <Compile Include="Packets\Handlers\2F-SymbolHandler\2F-06-SymbolArtHandler.cs" />
+    <Compile Include="Packets\Handlers\4A-ARKSMisionsHandler\4A-00-MissionListRequest.cs" />
+    <Compile Include="Packets\Handlers\4D-ClassicMissionPassHandler\4D-02-MissionPassRequest.cs" />
+    <Compile Include="Packets\Handlers\4D-ClassicMissionPassHandler\4D-00-MissionPassInfoRequest.cs" />
+    <Compile Include="Packets\PSOPackets\4A-ARKSMissionPacket\4A-03-Unk4A03Packet.cs" />
+    <Compile Include="Packets\PSOPackets\4A-ARKSMissionPacket\4A-01-ARKSMissionListPacket.cs" />
     <Compile Include="Packets\PSOPackets\07-ChatPacket\07-00-ChatPacket.cs" />
     <Compile Include="Packets\PSOPackets\0E-PartyPacket\0E-65-Unk0E65Packet.cs" />
     <Compile Include="Packets\PSOPackets\49-UNK49\49-01-Unk4901Packet.cs" />

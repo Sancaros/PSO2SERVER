@@ -1,5 +1,6 @@
 ﻿using PSO2SERVER.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -26,8 +27,8 @@ namespace PSO2SERVER.Packets
             : base(new MemoryStream(bytes, (int) position, (int) size))
         {
             _data = bytes;
-            _position = (int)position;
-            _size = (int)size;
+            _position = 0;
+            _size = (int)(size);
         }
 
         public uint ReadMagic(uint xor, uint sub)
@@ -38,17 +39,22 @@ namespace PSO2SERVER.Packets
         // 示例方法：读取 ASCII 字符串
         public string ReadAsciiForPosition(int start, int length)
         {
-            // 检查读取位置是否有效
-            if (_position + length > _size)
+            try
             {
-                throw new ArgumentOutOfRangeException("读取超出数据边界");
+                if (_position + length > _size)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(start), $"Reading beyond data boundary in {nameof(ReadAsciiForPosition)}");
+                }
+
+                var result = Encoding.ASCII.GetString(_data, _position, length);
+                _position += length;
+                return result;
             }
-
-            // 读取数据并更新当前位置
-            var result = Encoding.ASCII.GetString(_data, _position, length);
-            _position += length; // 更新当前位置
-
-            return result;
+            catch (Exception ex)
+            {
+                Logger.WriteException(nameof(ReadAsciiForPosition), ex);
+                throw;
+            }
         }
 
         public string ReadAscii(uint xor, uint sub)
@@ -57,7 +63,7 @@ namespace PSO2SERVER.Packets
 
             if (magic == 0)
             {
-                return "";
+                return string.Empty;
             }
             var charCount = magic - 1;
             var padding = 4 - (charCount & 3);
@@ -117,6 +123,29 @@ namespace PSO2SERVER.Packets
             Read(structBytes, 0, structBytes.Length);
 
             return Helper.ByteArrayToStructure<T>(structBytes);
+        }
+
+        public List<T> ReadList<T>() where T : struct
+        {
+            var count = ReadUInt32();
+            var list = new List<T>();
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(ReadStruct<T>());
+            }
+            return list;
+        }
+        public string ReadNullableString(uint xor, uint sub)
+        {
+            var magic = ReadMagic(xor, sub);
+            if (magic == 0)
+            {
+                return null;
+            }
+
+            var charCount = magic - 1;
+            var data = ReadBytes((int)charCount);
+            return data?.Length > 0 ? Encoding.ASCII.GetString(data) : null;
         }
 
         public PSOLocation ReadEntityPosition()

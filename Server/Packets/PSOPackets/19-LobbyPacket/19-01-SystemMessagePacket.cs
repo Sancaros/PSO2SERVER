@@ -5,17 +5,24 @@ namespace PSO2SERVER.Packets.PSOPackets
 {
     public class SystemMessagePacket : Packet
     {
-        public enum MessageType
+        public enum MessageType : UInt32
         {
             GoldenTicker = 0,
             AdminMessage,
             AdminMessageInstant,
             SystemMessage,
-            GenericMessage
+            GenericMessage,
+            EventInformationYellow,
+            EventInformationGreen,
+            ImportantMessage,
+            PopupMessage,
+            Undefined = 0xFFFFFFFF,
         }
 
         private readonly string _message;
+        private string _unk;
         private readonly MessageType _type;
+        private uint _msg_num;
 
         public SystemMessagePacket(string message, MessageType type)
         {
@@ -36,12 +43,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader
-            {
-                Type = 0x19,
-                Subtype = 0x01,
-                Flags1 = 0x04
-            };
+            return new PacketHeader(0x19, 0x01, PacketFlags.PACKED);
         }
 
         #endregion

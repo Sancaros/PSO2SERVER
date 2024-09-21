@@ -4,23 +4,20 @@ using PSO2SERVER.Packets.PSOPackets;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-    [PacketHandlerAttr(0x0E, 0x29)]
-    class PlayerIsNotBusyState : PacketHandler
+    [PacketHandlerAttr(0x4A, 0x00)]
+    class MissionListRequest : PacketHandler
     {
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
-            if (context.Character == null)
+            if(context.Character == null)
                 return;
+
             //var info = string.Format("[<--] 接收到的数据 (hex): {0} 字节", data.Length);
             //Logger.WriteHex(info, data);
 
-            foreach (var c in Server.Instance.Clients)
-            {
-                if (c.Character == null || c.CurrentZone != context.CurrentZone)
-                    continue;
+            //Mission mission = new Mission();
 
-                c.SendPacket(new NewBusyStatePacket(context._account.AccountId, BusyState.NotBusy));
-            }
+            //context.SendPacket(new ARKSMissionListPacket(mission));
         }
     }
 }

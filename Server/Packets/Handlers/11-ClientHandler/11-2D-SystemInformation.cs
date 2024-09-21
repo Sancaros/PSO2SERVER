@@ -20,7 +20,7 @@ namespace PSO2SERVER.Packets.Handlers
             var video_info = reader.ReadAscii(0x883D, 0x9F);
             //reader.BaseStream.Seek(8, SeekOrigin.Current);
             //var vram = reader.ReadAscii(0x883D, 0x9F);
-            //var info = string.Format("[<--] 接收到的数据 (hex): ");
+            //var info = string.Format("[<--] 接收到的数据 (hex): {0} 字节", data.Length);
             //Logger.WriteHex(info, data);
             //var windows_version = reader.ReadAscii(0x6C, 190);
 

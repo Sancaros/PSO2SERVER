@@ -20,7 +20,7 @@ namespace PSO2SERVER.Packets.Handlers
 
 
             var reader = new PacketReader(data, position, size);
-            var info = string.Format("[<--] 接收到的数据 (hex): ");
+            var info = string.Format("[<--] 接收到的数据 (hex): {0} 字节", data.Length);
             Logger.WriteHex(info, data);
 
             reader.ReadBytes(12); // 12 unknown bytes

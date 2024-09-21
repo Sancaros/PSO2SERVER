@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using static PSO2SERVER.Models.Character;
 
 namespace PSO2SERVER.Models
@@ -132,6 +133,78 @@ namespace PSO2SERVER.Models
                 {
                     return new Span<ushort>(p, 8);
                 }
+            }
+        }
+    }
+
+    public struct Campaign
+    {
+        /// Campaign ID.
+        public uint Id; // 对应 Rust 的 u32
+
+        /// Start timestamp.
+        public TimeSpan StartDate; // 对应 Rust 的 Duration
+
+        /// End timestamp.
+        public TimeSpan EndDate; // 对应 Rust 的 Duration
+
+        /// Campaign title (固定长度 0x3E).
+        private const int TitleLength = 0x3E;
+        private byte[] titleBytes;
+
+        public string Title
+        {
+            get => Encoding.ASCII.GetString(titleBytes).TrimEnd('\0');
+            set
+            {
+                titleBytes = new byte[TitleLength];
+                byte[] valueBytes = Encoding.ASCII.GetBytes(value);
+                Array.Copy(valueBytes, titleBytes, Math.Min(valueBytes.Length, TitleLength));
+            }
+        }
+
+        /// Campaign conditions (固定长度 0x102).
+        private const int ConditionsLength = 0x102;
+        private byte[] conditionsBytes;
+
+        public string Conditions
+        {
+            get => Encoding.ASCII.GetString(conditionsBytes).TrimEnd('\0');
+            set
+            {
+                conditionsBytes = new byte[ConditionsLength];
+                byte[] valueBytes = Encoding.ASCII.GetBytes(value);
+                Array.Copy(valueBytes, conditionsBytes, Math.Min(valueBytes.Length, ConditionsLength));
+            }
+        }
+
+        // 从数据流中读取 Campaign
+        public static Campaign FromStream(Stream stream)
+        {
+            using (BinaryReader reader = new BinaryReader(stream, Encoding.ASCII, true))
+            {
+                Campaign campaign = new Campaign
+                {
+                    Id = reader.ReadUInt32(),
+                    StartDate = TimeSpan.FromTicks(reader.ReadInt64()),
+                    EndDate = TimeSpan.FromTicks(reader.ReadInt64()),
+                };
+                campaign.titleBytes = reader.ReadBytes(TitleLength);
+                campaign.conditionsBytes = reader.ReadBytes(ConditionsLength);
+                return campaign;
+            }
+        }
+
+        // 将 Campaign 写入数据流
+        public void WriteToStream(Stream stream)
+        {
+            using (BinaryWriter writer = new BinaryWriter(stream, Encoding.ASCII, true))
+            {
+                writer.Write(Id);
+                writer.Write(StartDate.Ticks);
+                writer.Write(EndDate.Ticks);
+                writer.Write(titleBytes);
+                writer.Write(conditionsBytes);
             }
         }
     }
