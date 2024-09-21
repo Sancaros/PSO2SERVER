@@ -8,9 +8,10 @@ namespace PSO2SERVER.Packets.PSOPackets
 {
     public class ClientPongPacket : Packet
     {
-
-        public ClientPongPacket()
+        private readonly ulong _clientTime;
+        public ClientPongPacket(ulong clientTime)
         {
+            _clientTime = clientTime;
         }
 
         #region implemented abstract members of Packet
@@ -18,6 +19,8 @@ namespace PSO2SERVER.Packets.PSOPackets
         public override byte[] Build()
         {
             var pkt = new PacketWriter();
+            pkt.Write(_clientTime);
+            pkt.Write(Helper.Timestamp(DateTime.UtcNow));
             return pkt.ToArray();
         }
 

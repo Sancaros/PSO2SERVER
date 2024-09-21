@@ -5,7 +5,7 @@ using PSO2SERVER.Packets.PSOPackets;
 namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0x0D)]
-    public class PingTimestampResponse : PacketHandler
+    public class ClientPingHandler : PacketHandler
     {
         #region implemented abstract members of PacketHandler
 
@@ -14,10 +14,7 @@ namespace PSO2SERVER.Packets.Handlers
             var reader = new PacketReader(data, position, size);
             var clientTime = reader.ReadUInt64();
 
-            var writer = new PacketWriter();
-            writer.Write(clientTime);
-            writer.Write(Helper.Timestamp(DateTime.UtcNow));
-            context.SendPacket(0x11, 0xE, 0, writer.ToArray());
+            context.SendPacket(new ClientPongPacket(clientTime));
         }
 
         #endregion
