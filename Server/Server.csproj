@@ -164,6 +164,7 @@
     <Compile Include="ConsoleSystem.cs" />
     <Compile Include="Crypto\KeyLoader.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Models\Flags.cs" />
     <Compile Include="Models\PSO2Item.cs" />
     <Compile Include="Models\PSOData.cs" />
     <Compile Include="Models\PSOObject.cs" />
@@ -204,10 +205,14 @@
     <Compile Include="Packets\Handlers\03-ServerHandler\03-34-TeleportCasinoToLobby.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-41-CreateCharacterOne.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-2D-SystemInformation.cs" />
+    <Compile Include="Packets\Handlers\23-FlagHandler\23-02-SetFlagHandler.cs" />
     <Compile Include="Packets\Handlers\2B-SettingHandler\2B-01-SavePlayerSettings.cs" />
     <Compile Include="Packets\Handlers\2B-SettingHandler\2B-00-SettingsRequest.cs" />
     <Compile Include="Packets\Handlers\2F-SymbolHandler\2F-06-SymbolArtHandler.cs" />
+    <Compile Include="Packets\PSOPackets\0E-PartyPacket\0E-65-Unk0E65Packet.cs" />
+    <Compile Include="Packets\PSOPackets\49-UNK49\49-01-Unk4901Packet.cs" />
     <Compile Include="Packets\PSOPackets\03-ServerPacket\03-0B-ServerPingPacket.cs" />
+    <Compile Include="Packets\PSOPackets\0B-QuestPacket\0B-22-Unk0B22Packet.cs" />
     <Compile Include="Packets\PSOPackets\4D-ClassicMissionPassPacket\4D-03-MissionPassPacket.cs" />
     <Compile Include="Packets\PSOPackets\4D-ClassicMissionPassPacket\4D-01-MissionPassInfoPacket.cs" />
     <Compile Include="Packets\PSOPackets\2B-SettingsPacket\2B-02-LoadSettingsPacket.cs" />
@@ -330,7 +335,6 @@
     <Compile Include="Packets\PSOPackets\11-ClientPacket\11-1C-SetCurrencyPacket.cs" />
     <Compile Include="Packets\PSOPackets\0F-ItemPacket\0F-14-SetMesetaPacket.cs" />
     <Compile Include="Packets\PSOPackets\03-ServerPacket\03-04-LoadingScreenTransitionPacket.cs" />
-    <Compile Include="Packets\PSOPackets\23-FlagPackets\23-02-SetFlagPacket.cs" />
     <Compile Include="Packets\PSOPackets\23-FlagPackets\23-04-ServerSetFlagPacket.cs" />
     <Compile Include="Packets\PSOPackets\23-FlagPackets\23-05-ServerSetParamPacket.cs" />
     <Compile Include="Packets\PSOPackets\23-FlagPackets\23-06-AccountFlagsPacket.cs" />

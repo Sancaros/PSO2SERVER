@@ -48,10 +48,11 @@ namespace PSO2SERVER.Packets.Handlers
             // 先给一个空的 Palette
             context.SendPacket(new LoadPalettePacket());
 
-            // memset packet - Enables menus
+            // memset packet - Enables menus TODO
             // Also holds event items and likely other stuff too
-            var memSetPacket = File.ReadAllBytes(ServerApp.ServerMemoryPacket);
-            context.SendPacket(memSetPacket);
+            //var memSetPacket = File.ReadAllBytes(ServerApp.ServerMemoryPacket);
+            //context.SendPacket(memSetPacket);
+            context.SendPacket(new CharacterFlagsPacket());
         }
 
         #endregion

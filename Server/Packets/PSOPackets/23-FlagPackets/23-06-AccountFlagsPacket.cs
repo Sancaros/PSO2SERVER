@@ -8,6 +8,15 @@ namespace PSO2SERVER.Packets.PSOPackets
 {
     public class AccountFlagsPacket : Packet
     {
+        /// <summary>
+        /// Account flags.
+        /// </summary>
+        public List<byte> Flags { get; set; } = new List<byte>(0x400);
+
+        /// <summary>
+        /// Account parameters.
+        /// </summary>
+        public List<uint> Params { get; set; } = new List<uint>(0x100);
 
         public AccountFlagsPacket()
         {

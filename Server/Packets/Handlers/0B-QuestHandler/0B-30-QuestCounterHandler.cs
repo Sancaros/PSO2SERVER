@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSO2SERVER.Packets.PSOPackets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,9 @@ namespace PSO2SERVER.Packets.Handlers
         public override void HandlePacket(Client context, byte flags, byte[] data, uint position, uint size)
         {
             // Not sure what this does yet
-            byte[] allTheQuests = new byte[408];
-
-            for (int i = 0; i < allTheQuests.Length; i++)
-                allTheQuests[i] = 0xFF;
-
-            context.SendPacket(0xB, 0x22, 0x0, allTheQuests);
+            context.SendPacket(new Unk4901Packet());
+            context.SendPacket(new Unk0E65Packet());
+            context.SendPacket(new Unk0B22Packet());
         }
     }
 

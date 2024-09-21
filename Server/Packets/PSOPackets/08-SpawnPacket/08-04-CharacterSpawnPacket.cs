@@ -74,7 +74,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0x08, 0x04);
+            return new PacketHeader(0x08, 0x04, PacketFlags.None);
         }
 
         #endregion

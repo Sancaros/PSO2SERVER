@@ -36,7 +36,7 @@ namespace PSO2SERVER
         public const int ServerShipListProt = 12099;
 
         public const string ServerSettingsKey = "Resources\\settings.txt";
-        public const string ServerMemoryPacket = "Resources\\setMemoryPacket.bin";
+        //public const string ServerMemoryPacket = "Resources\\setMemoryPacket.bin"; TODO
 
         // 密钥BLOB格式
         public const string ServerPrivateKeyBlob = "key\\privateKey.blob";
