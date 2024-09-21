@@ -30,7 +30,7 @@ namespace PSO2SERVER.Models
         {
             PacketWriter writer = new PacketWriter();
             writer.WriteStruct(Header);
-            writer.Write(Position);
+            writer.WritePosition(Position);
             writer.Seek(2, SeekOrigin.Current); // Padding I guess...
             writer.WriteFixedLengthASCII(Name, 0x34);
             writer.Write(ThingFlag);

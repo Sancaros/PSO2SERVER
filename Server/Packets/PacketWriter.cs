@@ -118,17 +118,6 @@ namespace PSO2SERVER.Packets
             }
         }
 
-        public void Write(PSOLocation s)
-        {
-            Write(Helper.FloatToHalfPrecision(s.RotX));
-            Write(Helper.FloatToHalfPrecision(s.RotY));
-            Write(Helper.FloatToHalfPrecision(s.RotZ));
-            Write(Helper.FloatToHalfPrecision(s.RotW));
-            Write(Helper.FloatToHalfPrecision(s.PosX));
-            Write(Helper.FloatToHalfPrecision(s.PosY));
-            Write(Helper.FloatToHalfPrecision(s.PosZ));
-        }
-
         public void WriteAccountHeader(uint id)
         {
             Write(id);

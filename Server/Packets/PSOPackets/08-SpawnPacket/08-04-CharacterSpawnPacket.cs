@@ -41,7 +41,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             writer.WriteAccountHeader((uint)_character.Account.AccountId);
 
             // Spawn position
-            writer.Write(Position);
+            writer.WritePosition(Position);
 
             writer.Write((ushort)0); // padding?
             writer.WriteFixedLengthASCII("Character", 32);

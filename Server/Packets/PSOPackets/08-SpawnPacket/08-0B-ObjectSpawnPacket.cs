@@ -24,7 +24,7 @@ namespace PSO2SERVER.Packets.PSOPackets
         {
             PacketWriter writer = new PacketWriter();
             writer.WriteStruct(_obj.Header);
-            writer.Write(_obj.Position);
+            writer.WritePosition(_obj.Position);
             writer.Seek(2, SeekOrigin.Current); // Padding I guess...
             writer.WriteFixedLengthASCII(_obj.Name, 0x34);
             writer.Write(_obj.ThingFlag);
