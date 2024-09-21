@@ -101,7 +101,7 @@ namespace PSO2SERVER.Object
                 foreach (NPC npc in dbNpcs)
                 {
                     PSONPC dNpc = new PSONPC();
-                    dNpc.Header = new ObjectHeader((uint)npc.EntityID, EntityType.Object);
+                    dNpc.Header = new ObjectHeader((uint)npc.EntityID, ObjectType.Object);
                     dNpc.Position = new PSOLocation(npc.RotX, npc.RotY, npc.RotZ, npc.RotW, npc.PosX, npc.PosY, npc.PosZ);
                     dNpc.Name = npc.NPCName;
 
@@ -135,7 +135,7 @@ namespace PSO2SERVER.Object
             if (!allTheObjects.ContainsKey(ID))
             {
                 Logger.WriteWarning("[OBJ] 客户端请求的对象 {0} 服务端未解析. 等待分析.", ID);
-                return new PSOObject() { Header = new ObjectHeader(ID, EntityType.Object), Name = "Unknown" };
+                return new PSOObject() { Header = new ObjectHeader(ID, ObjectType.Object), Name = "Unknown" };
             }
 
             return allTheObjects[ID];

@@ -28,7 +28,7 @@ namespace PSO2SERVER.Packets.PSOPackets
         public override byte[] Build()
         {
             var pkt = new PacketWriter();
-            pkt.WriteStruct(new ObjectHeader((uint)_user_playerid, EntityType.Player));
+            pkt.WriteStruct(new ObjectHeader((uint)_user_playerid, ObjectType.Player));
             pkt.Write((uint)_state);
             return pkt.ToArray();
         }

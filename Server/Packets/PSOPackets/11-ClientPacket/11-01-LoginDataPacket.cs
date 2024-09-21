@@ -33,7 +33,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
             // TODO: Explore this data! Some if it seems really important. (May contain level cap setting + more)
 
-            resp.WriteStruct(new ObjectHeader(userid, EntityType.Player));
+            resp.WriteStruct(new ObjectHeader(userid, ObjectType.Player));
             resp.WriteFixedLengthUtf16(blockName, 0x20); // This is right
             // Set things to "default" values; Dunno these purposes yet.
             resp.Write(0x42700000); //0

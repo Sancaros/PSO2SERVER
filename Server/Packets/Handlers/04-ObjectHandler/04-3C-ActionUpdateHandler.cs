@@ -23,7 +23,7 @@ namespace PSO2SERVER.Packets.Handlers
                 if (c == context || c.Character == null || c.CurrentZone != context.CurrentZone)
                     continue;
                 //PacketWriter writer = new PacketWriter();
-                //writer.WriteStruct(new ObjectHeader((uint)c._account.AccountId, EntityType.Account));
+                //writer.WriteStruct(new ObjectHeader((uint)c._account.AccountId, ObjectType.Account));
                 //writer.WriteStruct(actor);
                 //writer.Write(rest);
 

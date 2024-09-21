@@ -109,8 +109,8 @@ namespace PSO2SERVER.Zone
             else
             {
                 //PacketWriter writer = new PacketWriter();
-                //writer.WriteStruct(new ObjectHeader(3, EntityType.Map));
-                //writer.WriteStruct(new ObjectHeader((uint)c._account.AccountId, EntityType.Account));
+                //writer.WriteStruct(new ObjectHeader(3, ObjectType.Map));
+                //writer.WriteStruct(new ObjectHeader((uint)c._account.AccountId, ObjectType.Account));
                 //writer.Write(0x1); // 8 Zeros
                 //writer.Write(0); // 8 Zeros
                 //writer.Write(~(uint)Type); // F4 FF FF FF
@@ -195,8 +195,8 @@ namespace PSO2SERVER.Zone
             foreach (Client other in Clients)
             {
                 //PacketWriter writer = new PacketWriter();
-                //writer.WriteStruct(new ObjectHeader((uint)other._account.AccountId, EntityType.Account));
-                //writer.WriteStruct(new ObjectHeader((uint)c._account.AccountId, EntityType.Account));
+                //writer.WriteStruct(new ObjectHeader((uint)other._account.AccountId, ObjectType.Account));
+                //writer.WriteStruct(new ObjectHeader((uint)c._account.AccountId, ObjectType.Account));
                 //other.SendPacket(0x4, 0x3B, 0x40, writer.ToArray());
                 other.SendPacket(new DespawnPlayerPacket(other._account.AccountId, c._account.AccountId));
             }

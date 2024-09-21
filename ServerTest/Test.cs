@@ -96,7 +96,7 @@ namespace ServerTest
             var testObject = new PSOObject
             {
                 Name = "testobj",
-                Header = new ObjectHeader { ID = 1337, EntityType = EntityType.Object },
+                Header = new ObjectHeader { ID = 1337, ObjectType = ObjectType.Object },
                 Position = new PSOLocation
                 {
                     RotX = (float)3.3,

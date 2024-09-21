@@ -37,7 +37,7 @@ namespace PSO2SERVER.Packets.Handlers
                 if (c == context || c.Character == null || c.CurrentZone != context.CurrentZone)
                     continue;
                 //PacketWriter output = new PacketWriter();
-                //output.WriteStruct(new ObjectHeader((uint)context._account.AccountId, EntityType.Account));
+                //output.WriteStruct(new ObjectHeader((uint)context._account.AccountId, ObjectType.Account));
                 //output.WriteStruct(preformer);
                 //output.Write(preData);
                 //output.WriteAscii(command, 0x4315, 0x7A);

@@ -22,11 +22,11 @@ namespace PSO2SERVER.Packets.Handlers
             reader.ReadBytes(16); // Not sure what this is yet
             string command = reader.ReadAscii(0xD711, 0xCA);
             PSOObject srcObj;
-            if(srcObject.EntityType == EntityType.Object)
+            if(srcObject.ObjectType == ObjectType.Object)
             {
                 srcObj = ObjectManager.Instance.getObjectByID(context.CurrentZone.Name, srcObject.ID);
             }
-            else if(srcObject.EntityType == EntityType.Player)
+            else if(srcObject.ObjectType == ObjectType.Player)
             {
                 srcObj = new PSOObject
                 {
@@ -39,7 +39,7 @@ namespace PSO2SERVER.Packets.Handlers
                 srcObj = null;
             }
 
-            Logger.WriteInternal("[OBJ] {0} (ID {1}) <{2}> --> Ent {3} (ID {4})", srcObj.Name, srcObj.Header.ID, command, (EntityType)dstObject.EntityType, dstObject.ID);
+            Logger.WriteInternal("[OBJ] {0} (ID {1}) <{2}> --> Ent {3} (ID {4})", srcObj.Name, srcObj.Header.ID, command, (ObjectType)dstObject.ObjectType, dstObject.ID);
 
             // TODO: Delete this code and do this COMPLETELY correctly!!!
             if (command == "Transfer" && context.CurrentZone.Name == "lobby")
@@ -80,9 +80,9 @@ namespace PSO2SERVER.Packets.Handlers
 
             if (command == "READY")
             {
-                context.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)context._account.AccountId, EntityType.Player), srcObj.Header, srcObj.Header,
+                context.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)context._account.AccountId, ObjectType.Player), srcObj.Header, srcObj.Header,
                     new ObjectHeader(), "FavsNeutral"));
-                context.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)context._account.AccountId, EntityType.Player), srcObj.Header, srcObj.Header,
+                context.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)context._account.AccountId, ObjectType.Player), srcObj.Header, srcObj.Header,
                     new ObjectHeader(), "AP")); // Short for Appear, Thanks Zapero!
             }
 
@@ -93,8 +93,8 @@ namespace PSO2SERVER.Packets.Handlers
                     if (client.Character == null || client == context)
                         continue;
 
-                    client.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)client._account.AccountId, EntityType.Player), srcObj.Header,
-                        new ObjectHeader(dstObject.ID, EntityType.Player), new ObjectHeader(), "SitSuccess"));
+                    client.SendPacket(new ObjectActionPacket(new ObjectHeader((uint)client._account.AccountId, ObjectType.Player), srcObj.Header,
+                        new ObjectHeader(dstObject.ID, ObjectType.Player), new ObjectHeader(), "SitSuccess"));
                 }
             }
         }

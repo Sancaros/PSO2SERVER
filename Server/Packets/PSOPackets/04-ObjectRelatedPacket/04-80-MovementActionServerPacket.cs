@@ -40,7 +40,7 @@ namespace PSO2SERVER.Packets.PSOPackets
         public override byte[] Build()
         {
             PacketWriter output = new PacketWriter();
-            output.WriteStruct(new ObjectHeader((uint)_user_playerid, EntityType.Player));
+            output.WriteStruct(new ObjectHeader((uint)_user_playerid, ObjectType.Player));
             output.WriteStruct(_preformer);
             output.Write(_preData);
             output.WriteAscii(_command, 0x4315, 0x7A);

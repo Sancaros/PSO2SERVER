@@ -1016,7 +1016,7 @@ namespace PSO2SERVER
             PSOObject obj = new PSOObject
             {
                 Name = args[2],
-                Header = new ObjectHeader((uint)Int32.Parse(args[3]), EntityType.Object),
+                Header = new ObjectHeader((uint)Int32.Parse(args[3]), ObjectType.Object),
                 Position = new PSOLocation(float.Parse(args[4]), float.Parse(args[5]), float.Parse(args[6]), float.Parse(args[7]), float.Parse(args[8]), float.Parse(args[9]), float.Parse(args[10])),
                 Things = new PSOObject.PSOObjectThing[0]
             };

@@ -26,7 +26,7 @@ namespace PSO2SERVER.Packets.PSOPackets
             writer.Write((ushort)0);
             writer.Write((ushort)0);
             writer.Write((ushort)1);
-            writer.WriteStruct(new ObjectHeader((uint)p.AccountId, EntityType.Player));
+            writer.WriteStruct(new ObjectHeader((uint)p.AccountId, ObjectType.Player));
             writer.Write(0);
             writer.Write((ushort)0);
             writer.Write((ushort)0);

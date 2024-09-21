@@ -67,7 +67,7 @@ namespace PSO2SERVER.Models
         internal static PSOObject FromDBObject(GameObject dbObject)
         {
             PSOObject psoObj = new PSOObject();
-            psoObj.Header = new ObjectHeader((uint)dbObject.ObjectID, EntityType.Object);
+            psoObj.Header = new ObjectHeader((uint)dbObject.ObjectID, ObjectType.Object);
             psoObj.Name = dbObject.ObjectName;
             psoObj.Position = new PSOLocation(dbObject.RotX, dbObject.RotY, dbObject.RotZ, dbObject.RotW, dbObject.PosX, dbObject.PosY, dbObject.PosZ);
 

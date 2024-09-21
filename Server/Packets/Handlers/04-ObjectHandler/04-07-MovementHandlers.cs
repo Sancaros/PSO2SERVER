@@ -35,11 +35,11 @@ namespace PSO2SERVER.Packets.Handlers
             }
             if (theFlags.HasFlag(PackedData.ENT1_TYPE))
             {
-                dstData.entity1.EntityType = (EntityType)reader.ReadUInt16();
+                dstData.entity1.ObjectType = (ObjectType)reader.ReadUInt16();
             }
             if (theFlags.HasFlag(PackedData.ENT1_A))
             {
-                dstData.entity1.Unknown_A = reader.ReadUInt16();
+                dstData.entity1.MapID = reader.ReadUInt16();
             }
             if (theFlags.HasFlag(PackedData.ENT2_ID))
             {
@@ -47,11 +47,11 @@ namespace PSO2SERVER.Packets.Handlers
             }
             if (theFlags.HasFlag(PackedData.ENT2_TYPE))
             {
-                dstData.entity1.EntityType = (EntityType)reader.ReadUInt16();
+                dstData.entity1.ObjectType = (ObjectType)reader.ReadUInt16();
             }
             if (theFlags.HasFlag(PackedData.ENT2_A))
             {
-                dstData.entity1.Unknown_A = reader.ReadUInt16();
+                dstData.entity1.MapID = reader.ReadUInt16();
             }
             if (theFlags.HasFlag(PackedData.TIMESTAMP))
             {

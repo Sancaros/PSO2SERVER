@@ -193,7 +193,7 @@
     <Compile Include="Packets\Handlers\--UNK.cs" />
     <Compile Include="Packets\Handlers\0E-PartyHandler\0E-29-PlayerIsNotBusyState.cs" />
     <Compile Include="Packets\Handlers\0E-PartyHandler\0E-28-PlayerIsBusyState.cs" />
-    <Compile Include="Packets\Handlers\0E-PartyHandler\0E-19-UNK.cs" />
+    <Compile Include="Packets\Handlers\0E-PartyHandler\0E-19-ChatStatusHandler.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-B8-CharacterShipTransferRightsRequest.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-06-DeleteCharacter.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-0D-PingTimestampResponse.cs" />

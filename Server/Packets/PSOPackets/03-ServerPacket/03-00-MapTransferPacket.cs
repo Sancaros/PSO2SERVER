@@ -25,8 +25,8 @@ namespace PSO2SERVER.Packets.PSOPackets
         public override byte[] Build()
         {
             PacketWriter writer = new PacketWriter();
-            writer.WriteStruct(new ObjectHeader(3, EntityType.Map));
-            writer.WriteStruct(new ObjectHeader((uint)_playerid, EntityType.Player));
+            writer.WriteStruct(new ObjectHeader(3, ObjectType.Map));
+            writer.WriteStruct(new ObjectHeader((uint)_playerid, ObjectType.Player));
             writer.Write(0x1); // 8 Zeros
             writer.Write(0); // 8 Zeros
             writer.Write(~(uint)_map.Type); // F4 FF FF FF
