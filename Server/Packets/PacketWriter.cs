@@ -122,7 +122,7 @@ namespace PSO2SERVER.Packets
         {
             Write(id);
             Write((uint) 0);
-            Write((ushort) 4);
+            Write((ushort)ObjectType.Player);
             Write((ushort) 0);
         }
 

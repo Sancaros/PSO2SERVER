@@ -209,6 +209,7 @@
     <Compile Include="Packets\Handlers\2B-SettingHandler\2B-01-SavePlayerSettings.cs" />
     <Compile Include="Packets\Handlers\2B-SettingHandler\2B-00-SettingsRequest.cs" />
     <Compile Include="Packets\Handlers\2F-SymbolHandler\2F-06-SymbolArtHandler.cs" />
+    <Compile Include="Packets\PSOPackets\07-ChatPacket\07-00-ChatPacket.cs" />
     <Compile Include="Packets\PSOPackets\0E-PartyPacket\0E-65-Unk0E65Packet.cs" />
     <Compile Include="Packets\PSOPackets\49-UNK49\49-01-Unk4901Packet.cs" />
     <Compile Include="Packets\PSOPackets\03-ServerPacket\03-0B-ServerPingPacket.cs" />

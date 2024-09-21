@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using PSO2SERVER.Models;
+using PSO2SERVER.Packets.PSOPackets;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace PSO2SERVER.Packets.Handlers
 {
-
     [PacketHandlerAttr(0x07, 0x00)]
     public class ChatHandler : PacketHandler
     {
@@ -18,8 +19,11 @@ namespace PSO2SERVER.Packets.Handlers
             Logger.WriteHex(info, data);
 
             var reader = new PacketReader(data, position, size);
-            reader.BaseStream.Seek(0xC, SeekOrigin.Begin);
-            var channel = reader.ReadUInt32();
+            var obj = reader.ReadStruct<ObjectHeader>();
+            var channel = reader.ReadByte();
+            var unk3 = reader.ReadByte();
+            var unk4 = reader.ReadInt16();
+            reader.BaseStream.Seek(0x4, SeekOrigin.Current);
             var message = reader.ReadUtf16(0x9D3F, 0x44);
 
             if (message.StartsWith(ServerApp.Config.CommandPrefix))
@@ -50,44 +54,16 @@ namespace PSO2SERVER.Packets.Handlers
             {
                 Logger.Write("[CHT] <{0}> 频道{1}说 {2}", context.Character.Name, channel, message);
 
-                var writer = new PacketWriter();
-                writer.WriteAccountHeader((uint) context._account.AccountId);
-                writer.Write(channel);
-                writer.WriteUtf16(message, 0x9D3F, 0x44);
-
-                data = writer.ToArray();
-
                 foreach (var c in Server.Instance.Clients)
                 {
                     if (c.Character == null || c.CurrentZone != context.CurrentZone)
                         continue;
 
-                    c.SendPacket(0x07, 0x00, 0x44, data);
+                    c.SendPacket(new ChatPacket((uint)context._account.AccountId, channel, message));
                 }
             }
         }
 
         #endregion
     }
-    public enum MessageChannel : byte
-    {
-        // Map channel.
-        Map = 0,
-
-        // Party channel.
-        Party = 1,
-
-        // Alliance channel.
-        Alliance = 2,
-
-        // Whisper channel.
-        Whisper = 3,
-
-        // Group channel.
-        Group = 4,
-
-        // Undefined channel.
-        Undefined = 0xFF
-    }
-
 }
