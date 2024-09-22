@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using PSO2SERVER.Packets;
 
 namespace PSO2SERVER.Models
 {
@@ -42,6 +44,21 @@ namespace PSO2SERVER.Models
             ID = id;
             ObjectType = type;
             MapID = mapid;
+        }
+        public void ReadFromStream(PacketReader reader)
+        {
+            ID = reader.ReadUInt32();
+            padding = reader.ReadUInt32(); // 读取填充
+            ObjectType = (ObjectType)reader.ReadUInt16();
+            MapID = reader.ReadUInt16();
+        }
+
+        public void WriteToStream(PacketWriter writer)
+        {
+            writer.Write(ID);
+            writer.Write(padding); // 写入填充
+            writer.Write((UInt16)ObjectType);
+            writer.Write(MapID);
         }
     }
 }

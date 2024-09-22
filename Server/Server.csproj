@@ -169,6 +169,7 @@
     <Compile Include="Models\PSO2Item.cs" />
     <Compile Include="Models\PSOData.cs" />
     <Compile Include="Models\PSOObject.cs" />
+    <Compile Include="Models\PSOPalette.cs" />
     <Compile Include="Models\Quest.cs" />
     <Compile Include="Network\PortChecker.cs" />
     <Compile Include="Object\ObjectManager.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Packets\Handlers\19-UnkHandler\19-1C-Unk191CPacketHandler.cs" />
     <Compile Include="Packets\Handlers\19-UnkHandler\19-06-UNK - 复制.cs" />
     <Compile Include="Packets\Handlers\19-UnkHandler\19-04-UNK.cs" />
+    <Compile Include="Packets\Handlers\21-PaletteHandler\21-02-FullPaletteInfoRequest.cs" />
     <Compile Include="Packets\Handlers\23-FlagHandler\23-02-SetFlagHandler.cs" />
     <Compile Include="Packets\Handlers\2B-SettingHandler\2B-01-SavePlayerSettings.cs" />
     <Compile Include="Packets\Handlers\2B-SettingHandler\2B-00-SettingsRequest.cs" />
@@ -378,7 +380,7 @@
     <Compile Include="Server.cs" />
     <Compile Include="Packets\Handlers\PacketHandler.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-0B-KeyExchange.cs" />
-    <Compile Include="Packets\Handlers\11-ClientHandler\11-00-Login.cs" />
+    <Compile Include="Packets\Handlers\11-ClientHandler\11-00-SegaIDLogin.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Packets\Handlers\11-ClientHandler\11-54-CreateCharacterTwo.cs" />
     <Compile Include="Packets\PacketWriter.cs" />

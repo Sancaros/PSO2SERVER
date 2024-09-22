@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace PSO2SERVER.Packets.Handlers
 {
     [PacketHandlerAttr(0x11, 0x00)]
-    public class Login : PacketHandler
+    public class SegaIDLogin : PacketHandler
     {
         public uint Unk1 { get; set; }
         public uint Unk2 { get; set; }
@@ -167,7 +167,7 @@ namespace PSO2SERVER.Packets.Handlers
                 //mystery.Write((uint)100);
                 //context.SendPacket(0x11, 0x49, 0, mystery.ToArray());
 
-                // Login response packet
+                // SegaIDLogin response packet
 
                 if (user == null)
                 {
@@ -209,10 +209,5 @@ namespace PSO2SERVER.Packets.Handlers
     {
         Japanese = 0,
         English = 1
-    }
-
-    public class SegaIDLoginPacket
-    {
-
     }
 }

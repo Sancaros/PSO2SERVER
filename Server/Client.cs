@@ -257,16 +257,20 @@ namespace PSO2SERVER
                 , _server.StartTime.ToShortTimeString().Replace('/', '-').Replace(':', '-')
                 );
 
-            using (var stream = File.OpenWrite(filename))
+            try
             {
-                if (fromClient)
+                using (var stream = new FileStream(filename, FileMode.Append, FileAccess.Write, FileShare.None))
                 {
-                    stream.WriteByte(typeA);
-                    stream.WriteByte(typeB);
-                    stream.WriteByte(flags1);
-                    stream.WriteByte(flags2);
+                    if (fromClient)
+                    {
+                        stream.Write(new byte[] { typeA, typeB, flags1, flags2 }, 0, 4);
+                    }
+                    stream.Write(packet, 0, packet.Length);
                 }
-                stream.Write(packet, 0, packet.Length);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"记录数据包时出错: {ex.Message}");
             }
         }
 
@@ -290,13 +294,17 @@ namespace PSO2SERVER
                 , _server.StartTime.ToShortTimeString().Replace('/', '-').Replace(':', '-')
                 );
 
-            using (var stream = File.OpenWrite(filename))
+            try
             {
-                stream.WriteByte(typeA);
-                stream.WriteByte(typeB);
-                stream.WriteByte(flags1);
-                stream.WriteByte(flags2);
-                stream.Write(packet, 0, packet.Length);
+                using (var stream = new FileStream(filename, FileMode.Append, FileAccess.Write, FileShare.None))
+                {
+                    stream.Write(new byte[] { typeA, typeB, flags1, flags2 }, 0, 4);
+                    stream.Write(packet, 0, packet.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"记录未知数据包时出错: {ex.Message}");
             }
         }
     }

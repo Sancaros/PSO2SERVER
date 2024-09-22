@@ -20,9 +20,9 @@ namespace PSO2SERVER.Packets.PSOPackets
         }
 
         private readonly string _message;
-        private string _unk;
+        //private string _unk;
         private readonly MessageType _type;
-        private uint _msg_num;
+        //private uint _msg_num;
 
         public SystemMessagePacket(string message, MessageType type)
         {
