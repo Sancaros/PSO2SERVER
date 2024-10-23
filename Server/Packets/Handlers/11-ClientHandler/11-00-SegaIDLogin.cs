@@ -96,7 +96,7 @@ namespace PSO2SERVER.Packets.Handlers
             //var info = string.Format("[<--] 接收到的数据 (hex): {0}字节", data.Length);
             //Logger.WriteHex(info, data);
 
-            //Logger.Write("用户名 {0} 密码 {1}", Username, Password);
+            //Logger.Write("用户名 {0} 密码 {1} - {2}", Username, Password, BCrypt.Net.BCrypt.HashPassword(Password));
 
             // What am I doing here even
             using (var db = new ServerEf())
