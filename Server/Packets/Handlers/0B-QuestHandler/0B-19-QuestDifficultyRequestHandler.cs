@@ -15,8 +15,8 @@ namespace PSO2SERVER.Packets.Handlers
             QuestDifficultyPacket.QuestDifficulty[] diffs = new QuestDifficultyPacket.QuestDifficulty[1];
             for (int i = 0; i < diffs.Length; i++)
             {
-                diffs[i].dateOrSomething = "2012/01/05";
-                diffs[i].something = 0x20;
+                diffs[i].dateOrSomething = "2017/2/20";
+                diffs[i].quest_obj.ID = 496;
                 diffs[i].something2 = 0x0B;
                 diffs[i].questNameString = 30010;
 
@@ -27,7 +27,7 @@ namespace PSO2SERVER.Packets.Handlers
             context.SendPacket(new QuestDifficultyPacket(diffs));
 
             // [K873] I believe this is the correct packet, but it causes an infinite send/recieve loop, we're probably just missing something else
-            context.SendPacket(new NoPayloadPacket(0xB, 0x1C));
+            context.SendPacket(new NoPayloadPacket(0x0B, 0x1C));
         }
     }
 

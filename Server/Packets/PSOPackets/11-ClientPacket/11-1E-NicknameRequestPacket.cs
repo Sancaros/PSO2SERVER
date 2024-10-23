@@ -8,9 +8,18 @@ namespace PSO2SERVER.Packets.PSOPackets
 {
     public class NicknameRequestPacket : Packet
     {
+        // Error flag
+        //[DataMember(Order = 1)]
+        public ushort Error { get; set; }
 
         public NicknameRequestPacket()
         {
+            Error = 0; // 默认值
+        }
+
+        public NicknameRequestPacket(ushort error)
+        {
+            Error = error;
         }
 
         #region implemented abstract members of Packet
@@ -18,6 +27,8 @@ namespace PSO2SERVER.Packets.PSOPackets
         public override byte[] Build()
         {
             var pkt = new PacketWriter();
+            pkt.Write(new byte[0x42]);
+            pkt.Write(Error);
             return pkt.ToArray();
         }
 

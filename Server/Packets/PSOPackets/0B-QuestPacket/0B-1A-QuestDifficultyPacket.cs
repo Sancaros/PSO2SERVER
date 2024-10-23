@@ -16,10 +16,20 @@ namespace PSO2SERVER.Packets.PSOPackets
             {
                 QuestDifficultyEntry difficulty = new QuestDifficultyEntry
                 {
-                    unknown1 = 0x0101,
-                    monster1 = 0xFFFFFFFF,
-                    monster2 = 0xFFFFFFFF,
-                    monster3 = 0xFFFFFFFF
+                    ReqLevel = 1,
+                    SubClassReqLevel = 0,
+                    MonsterLevel = 1,
+                    Unk1 = 1,
+                    AbilityAdj = 0,
+                    DmgLimit = 0,
+                    TimeLimit = 0,
+                    TimeLimit2 = 0,
+                    SuppTarget = 0xFFFFFFFF,
+                    Unk2 = 7,
+                    Enemy1 = 0xFFFFFFFF,
+                    Unk3 = 3,
+                    Enemy2 = 0xFFFFFFFF,
+                    Unk4 = 3
                 };
 
                 questdiffs[i].difficulty1 = difficulty;
@@ -49,7 +59,7 @@ namespace PSO2SERVER.Packets.PSOPackets
 
         public override PacketHeader GetHeader()
         {
-            return new PacketHeader(0x0B, 0x1A, 0x4);
+            return new PacketHeader(0x0B, 0x1A, PacketFlags.PACKED);
         }
 
         //Size: 308 bytes, confirmed in unpacker
@@ -58,13 +68,12 @@ namespace PSO2SERVER.Packets.PSOPackets
         {
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 24)]
             public string dateOrSomething;
-            public int field_24;
-            public int field_28;
-            public int something;
-            public int field_30;
-            public int something2;
-            public int questNameString;
-            public int something3;
+            public ObjectHeader quest_obj;
+            public uint name_id;
+            public byte area;
+            public byte planet;
+            public byte unk1;
+            public byte unk2;
             public QuestDifficultyEntry difficulty1;
             public QuestDifficultyEntry difficulty2;
             public QuestDifficultyEntry difficulty3;
@@ -78,14 +87,20 @@ namespace PSO2SERVER.Packets.PSOPackets
         //Size: 32, confirmed in ctor TODO
         public struct QuestDifficultyEntry
         {
-            public uint unknown1;
-            public uint unknown2;
-            public uint monster1;
-            public uint monster1flags;
-            public uint monster2;
-            public uint monster2flags;
-            public uint monster3;
-            public uint monster3flags;
+            public byte ReqLevel;
+            public byte SubClassReqLevel;
+            public byte MonsterLevel;
+            public byte Unk1;
+            public uint AbilityAdj;
+            public uint DmgLimit;
+            public uint TimeLimit;
+            public uint TimeLimit2;
+            public uint SuppTarget;
+            public uint Unk2;
+            public uint Enemy1;
+            public uint Unk3;
+            public uint Enemy2;
+            public uint Unk4;
         }
     }
 }

@@ -137,7 +137,8 @@ namespace PSO2SERVER.Packets.Handlers
                         db.Account.Add(user);
                         db.SaveChanges();
 
-                        context.SendPacket(0x11, 0x1e, 0x0, new byte[0x44]); // Request nickname
+                        //context.SendPacket(0x11, 0x1e, 0x0, new byte[0x44]); // Request nickname
+                        context.SendPacket(new NicknameRequestPacket(0)); // Request nickname
                     }
                 }
                 else
