@@ -1,6 +1,10 @@
+The project has been transferred to http://sanc.top:3000/Sancaros/PSO2SERVER
+
+
+
 PolarisServer rebuild
 
-ÃÎ»ÃÖ®ĞÇOL2 ÖĞ¹ú·şÎñÆ÷ Polaris¶ş´Î¿ª·¢
+æ¢¦å¹»ä¹‹æ˜ŸOL2 ä¸­å›½æœåŠ¡å™¨ PolarisäºŒæ¬¡å¼€å‘
 
 
 
